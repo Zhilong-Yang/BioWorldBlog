@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using BioWorld.Domain.Common;
 
 namespace BioWorld.Domain.Entities
 {
-    public class FriendLinkEntity: AuditableEntity
+    public class FriendLinkEntity : AuditableEntity
     {
         public Guid Id { get; set; }
 
