@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioWorld.Domain", "BioWorld.Domain\BioWorld.Domain.csproj", "{E3CF4D05-D135-4444-82A1-EC0F86AB31BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioWorld.Domain", "BioWorld.Domain\BioWorld.Domain.csproj", "{E3CF4D05-D135-4444-82A1-EC0F86AB31BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioWorld.Infrastructure", "BioWorld.Infrastructure\BioWorld.Infrastructure.csproj", "{3B0549CB-1C03-4914-95B7-B506C51E1B62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioWorld.Infrastructure", "BioWorld.Infrastructure\BioWorld.Infrastructure.csproj", "{3B0549CB-1C03-4914-95B7-B506C51E1B62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{5267E668-7CD5-4B43-BB86-12A77E3EA883}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3B0549CB-1C03-4914-95B7-B506C51E1B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B0549CB-1C03-4914-95B7-B506C51E1B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B0549CB-1C03-4914-95B7-B506C51E1B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5267E668-7CD5-4B43-BB86-12A77E3EA883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5267E668-7CD5-4B43-BB86-12A77E3EA883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5267E668-7CD5-4B43-BB86-12A77E3EA883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5267E668-7CD5-4B43-BB86-12A77E3EA883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
