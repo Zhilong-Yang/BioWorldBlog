@@ -49,11 +49,11 @@ namespace BioWorld.Infrastructure
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = _currentUserService.UserId;
-                        entry.Entity.Created = _dateTime.GetNowWithUserTZone();
+                        entry.Entity.Created = _dateTime.Now;//_dateTime.GetNowWithUserTZone();
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                        entry.Entity.LastModified = _dateTime.GetNowWithUserTZone();
+                        entry.Entity.LastModified = _dateTime.Now; //_dateTime.GetNowWithUserTZone();
                         break;
                 }
             }

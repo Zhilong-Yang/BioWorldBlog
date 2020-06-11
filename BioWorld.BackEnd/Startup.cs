@@ -32,6 +32,7 @@ namespace BioWorld.BackEnd
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+
             services.AddHttpContextAccessor();
             services.AddControllers();
         }
@@ -49,8 +50,8 @@ namespace BioWorld.BackEnd
             app.UseRouting();
 
             app.UseAuthorization();
-            // app.UseIdentityServer();
-            // app.UseAuthorization();
+            app.UseIdentityServer();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
