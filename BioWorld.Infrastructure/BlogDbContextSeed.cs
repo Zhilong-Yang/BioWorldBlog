@@ -2,12 +2,23 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BioWorld.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Internal;
+using BioWorld.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace BioWorld.Infrastructure
 {
     public static class BlogDbContextSeed
     {
+        public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager)
+        {
+            var defaultUser = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
+
+            if (userManager.Users.All(u => u.UserName != defaultUser.UserName))
+            {
+                await userManager.CreateAsync(defaultUser, "Administrator1!");
+            }
+        }
+
         public static async Task SeedSampleDataAsync(BlogDbContext context)
         {
             // Seed, if necessary

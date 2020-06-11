@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using TimeZoneConverter;
 
-namespace BioWorld.DateTimeResolver
+namespace BioWorld.DateTimeService
 {
-    public class DateTimeResolver : IDateTimeResolver
+    public class DateTimeService : IDateTimeService
     {
         public string TimeZoneUtcOffset { get; set; }
 
-        public DateTimeResolver(string timeZoneUtcOffset)
+        public DateTimeService(string timeZoneUtcOffset)
         {
             TimeZoneUtcOffset = timeZoneUtcOffset;
         }

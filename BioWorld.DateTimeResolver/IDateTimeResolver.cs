@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioWorld.DateTimeResolver
+namespace BioWorld.DateTimeService
 {
-    public interface IDateTimeResolver
+    public interface IDateTimeService
     {
         DateTime GetNowWithUserTZone();
         DateTime GetDateTimeWithUserTZone(DateTime utcDateTime);

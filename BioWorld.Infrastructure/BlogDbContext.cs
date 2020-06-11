@@ -1,21 +1,33 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
+using BioWorld.DateTimeService;
 using BioWorld.Domain.Common;
 using BioWorld.Domain.Entities;
+using BioWorld.Infrastructure.Identity;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace BioWorld.Infrastructure
 {
-    public class BlogDbContext : DbContext, IBlogDbContext
+    public class BlogDbContext : ApiAuthorizationDbContext<ApplicationUser>, IBlogDbContext
     {
-        protected BlogDbContext()
+        private readonly ICurrentUserService _currentUserService;
+
+        private readonly IDateTimeService _dateTime;
+
+        public BlogDbContext(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions,
+            ICurrentUserService currentUserService,
+            IDateTimeService dateTime) : base(options, operationalStoreOptions)
         {
+            _currentUserService = currentUserService;
+            _dateTime = dateTime;
         }
 
-        public BlogDbContext(DbContextOptions options) : base(options)
-        {
-        }
 
         public virtual DbSet<CategoryEntity> Category { get; set; }
         public virtual DbSet<CommentEntity> Comment { get; set; }
@@ -38,12 +50,12 @@ namespace BioWorld.Infrastructure
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        // entry.Entity.CreatedBy = _currentUserService.UserId;
-                        // entry.Entity.Created = _dateTime.Now;
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.Created = _dateTime.GetNowWithUserTZone();
                         break;
                     case EntityState.Modified:
-                        // entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                        // entry.Entity.LastModified = _dateTime.Now;
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        entry.Entity.LastModified = _dateTime.GetNowWithUserTZone();
                         break;
                 }
             }

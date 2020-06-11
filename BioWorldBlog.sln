@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{A380B6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{29ACA152-B5E4-4EC4-8EE2-2EEE18A1472E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioWorld.DateTimeResolver", "BioWorld.DateTimeResolver\BioWorld.DateTimeResolver.csproj", "{A2B36061-B422-46B7-90D5-D9DC8ED58F56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioWorld.DateTimeService", "BioWorld.DateTimeResolver\BioWorld.DateTimeService.csproj", "{A2B36061-B422-46B7-90D5-D9DC8ED58F56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

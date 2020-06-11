@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BioWorld.Infrastructure;
+using BioWorld.Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,7 +16,7 @@ namespace BioWorld.BackEnd
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -22,13 +26,28 @@ namespace BioWorld.BackEnd
 
                 try
                 {
+                    var context = services.GetRequiredService<BlogDbContext>();
 
+                    if (context.Database.IsSqlServer())
+                    {
+                        context.Database.Migrate();
+                    }
+
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+
+                    await BlogDbContextSeed.SeedDefaultUserAsync(userManager);
+                    await BlogDbContextSeed.SeedSampleDataAsync(context);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
                     throw;
                 }
+
+                await host.RunAsync();
             }
         }
 
