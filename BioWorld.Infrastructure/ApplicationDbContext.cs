@@ -1,7 +1,7 @@
-﻿using System.Threading;
+﻿using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
-using BioWorld.DateTimeService;
 using BioWorld.Domain.Common;
 using BioWorld.Domain.Entities;
 using BioWorld.Infrastructure.Identity;
@@ -12,22 +12,20 @@ using Microsoft.Extensions.Options;
 
 namespace BioWorld.Infrastructure
 {
-    public class BlogDbContext : ApiAuthorizationDbContext<ApplicationUser>, IBlogDbContext
+    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
         private readonly ICurrentUserService _currentUserService;
+        private readonly IDateTime _dateTime;
 
-        private readonly IDateTimeService _dateTime;
-
-        public BlogDbContext(
+        public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
             ICurrentUserService currentUserService,
-            IDateTimeService dateTime) : base(options, operationalStoreOptions)
+            IDateTime dateTime) : base(options, operationalStoreOptions)
         {
             _currentUserService = currentUserService;
             _dateTime = dateTime;
         }
-
 
         public virtual DbSet<CategoryEntity> Category { get; set; }
         public virtual DbSet<CommentEntity> Comment { get; set; }
@@ -63,9 +61,11 @@ namespace BioWorld.Infrastructure
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlogDbContext).Assembly);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            base.OnModelCreating(builder);
         }
     }
 }

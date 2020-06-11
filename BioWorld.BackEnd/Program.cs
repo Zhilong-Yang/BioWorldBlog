@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BioWorld.Infrastructure;
 using BioWorld.Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -26,36 +23,32 @@ namespace BioWorld.BackEnd
 
                 try
                 {
-                    var context = services.GetRequiredService<BlogDbContext>();
-
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                
                     if (context.Database.IsSqlServer())
                     {
                         context.Database.Migrate();
                     }
-
+                
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
+                
                     await BlogDbContextSeed.SeedDefaultUserAsync(userManager);
                     await BlogDbContextSeed.SeedSampleDataAsync(context);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
+                
                     logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
+                
                     throw;
                 }
-
-                await host.RunAsync();
             }
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Common.Interface
 {
-    public interface IBlogDbContext
+    public interface IApplicationDbContext
     {
         DbSet<CategoryEntity> Category { get; set; }
         DbSet<CommentEntity> Comment { get; set; }

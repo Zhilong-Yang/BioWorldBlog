@@ -19,7 +19,7 @@ namespace BioWorld.Infrastructure
             }
         }
 
-        public static async Task SeedSampleDataAsync(BlogDbContext context)
+        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
         {
             // Seed, if necessary
             if (!context.Category.Any())

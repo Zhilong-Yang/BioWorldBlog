@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
+using BioWorld.BackEnd.Services;
 using BioWorld.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,9 +29,11 @@ namespace BioWorld.BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddApplication();
             services.AddInfrastructure(Configuration);
-            // services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddHttpContextAccessor();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +49,8 @@ namespace BioWorld.BackEnd
             app.UseRouting();
 
             app.UseAuthorization();
+            // app.UseIdentityServer();
+            // app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

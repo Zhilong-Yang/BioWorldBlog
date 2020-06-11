@@ -10,9 +10,9 @@ namespace BioWorld.Infrastructure.Repository
 {
     public class DbContextRepository<T> : IRepository<T> where T : class
     {
-        protected readonly BlogDbContext DbContext;
+        protected readonly ApplicationDbContext DbContext;
 
-        public DbContextRepository(BlogDbContext dbContext)
+        public DbContextRepository(ApplicationDbContext dbContext)
         {
             DbContext = dbContext;
         }

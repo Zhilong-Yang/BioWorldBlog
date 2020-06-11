@@ -7,17 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioWorld.Domain", "BioWorld
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioWorld.Infrastructure", "BioWorld.Infrastructure\BioWorld.Infrastructure.csproj", "{3B0549CB-1C03-4914-95B7-B506C51E1B62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioWorld.BackEnd", "BioWorld.BackEnd\BioWorld.BackEnd.csproj", "{DCA3F841-F060-41E1-84F7-FE342486B97E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioWorld.BackEnd", "BioWorld.BackEnd\BioWorld.BackEnd.csproj", "{DCA3F841-F060-41E1-84F7-FE342486B97E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioWorld.Application", "BioWorld.Application\BioWorld.Application.csproj", "{155EDCB0-8E0D-47D7-96D0-954D6D199933}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioWorld.Application", "BioWorld.Application\BioWorld.Application.csproj", "{155EDCB0-8E0D-47D7-96D0-954D6D199933}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{FD672692-60EE-4CDD-8A47-29B3B6F9BD28}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{A380B653-1E71-4424-B151-42040E643795}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{29ACA152-B5E4-4EC4-8EE2-2EEE18A1472E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioWorld.DateTimeService", "BioWorld.DateTimeResolver\BioWorld.DateTimeService.csproj", "{A2B36061-B422-46B7-90D5-D9DC8ED58F56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{155EDCB0-8E0D-47D7-96D0-954D6D199933}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{155EDCB0-8E0D-47D7-96D0-954D6D199933}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{155EDCB0-8E0D-47D7-96D0-954D6D199933}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2B36061-B422-46B7-90D5-D9DC8ED58F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2B36061-B422-46B7-90D5-D9DC8ED58F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2B36061-B422-46B7-90D5-D9DC8ED58F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2B36061-B422-46B7-90D5-D9DC8ED58F56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,7 +48,6 @@ Global
 		{3B0549CB-1C03-4914-95B7-B506C51E1B62} = {29ACA152-B5E4-4EC4-8EE2-2EEE18A1472E}
 		{DCA3F841-F060-41E1-84F7-FE342486B97E} = {FD672692-60EE-4CDD-8A47-29B3B6F9BD28}
 		{155EDCB0-8E0D-47D7-96D0-954D6D199933} = {FD672692-60EE-4CDD-8A47-29B3B6F9BD28}
-		{A2B36061-B422-46B7-90D5-D9DC8ED58F56} = {29ACA152-B5E4-4EC4-8EE2-2EEE18A1472E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68FDF798-D288-454D-85BC-B573B028610A}

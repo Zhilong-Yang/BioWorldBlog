@@ -10,11 +10,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="TimeZoneConverter" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BioWorld.Application\BioWorld.Application.csproj" />
-    <ProjectReference Include="..\BioWorld.DateTimeResolver\BioWorld.DateTimeService.csproj" />
     <ProjectReference Include="..\BioWorld.Domain\BioWorld.Domain.csproj" />
   </ItemGroup>
 

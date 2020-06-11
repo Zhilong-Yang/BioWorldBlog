@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BioWorld.Application.Common.Interface;
+﻿using BioWorld.Application.Common.Interface;
 using BioWorld.Infrastructure.Identity;
+using BioWorld.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,25 +14,26 @@ namespace BioWorld.Infrastructure
         {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                services.AddDbContext<BlogDbContext>(options =>
-                    options.UseInMemoryDatabase("BioWorldBlog"));
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseInMemoryDatabase("BioWorldBlogDb"));
             }
             else
             {
-                services.AddDbContext<BlogDbContext>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
-                        configuration.GetConnectionString("ConnectionStrings"),
-                        b => b.MigrationsAssembly(typeof(BlogDbContext).Assembly.FullName)));
+                        configuration.GetConnectionString("DefaultConnection"),
+                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             }
 
-            services.AddScoped<IBlogDbContext>(provider => provider.GetService<BlogDbContext>());
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<BlogDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, BlogDbContext>();
-            
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+            services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
 
             services.AddAuthentication()
