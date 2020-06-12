@@ -26,7 +26,7 @@ namespace BioWorld.Infrastructure
             {
                 context.Category.Add(new CategoryEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("e2506fd5-887c-4537-b1ff-c9e3cf01a00b"),//Guid.NewGuid(),
                     DisplayName = "Default",
                     Note = "Default Category",
                     RouteName = "default"
@@ -54,7 +54,7 @@ namespace BioWorld.Infrastructure
             {
                 context.Add(new FriendLinkEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("f4079a57-3d22-4ab8-9fdf-25c31f4f5644"),//Guid.NewGuid(),
                     LinkUrl = "https://edi.wang",
                     Title = "Edi.Wang"
                 });
@@ -64,7 +64,7 @@ namespace BioWorld.Infrastructure
             {
                 context.Add(new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("06d83988-c254-43b9-9220-d3a4a862fae8"),//Guid.NewGuid(),
                     Title = "About",
                     Url = "",
                     Icon = "icon-star-full",
@@ -73,9 +73,9 @@ namespace BioWorld.Infrastructure
                 });
             }
 
-            Guid newPostId = Guid.NewGuid();
+            Guid newPostId = Guid.Parse("4886ec88-fc7b-4338-9fd2-56411187a7f7");//Guid.NewGuid();
 
-            Guid neCategoryId =Guid.NewGuid();
+            Guid neCategoryId = Guid.Parse("9710daba-ae1b-462c-9252-8eacf90f45a8");//Guid.NewGuid();
 
             if (!context.Post.Any())
             {
@@ -142,7 +142,7 @@ namespace BioWorld.Infrastructure
             {
                 context.Add(new CustomPageEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"),//Guid.NewGuid(),
                     Title = "About",
                     RouteName = "about",
                     HtmlContent = "'An Empty About Page",
