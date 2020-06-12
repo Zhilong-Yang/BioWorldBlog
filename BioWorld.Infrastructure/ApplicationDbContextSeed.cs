@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BioWorld.Infrastructure
 {
-    public static class BlogDbContextSeed
+    public static class ApplicationDbContextSeed
     {
         public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager)
         {
@@ -37,14 +37,14 @@ namespace BioWorld.Infrastructure
             {
                 context.Tag.Add(new TagEntity()
                 {
-                    Id = 0,
+                    //Id = 0,
                     DisplayName = ".NET Core",
                     NormalizedName = "dotnet-core"
                 });
 
                 context.Tag.Add(new TagEntity()
                 {
-                    Id = 1,
+                    //Id = 1,
                     DisplayName = "Azure",
                     NormalizedName = "azure"
                 });

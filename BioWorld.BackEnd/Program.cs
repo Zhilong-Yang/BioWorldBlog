@@ -32,8 +32,8 @@ namespace BioWorld.BackEnd
                 
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                 
-                    await BlogDbContextSeed.SeedDefaultUserAsync(userManager);
-                    await BlogDbContextSeed.SeedSampleDataAsync(context);
+                    await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager);
+                    await ApplicationDbContextSeed.SeedSampleDataAsync(context);
                 }
                 catch (Exception ex)
                 {
