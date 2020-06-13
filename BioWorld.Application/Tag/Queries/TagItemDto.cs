@@ -15,7 +15,8 @@ namespace BioWorld.Application.Tag.Queries
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TagEntity, TagItemDto>()
-                .ForMember(d => d.TagName, opt => opt.MapFrom(s => s.DisplayName));
+                .ForMember(d => d.TagName, 
+                    opt => opt.MapFrom(s => s.DisplayName));
         }
     }
 }

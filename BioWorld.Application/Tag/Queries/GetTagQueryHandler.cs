@@ -17,11 +17,13 @@ namespace BioWorld.Application.Tag.Queries
         {
             private readonly IApplicationDbContext _context;
             private readonly IMapper _mapper;
+            public  ITagRepoService _tagService;
 
-            public GetTagQueryHandler(IApplicationDbContext context, IMapper mapper)
+            public GetTagQueryHandler(IApplicationDbContext context, IMapper mapper, ITagRepoService tagService)
             {
                 _context = context;
                 _mapper = mapper;
+                _tagService = tagService;
             }
 
             public async Task<TagItemDto> Handle(GetTagQuery request, CancellationToken cancellationToken)
@@ -30,8 +32,13 @@ namespace BioWorld.Application.Tag.Queries
                     .Where(e => e.Id == request.Id)
                     .ProjectTo<TagItemDto>(_mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(cancellationToken); ;
-            
+
+                var response = await _tagService.GetAllTagsAsync();
+
                 return vm;
+
+                // 
+                // return response;
             }
         }
     }
