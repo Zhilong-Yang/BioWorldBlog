@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BioWorld.BackEnd.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public abstract class ApiController : ControllerBase
     {
         private IMediator _mediator;
