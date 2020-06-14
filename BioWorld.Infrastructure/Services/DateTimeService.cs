@@ -8,9 +8,6 @@ namespace BioWorld.Infrastructure.Services
 {
     public class DateTimeService : IDateTime
     {
-        public DateTime Now => DateTime.Now;
-
-        /*
         public string TimeZoneUtcOffset { get; set; }
 
         public DateTimeService(string timeZoneUtcOffset)
@@ -83,6 +80,5 @@ namespace BioWorld.Infrastructure.Services
         }
 
         #endregion
-        */
     }
 }

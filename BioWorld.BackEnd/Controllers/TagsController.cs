@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BioWorld.Application.Tag.Queries;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -15,18 +11,28 @@ namespace BioWorld.BackEnd.Controllers
         {
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TagItemDto>> Get(int id)
+        [HttpGet]
+        public async Task<ActionResult<TagItemDto>> GetAllTags()
         {
-            return Ok(await Mediator.Send(new GetTagQuery { Id = id }));
+            return Ok(await Mediator.Send(new GetAllTagsQuery()));
         }
 
-        // [Route("manage")]
-        // public async Task<IActionResult> Manage()
-        // {
-        //     var response = await _tagService.GetAllTagsAsync();
-        //     return response.IsSuccess ? View("~/Views/Admin/ManageTags.cshtml", response.Item) : ServerError();
-        // }
+        [HttpGet]
+        public async Task<ActionResult<TagItemDto>> GetAllTagsName()
+        {
+            return Ok(await Mediator.Send(new GetAllTagsNameQuery()));
+        }
 
+        [HttpGet]
+        public async Task<ActionResult<TagItemDto>> GetHotTags()
+        {
+            return Ok(await Mediator.Send(new GetAllTagsNameQuery()));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TagItemDto>> GetTagById(int id)
+        {
+            return Ok(await Mediator.Send(new GetTagByIdQuery { Id = id }));
+        }
     }
 }

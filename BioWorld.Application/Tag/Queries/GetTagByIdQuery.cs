@@ -9,36 +9,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class GetTagQuery : IRequest<TagItemDto>
+    public class GetTagByIdQuery : IRequest<TagItemDto>
     {
         public int Id { get; set; }
 
-        public class GetTagQueryHandler : IRequestHandler<GetTagQuery, TagItemDto>
+        public class GetTagByIdQueryHandler : IRequestHandler<GetTagByIdQuery, TagItemDto>
         {
             private readonly IApplicationDbContext _context;
             private readonly IMapper _mapper;
-            public  ITagRepoService _tagService;
 
-            public GetTagQueryHandler(IApplicationDbContext context, IMapper mapper, ITagRepoService tagService)
+            public GetTagByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
             {
                 _context = context;
                 _mapper = mapper;
-                _tagService = tagService;
             }
 
-            public async Task<TagItemDto> Handle(GetTagQuery request, CancellationToken cancellationToken)
+            public async Task<TagItemDto> Handle(GetTagByIdQuery request, CancellationToken cancellationToken)
             {
                 var vm = await _context.Tag
                     .Where(e => e.Id == request.Id)
                     .ProjectTo<TagItemDto>(_mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(cancellationToken); ;
 
-                var response = await _tagService.GetAllTagsAsync();
-
                 return vm;
-
-                // 
-                // return response;
             }
         }
     }
