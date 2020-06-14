@@ -19,4 +19,9 @@ namespace BioWorld.Application.Tag.Queries
                     opt => opt.MapFrom(s => s.DisplayName));
         }
     }
+
+    public class TagCountInfo : TagItemDto
+    {
+        public int TagCount { get; set; }
+    }
 }
