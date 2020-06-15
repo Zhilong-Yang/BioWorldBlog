@@ -4,7 +4,7 @@ using BioWorld.Domain.Entities;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class TagItemDto : IMapFrom<TagEntity>
+    public class TagDto : IMapFrom<TagEntity>
     {
         public int Id { get; set; }
 
@@ -14,13 +14,13 @@ namespace BioWorld.Application.Tag.Queries
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TagEntity, TagItemDto>()
+            profile.CreateMap<TagEntity, TagDto>()
                 .ForMember(d => d.TagName,
                     opt => opt.MapFrom(s => s.DisplayName));
         }
     }
 
-    public class TagCountInfo : TagItemDto
+    public class TagCountInfo : TagDto
     {
         public int TagCount { get; set; }
     }

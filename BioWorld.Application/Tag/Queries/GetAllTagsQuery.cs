@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class GetAllTagsQuery : IRequest<IReadOnlyList<TagItemDto>>
+    public class GetAllTagsQuery : IRequest<IReadOnlyList<TagDto>>
     {
-        public class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IReadOnlyList<TagItemDto>>
+        public class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IReadOnlyList<TagDto>>
         {
             private readonly IApplicationDbContext _context;
             private readonly IMapper _mapper;
@@ -22,12 +22,12 @@ namespace BioWorld.Application.Tag.Queries
                 _mapper = mapper;
             }
 
-            public async Task<IReadOnlyList<TagItemDto>> Handle(GetAllTagsQuery request,
+            public async Task<IReadOnlyList<TagDto>> Handle(GetAllTagsQuery request,
                 CancellationToken cancellationToken)
             {
                 var tags = await _context.Tag
                     .AsNoTracking()
-                    .ProjectTo<TagItemDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<TagDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
                 return tags;
