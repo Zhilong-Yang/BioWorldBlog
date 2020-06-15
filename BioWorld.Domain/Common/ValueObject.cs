@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace BioWorld.Domain.Common
@@ -30,7 +29,7 @@ namespace BioWorld.Domain.Common
                 return false;
             }
 
-            var other = (ValueObject)obj;
+            var other = (ValueObject) obj;
             var thisValues = GetAtomicValues().GetEnumerator();
             var otherValues = other.GetAtomicValues().GetEnumerator();
 

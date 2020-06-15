@@ -10,12 +10,12 @@ namespace BioWorld.Application.Tag.Queries
 
         public string TagName { get; set; }
 
-        public string NormalizedTagName { get; set; }
+        public string NormalizedName { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TagEntity, TagItemDto>()
-                .ForMember(d => d.TagName, 
+                .ForMember(d => d.TagName,
                     opt => opt.MapFrom(s => s.DisplayName));
         }
     }

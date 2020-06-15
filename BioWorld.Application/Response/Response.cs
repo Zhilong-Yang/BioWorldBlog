@@ -12,7 +12,9 @@
 
         // Workaround for .NET Core 3.0 bloody Json API issue
         // https://github.com/dotnet/corefx/issues/41102
-        public Response() : this(false) { }
+        public Response() : this(false)
+        {
+        }
 
         public Response(bool isSuccess = false, string message = "")
         {
@@ -27,7 +29,9 @@
 
         // Workaround for .NET Core 3.0 bloody Json API issue
         // https://github.com/dotnet/corefx/issues/41102
-        public Response() : this(default) { }
+        public Response() : this(default)
+        {
+        }
 
         public Response(T item = default)
         {

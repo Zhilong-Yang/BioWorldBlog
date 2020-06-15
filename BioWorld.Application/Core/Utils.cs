@@ -20,6 +20,7 @@ namespace BioWorld.Application.Core
             {
                 result.Replace(item1, item2);
             }
+
             return result.ToString();
         }
 
@@ -27,6 +28,5 @@ namespace BioWorld.Application.Core
         {
             return ReplaceWithStringBuilder(orgTagName, TagNormalizeSourceTable).ToLower();
         }
-
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BioWorld.BackEnd.Controllers
 {
-    public class TagsController: ApiController
+    public class TagsController : ApiController
     {
         public TagsController(ILogger<ControllerBase> logger) : base(logger)
         {
@@ -27,13 +27,13 @@ namespace BioWorld.BackEnd.Controllers
         [HttpGet("{top}")]
         public async Task<ActionResult<TagItemDto>> GetHotTags(int top)
         {
-            return Ok(await Mediator.Send(new GetHotTagsQuery{ Top = top }));
+            return Ok(await Mediator.Send(new GetHotTagsQuery {Top = top}));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TagItemDto>> GetTagById(int id)
         {
-            return Ok(await Mediator.Send(new GetTagByIdQuery { Id = id }));
+            return Ok(await Mediator.Send(new GetTagByIdQuery {Id = id}));
         }
 
         [HttpPut("{id}")]

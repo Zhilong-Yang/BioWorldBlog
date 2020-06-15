@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
 using MediatR.Pipeline;
@@ -15,7 +12,8 @@ namespace BioWorld.Application.Common.Behaviours
         private readonly ICurrentUserService _currentUserService;
         private readonly IIdentityService _identityService;
 
-        public LoggingBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService, IIdentityService identityService)
+        public LoggingBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService,
+            IIdentityService identityService)
         {
             _logger = logger;
             _currentUserService = currentUserService;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BioWorld.Application.Response
+﻿namespace BioWorld.Application.Response
 {
     public class SuccessResponse<T> : Response<T>
     {

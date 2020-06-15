@@ -29,7 +29,8 @@ namespace BioWorld.Application.Tag.Queries
                 var vm = await _context.Tag
                     .Where(e => e.Id == request.Id)
                     .ProjectTo<TagItemDto>(_mapper.ConfigurationProvider)
-                    .SingleOrDefaultAsync(cancellationToken); ;
+                    .SingleOrDefaultAsync(cancellationToken);
+                ;
 
                 return vm;
             }

@@ -15,8 +15,8 @@ namespace BioWorld.Infrastructure.Services
             if (null != logger) Logger = logger;
         }
 
-        public Response TryExecute(Func<Response> func, 
-            [CallerMemberName] string callerMemberName = "", 
+        public Response TryExecute(Func<Response> func,
+            [CallerMemberName] string callerMemberName = "",
             object keyParameter = null)
         {
             try
@@ -26,12 +26,12 @@ namespace BioWorld.Infrastructure.Services
             catch (Exception e)
             {
                 Logger.LogError(e, $"Error executing {callerMemberName}({keyParameter})");
-                return new FailedResponse((int)ResponseFailureCode.GeneralException, e.Message);
+                return new FailedResponse((int) ResponseFailureCode.GeneralException, e.Message);
             }
         }
 
-        public Response<T> TryExecute<T>(Func<Response<T>> func, 
-            [CallerMemberName] string callerMemberName = "", 
+        public Response<T> TryExecute<T>(Func<Response<T>> func,
+            [CallerMemberName] string callerMemberName = "",
             object keyParameter = null)
         {
             try
@@ -41,7 +41,7 @@ namespace BioWorld.Infrastructure.Services
             catch (Exception e)
             {
                 Logger.LogError(e, $"Error executing {callerMemberName}({keyParameter})");
-                return new FailedResponse<T>((int)ResponseFailureCode.GeneralException, e.Message);
+                return new FailedResponse<T>((int) ResponseFailureCode.GeneralException, e.Message);
             }
         }
 
@@ -56,12 +56,12 @@ namespace BioWorld.Infrastructure.Services
             catch (Exception e)
             {
                 Logger.LogError(e, $"Error executing {callerMemberName}({keyParameter})");
-                return new FailedResponse((int)ResponseFailureCode.GeneralException, e.Message);
+                return new FailedResponse((int) ResponseFailureCode.GeneralException, e.Message);
             }
         }
 
         public async Task<Response<T>> TryExecuteAsync<T>(Func<Task<Response<T>>> func,
-            [CallerMemberName] string callerMemberName = "", 
+            [CallerMemberName] string callerMemberName = "",
             object keyParameter = null)
         {
             try
@@ -71,7 +71,7 @@ namespace BioWorld.Infrastructure.Services
             catch (Exception e)
             {
                 Logger.LogError(e, $"Error executing {callerMemberName}({keyParameter})");
-                return new FailedResponse<T>((int)ResponseFailureCode.GeneralException, e.Message);
+                return new FailedResponse<T>((int) ResponseFailureCode.GeneralException, e.Message);
             }
         }
     }

@@ -24,26 +24,27 @@ namespace BioWorld.BackEnd
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                
+
                     if (context.Database.IsSqlServer())
                     {
                         context.Database.Migrate();
                     }
-                
+
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                
+
                     await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager);
                     await ApplicationDbContextSeed.SeedSampleDataAsync(context);
                 }
                 catch (Exception ex)
                 {
                     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                
+
                     logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-                
+
                     throw;
                 }
             }
+
             await host.RunAsync();
         }
 

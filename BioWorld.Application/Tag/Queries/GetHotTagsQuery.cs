@@ -35,7 +35,7 @@ namespace BioWorld.Application.Tag.Queries
                         {
                             TagCount = t.PostTag.Count,
                             TagName = t.DisplayName,
-                            NormalizedTagName = t.NormalizedName
+                            NormalizedName = t.NormalizedName
                         })
                         .ToListAsync(cancellationToken);
 

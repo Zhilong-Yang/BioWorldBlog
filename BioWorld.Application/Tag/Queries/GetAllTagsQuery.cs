@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -10,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class GetAllTagsQuery: IRequest<IReadOnlyList<TagItemDto>>
+    public class GetAllTagsQuery : IRequest<IReadOnlyList<TagItemDto>>
     {
         public class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IReadOnlyList<TagItemDto>>
         {
@@ -23,7 +22,8 @@ namespace BioWorld.Application.Tag.Queries
                 _mapper = mapper;
             }
 
-            public async Task<IReadOnlyList<TagItemDto>> Handle(GetAllTagsQuery request, CancellationToken cancellationToken)
+            public async Task<IReadOnlyList<TagItemDto>> Handle(GetAllTagsQuery request,
+                CancellationToken cancellationToken)
             {
                 var tags = await _context.Tag
                     .AsNoTracking()

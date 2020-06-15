@@ -10,7 +10,8 @@ namespace BioWorld.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services,
+            IConfiguration configuration)
         {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
@@ -26,7 +27,7 @@ namespace BioWorld.Infrastructure
             }
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
-            
+
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -34,7 +35,7 @@ namespace BioWorld.Infrastructure
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             //services.AddTransient<IDateTime, DateTimeService>();
-            services.AddScoped<IDateTime>(c =>new DateTimeService("08:00:00"));
+            services.AddScoped<IDateTime>(c => new DateTimeService("08:00:00"));
 
             services.AddTransient<IIdentityService, IdentityService>();
 

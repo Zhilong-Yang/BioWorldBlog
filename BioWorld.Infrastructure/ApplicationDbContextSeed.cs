@@ -11,7 +11,8 @@ namespace BioWorld.Infrastructure
     {
         public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager)
         {
-            var defaultUser = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
+            var defaultUser = new ApplicationUser
+                {UserName = "administrator@localhost", Email = "administrator@localhost"};
 
             if (userManager.Users.All(u => u.UserName != defaultUser.UserName))
             {
@@ -84,7 +85,8 @@ namespace BioWorld.Infrastructure
                     Id = newPostId,
                     Title = "Welcome to BioWorld",
                     Slug = "welcome-to-bioworld",
-                    PostContent = "Bioworld is the new blog system for https://edi.wang. It is a complete rewrite of the old system using .NET Core and runs on Microsoft Azure.",
+                    PostContent =
+                        "Bioworld is the new blog system for https://edi.wang. It is a complete rewrite of the old system using .NET Core and runs on Microsoft Azure.",
                     CommentEnabled = true,
                     CreateOnUtc = DateTime.UtcNow,
                     ContentAbstract = "new blog system",
@@ -142,7 +144,7 @@ namespace BioWorld.Infrastructure
             {
                 context.Add(new CustomPageEntity
                 {
-                    Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"),//Guid.NewGuid(),
+                    Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"), //Guid.NewGuid(),
                     Title = "About",
                     RouteName = "about",
                     HtmlContent = "'An Empty About Page",
