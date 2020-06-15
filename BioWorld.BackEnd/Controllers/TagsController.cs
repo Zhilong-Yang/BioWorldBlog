@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BioWorld.Application.Tag.Commands;
 using BioWorld.Application.Tag.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -33,6 +34,19 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<TagItemDto>> GetTagById(int id)
         {
             return Ok(await Mediator.Send(new GetTagByIdQuery { Id = id }));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateTagById(int id, UpdateTagCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+
+            return NoContent();
         }
     }
 }
