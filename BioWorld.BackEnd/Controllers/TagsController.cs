@@ -13,31 +13,31 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<TagItemDto>> GetAllTags()
+        public async Task<ActionResult<TagItemDto>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllTagsQuery()));
         }
 
         [HttpGet]
-        public async Task<ActionResult<TagItemDto>> GetAllTagsName()
+        public async Task<ActionResult<TagItemDto>> GetAllName()
         {
             return Ok(await Mediator.Send(new GetAllTagsNameQuery()));
         }
 
         [HttpGet("{top}")]
-        public async Task<ActionResult<TagItemDto>> GetHotTags(int top)
+        public async Task<ActionResult<TagItemDto>> GetHot(int top)
         {
             return Ok(await Mediator.Send(new GetHotTagsQuery {Top = top}));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TagItemDto>> GetTagById(int id)
+        public async Task<ActionResult<TagItemDto>> Get(int id)
         {
             return Ok(await Mediator.Send(new GetTagByIdQuery {Id = id}));
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTagById(int id, UpdateTagCommand command)
+        public async Task<ActionResult> Update(int id, UpdateTagCommand command)
         {
             if (id != command.Id)
             {
@@ -45,6 +45,14 @@ namespace BioWorld.BackEnd.Controllers
             }
 
             await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteTagCommand { Id = id });
 
             return NoContent();
         }

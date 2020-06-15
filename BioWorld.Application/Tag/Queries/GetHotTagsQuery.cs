@@ -33,6 +33,7 @@ namespace BioWorld.Application.Tag.Queries
                         .Take(request.Top)
                         .Select(t => new TagCountInfo
                         {
+                            Id = t.Id,
                             TagCount = t.PostTag.Count,
                             TagName = t.DisplayName,
                             NormalizedName = t.NormalizedName

@@ -27,6 +27,7 @@ namespace BioWorld.Application.Tag.Queries
             public async Task<TagItemDto> Handle(GetTagByIdQuery request, CancellationToken cancellationToken)
             {
                 var vm = await _context.Tag
+                    .AsNoTracking()
                     .Where(e => e.Id == request.Id)
                     .ProjectTo<TagItemDto>(_mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(cancellationToken);

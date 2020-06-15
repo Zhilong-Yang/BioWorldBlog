@@ -5,6 +5,7 @@ using BioWorld.Application.Common.Interface;
 using BioWorld.Application.Core;
 using BioWorld.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Commands
 {
