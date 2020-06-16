@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
@@ -8,33 +7,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class GetAllTagsQuery : IRequest<IReadOnlyList<TagDto>>
+    public class GetTagQuery : IRequest<TagDto>
     {
+        public int Id { get; set; }
     }
 
-    public class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IReadOnlyList<TagDto>>
+    public class GetTagQueryHandler : IRequestHandler<GetTagQuery, TagDto>
     {
         private readonly IApplicationDbContext _context;
 
-        public GetAllTagsQueryHandler(IApplicationDbContext context)
+        public GetTagQueryHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IReadOnlyList<TagDto>> Handle(GetAllTagsQuery request,
-            CancellationToken cancellationToken)
+        public async Task<TagDto> Handle(GetTagQuery request, CancellationToken cancellationToken)
         {
-            var tags = await _context.Tag
+            var vm = await _context.Tag
                 .AsNoTracking()
+                .Where(e => e.Id == request.Id)
                 .Select(t => new TagDto
                 {
                     Id = t.Id,
                     TagName = t.DisplayName,
                     NormalizedName = t.NormalizedName
                 })
-                .ToListAsync(cancellationToken);
+                .SingleOrDefaultAsync(cancellationToken);
 
-            return tags;
+            return vm;
         }
     }
 }

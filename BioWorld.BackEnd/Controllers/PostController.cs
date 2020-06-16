@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Models;
-using BioWorld.Application.Post.Commands.Hit;
-using BioWorld.Application.Post.Commands.Like;
+using BioWorld.Application.Post.Commands.PostHit;
+using BioWorld.Application.Post.Commands.PostLike;
 using BioWorld.Application.Post.Queries.GetAllPostListItem;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,15 +23,15 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpPost("{postId}")]
-        public async Task<ActionResult<HitDto>> Hit(Guid postId)
+        public async Task<ActionResult<PostHitDto>> Hit(Guid postId)
         {
-            return Ok(await Mediator.Send(new HitCommand() {PostId = postId}));
+            return Ok(await Mediator.Send(new PostHitCommand() {PostId = postId}));
         }
 
         [HttpPost("{postId}")]
-        public async Task<ActionResult<LikeDto>> Like(Guid postId)
+        public async Task<ActionResult<PostLikeDto>> Like(Guid postId)
         {
-            return Ok(await Mediator.Send(new LikeCommand() { PostId = postId }));
+            return Ok(await Mediator.Send(new PostLikeCommand() { PostId = postId }));
         }
     }
 }

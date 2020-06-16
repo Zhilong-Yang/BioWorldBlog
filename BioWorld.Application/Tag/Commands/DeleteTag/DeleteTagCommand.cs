@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Common.Models;
 using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +41,6 @@ namespace BioWorld.Application.Tag.Commands.DeleteTag
             _context.PostTag.RemoveRange(postTags);
 
             // 2. Delete Tag itself
-
             TagEntity tag = await _context.Tag.FindAsync(request.Id);
 
             if (tag == null)

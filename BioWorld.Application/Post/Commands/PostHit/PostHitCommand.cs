@@ -6,23 +6,23 @@ using BioWorld.Application.Common.Interface;
 using BioWorld.Domain.Entities;
 using MediatR;
 
-namespace BioWorld.Application.Post.Commands.Hit
+namespace BioWorld.Application.Post.Commands.PostHit
 {
-    public class HitCommand : IRequest<HitDto>
+    public class PostHitCommand : IRequest<PostHitDto>
     {
         public Guid PostId { get; set; }
     }
 
-    public class HitCommandHandler : IRequestHandler<HitCommand, HitDto>
+    public class PostHitCommandHandler : IRequestHandler<PostHitCommand, PostHitDto>
     {
         private readonly IApplicationDbContext _context;
 
-        public HitCommandHandler(IApplicationDbContext context)
+        public PostHitCommandHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<HitDto> Handle(HitCommand request, CancellationToken cancellationToken)
+        public async Task<PostHitDto> Handle(PostHitCommand request, CancellationToken cancellationToken)
         {
             var pp = await _context.PostExtension.FindAsync(request.PostId);
 
@@ -35,7 +35,7 @@ namespace BioWorld.Application.Post.Commands.Hit
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new HitDto()
+            return new PostHitDto()
             {
                 Hits = pp.Hits
             };

@@ -18,25 +18,25 @@ namespace BioWorld.BackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<TagDto>> GetAll()
         {
-            return Ok(await Mediator.Send(new GetAllTagsQuery()));
+            return Ok(await Mediator.Send(new GetAllTagQuery()));
         }
 
         [HttpGet]
         public async Task<ActionResult<TagDto>> GetAllName()
         {
-            return Ok(await Mediator.Send(new GetAllTagsNameQuery()));
+            return Ok(await Mediator.Send(new GetAllTagNameQuery()));
         }
 
         [HttpGet("{top}")]
         public async Task<ActionResult<TagDto>> GetHot(int top)
         {
-            return Ok(await Mediator.Send(new GetHotTagsQuery {Top = top}));
+            return Ok(await Mediator.Send(new GetHotTagQuery {Top = top}));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TagDto>> Get(int id)
         {
-            return Ok(await Mediator.Send(new GetTagByIdQuery {Id = id}));
+            return Ok(await Mediator.Send(new GetTagQuery {Id = id}));
         }
 
         [HttpPut("{id}")]

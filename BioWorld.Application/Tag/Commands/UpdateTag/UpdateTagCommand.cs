@@ -15,11 +15,11 @@ namespace BioWorld.Application.Tag.Commands.UpdateTag
         public string Name { get; set; }
     }
 
-    public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTagCommand>
+    public class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand>
     {
         private readonly IApplicationDbContext _context;
 
-        public UpdateTodoListCommandHandler(IApplicationDbContext context)
+        public UpdateTagCommandHandler(IApplicationDbContext context)
         {
             _context = context;
         }

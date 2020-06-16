@@ -7,20 +7,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class GetAllTagsNameQuery : IRequest<TagsNameListDto>
+    public class GetAllTagNameQuery : IRequest<TagsNameListDto>
     {
     }
 
-    public class GetAllTagsNameQueryHandler : IRequestHandler<GetAllTagsNameQuery, TagsNameListDto>
+    public class GetAllTagNameQueryHandler : IRequestHandler<GetAllTagNameQuery, TagsNameListDto>
     {
         private readonly IApplicationDbContext _context;
 
-        public GetAllTagsNameQueryHandler(IApplicationDbContext context)
+        public GetAllTagNameQueryHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<TagsNameListDto> Handle(GetAllTagsNameQuery request,
+        public async Task<TagsNameListDto> Handle(GetAllTagNameQuery request,
             CancellationToken cancellationToken)
         {
             var names = await _context.Tag

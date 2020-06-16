@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +16,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
         public Paging Param;
     }
 
-    public class
-        GetAllPostListItemQueryHandler : IRequestHandler<GetAllPostListItemQuery, IReadOnlyList<PostListItemDto>>
+    public class GetAllPostListItemQueryHandler : IRequestHandler<GetAllPostListItemQuery, IReadOnlyList<PostListItemDto>>
     {
         private readonly IApplicationDbContext _context;
 

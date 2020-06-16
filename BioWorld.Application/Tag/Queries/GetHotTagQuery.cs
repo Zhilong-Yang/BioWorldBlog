@@ -8,21 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class GetHotTagsQuery : IRequest<List<TagCountInfo>>
+    public class GetHotTagQuery : IRequest<List<TagCountInfo>>
     {
         public int Top { get; set; }
     }
 
-    public class GetHotTagsQueryHandler : IRequestHandler<GetHotTagsQuery, List<TagCountInfo>>
+    public class GetHotTagQueryHandler : IRequestHandler<GetHotTagQuery, List<TagCountInfo>>
     {
         private readonly IApplicationDbContext _context;
 
-        public GetHotTagsQueryHandler(IApplicationDbContext context)
+        public GetHotTagQueryHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<TagCountInfo>> Handle(GetHotTagsQuery request,
+        public async Task<List<TagCountInfo>> Handle(GetHotTagQuery request,
             CancellationToken cancellationToken)
         {
             if (_context.Tag.Any())

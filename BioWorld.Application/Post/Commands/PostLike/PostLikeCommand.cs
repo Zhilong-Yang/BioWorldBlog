@@ -6,23 +6,23 @@ using BioWorld.Application.Common.Interface;
 using BioWorld.Domain.Entities;
 using MediatR;
 
-namespace BioWorld.Application.Post.Commands.Like
+namespace BioWorld.Application.Post.Commands.PostLike
 {
-    public class LikeCommand : IRequest<LikeDto>
+    public class PostLikeCommand : IRequest<PostLikeDto>
     {
         public Guid PostId { get; set; }
     }
 
-    public class LikeCommandHandler : IRequestHandler<LikeCommand, LikeDto>
+    public class PostLikeCommandHandler : IRequestHandler<PostLikeCommand, PostLikeDto>
     {
         private readonly IApplicationDbContext _context;
 
-        public LikeCommandHandler(IApplicationDbContext context)
+        public PostLikeCommandHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<LikeDto> Handle(LikeCommand request, CancellationToken cancellationToken)
+        public async Task<PostLikeDto> Handle(PostLikeCommand request, CancellationToken cancellationToken)
         {
             var pp = await _context.PostExtension.FindAsync(request.PostId);
 
@@ -35,7 +35,7 @@ namespace BioWorld.Application.Post.Commands.Like
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new LikeDto()
+            return new PostLikeDto()
             {
                 Likes = pp.Likes
             };
