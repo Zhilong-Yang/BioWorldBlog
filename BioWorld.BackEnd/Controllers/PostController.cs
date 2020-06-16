@@ -23,29 +23,15 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpPost("{postId}")]
-        public async Task<ActionResult<Response>> Hit(Guid postId)
+        public async Task<ActionResult<HitDto>> Hit(Guid postId)
         {
-            Response hitRep = await Mediator.Send(new HitCommand() {PostId = postId});
-
-            if (hitRep.IsSuccess)
-            {
-                return Ok(hitRep);
-            }
-
-            return NotFound(hitRep);
+            return Ok(await Mediator.Send(new HitCommand() {PostId = postId}));
         }
 
         [HttpPost("{postId}")]
-        public async Task<ActionResult<Response>> Like(Guid postId)
+        public async Task<ActionResult<LikeDto>> Like(Guid postId)
         {
-            Response likeRep = await Mediator.Send(new LikeCommand() { PostId = postId });
-
-            if (likeRep.IsSuccess)
-            {
-                return Ok(likeRep);
-            }
-
-            return NotFound(likeRep);
+            return Ok(await Mediator.Send(new LikeCommand() { PostId = postId }));
         }
     }
 }

@@ -4,10 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
-using ValidationException = BioWorld.Application.Common.Exceptions.ValidationException;
 
-
-namespace BioWorld.Application.Common.Behaviours
+namespace BioWorld.Application.Common.Behaviors
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

@@ -59,30 +59,32 @@ namespace BioWorld.BackEnd.Filters
 
         private void HandleValidationException(ExceptionContext context)
         {
-            var exception = context.Exception as ValidationException;
-
-            var details = new ValidationProblemDetails(exception.Errors)
+            if (context.Exception is ValidationException exception)
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
-            };
+                var details = new ValidationProblemDetails(exception.Errors)
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+                };
 
-            context.Result = new BadRequestObjectResult(details);
+                context.Result = new BadRequestObjectResult(details);
+            }
 
             context.ExceptionHandled = true;
         }
 
         private void HandleNotFoundException(ExceptionContext context)
         {
-            var exception = context.Exception as NotFoundException;
-
-            var details = new ProblemDetails()
+            if (context.Exception is NotFoundException exception)
             {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                Title = "The specified resource was not found.",
-                Detail = exception.Message
-            };
+                var details = new ProblemDetails()
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    Title = "The specified resource was not found.",
+                    Detail = exception.Message
+                };
 
-            context.Result = new NotFoundObjectResult(details);
+                context.Result = new NotFoundObjectResult(details);
+            }
 
             context.ExceptionHandled = true;
         }

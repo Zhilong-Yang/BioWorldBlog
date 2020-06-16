@@ -10,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Commands.DeleteTag
 {
-    public class DeleteTagCommand : IRequest<Response>
+    public class DeleteTagCommand : IRequest
     {
         public int Id { get; set; }
     }
 
-    public class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, Response>
+    public class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand>
     {
         private readonly IApplicationDbContext _context;
 
@@ -24,10 +24,9 @@ namespace BioWorld.Application.Tag.Commands.DeleteTag
             _context = context;
         }
 
-        public async Task<Response> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
         {
             // 1. Delete Post-Tag Association
-
             var postTags = await _context.PostTag
                 .Where(pt => pt.TagId == request.Id
                              && !pt.Post.PostPublish.IsDeleted
@@ -48,20 +47,14 @@ namespace BioWorld.Application.Tag.Commands.DeleteTag
 
             if (tag == null)
             {
-                return new FailedResponse((int)ResponseFailureCode.TagNotFound)
-                {
-                    Message = "TagNotFound"
-                };
+                throw new NotFoundException(nameof(TagEntity), request.Id);
             }
 
             _context.Tag.Remove(tag);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new SuccessResponse()
-            {
-                Message = "TagDeleted",
-            };
+            return Unit.Value;
         }
     }
 }

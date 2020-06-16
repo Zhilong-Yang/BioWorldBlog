@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Post\Queries\GetPostByTag\**" />
     <Compile Remove="Tag\1\**" />
+    <EmbeddedResource Remove="Post\Queries\GetPostByTag\**" />
     <EmbeddedResource Remove="Tag\1\**" />
+    <None Remove="Post\Queries\GetPostByTag\**" />
     <None Remove="Tag\1\**" />
   </ItemGroup>
 
@@ -19,10 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BioWorld.Domain\BioWorld.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Post\Queries\GetPostByTag\" />
   </ItemGroup>
 
 </Project>

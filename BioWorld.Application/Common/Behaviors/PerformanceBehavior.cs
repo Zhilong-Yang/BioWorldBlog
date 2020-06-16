@@ -5,16 +5,16 @@ using BioWorld.Application.Common.Interface;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace BioWorld.Application.Common.Behaviours
+namespace BioWorld.Application.Common.Behaviors
 {
-    public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class PerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly Stopwatch _timer;
         private readonly ILogger<TRequest> _logger;
         private readonly ICurrentUserService _currentUserService;
         private readonly IIdentityService _identityService;
 
-        public PerformanceBehaviour(
+        public PerformanceBehavior(
             ILogger<TRequest> logger,
             ICurrentUserService currentUserService,
             IIdentityService identityService)

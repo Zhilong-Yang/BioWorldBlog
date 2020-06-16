@@ -53,15 +53,9 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Response>> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var Resp = await Mediator.Send(new DeleteTagCommand { Id = id });
-
-            if (!Resp.IsSuccess)
-            {
-                return NotFound(Resp);
-            }
-
+            await Mediator.Send(new DeleteTagCommand {Id = id});
             return NoContent();
         }
     }

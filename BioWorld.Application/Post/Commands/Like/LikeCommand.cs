@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Common.Models;
-using BioWorld.Application.Post.Commands.Hit;
+using BioWorld.Domain.Entities;
 using MediatR;
 
 namespace BioWorld.Application.Post.Commands.Like
 {
-    public class LikeCommand : IRequest<Response>
+    public class LikeCommand : IRequest<LikeDto>
     {
         public Guid PostId { get; set; }
     }
 
-    public class LikeCommandHandler : IRequestHandler<LikeCommand, Response>
+    public class LikeCommandHandler : IRequestHandler<LikeCommand, LikeDto>
     {
         private readonly IApplicationDbContext _context;
 
@@ -24,27 +22,22 @@ namespace BioWorld.Application.Post.Commands.Like
             _context = context;
         }
 
-        public async Task<Response> Handle(LikeCommand request, CancellationToken cancellationToken)
+        public async Task<LikeDto> Handle(LikeCommand request, CancellationToken cancellationToken)
         {
             var pp = await _context.PostExtension.FindAsync(request.PostId);
 
             if (pp == null)
-                return new FailedResponse((int) ResponseFailureCode.PostNotFound)
-                {
-                    Message = "Post Not Found"
-                };
+            {
+                throw new NotFoundException(nameof(PostExtensionEntity), request.PostId);
+            }
 
             pp.Likes += 1;
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new SuccessResponse()
+            return new LikeDto()
             {
-                Message = "You Have Rated",
-                Addition = new LikeDto()
-                {
-                    Likes = pp.Likes
-                }
+                Likes = pp.Likes
             };
         }
     }
