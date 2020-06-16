@@ -1,23 +1,14 @@
-﻿using AutoMapper;
-using BioWorld.Application.Common.Mappings;
-using BioWorld.Domain.Entities;
+﻿using BioWorld.Domain.Entities;
 
 namespace BioWorld.Application.Tag.Queries
 {
-    public class TagDto : IMapFrom<TagEntity>
+    public class TagDto
     {
         public int Id { get; set; }
 
         public string TagName { get; set; }
 
         public string NormalizedName { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<TagEntity, TagDto>()
-                .ForMember(d => d.TagName,
-                    opt => opt.MapFrom(s => s.DisplayName));
-        }
     }
 
     public class TagCountInfo : TagDto

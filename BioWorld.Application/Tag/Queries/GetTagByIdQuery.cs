@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BioWorld.Application.Common.Interface;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +14,10 @@ namespace BioWorld.Application.Tag.Queries
         public class GetTagByIdQueryHandler : IRequestHandler<GetTagByIdQuery, TagDto>
         {
             private readonly IApplicationDbContext _context;
-            private readonly IMapper _mapper;
 
-            public GetTagByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
+            public GetTagByIdQueryHandler(IApplicationDbContext context)
             {
                 _context = context;
-                _mapper = mapper;
             }
 
             public async Task<TagDto> Handle(GetTagByIdQuery request, CancellationToken cancellationToken)
@@ -29,9 +25,13 @@ namespace BioWorld.Application.Tag.Queries
                 var vm = await _context.Tag
                     .AsNoTracking()
                     .Where(e => e.Id == request.Id)
-                    .ProjectTo<TagDto>(_mapper.ConfigurationProvider)
+                    .Select(t => new TagDto
+                    {
+                        Id = t.Id,
+                        TagName = t.DisplayName,
+                        NormalizedName = t.NormalizedName
+                    })
                     .SingleOrDefaultAsync(cancellationToken);
-                ;
 
                 return vm;
             }
