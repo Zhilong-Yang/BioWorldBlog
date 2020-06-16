@@ -1,5 +1,8 @@
 ﻿using System.Threading.Tasks;
+using BioWorld.Application.Common.Models;
 using BioWorld.Application.Tag.Commands;
+using BioWorld.Application.Tag.Commands.DeleteTag;
+using BioWorld.Application.Tag.Commands.UpdateTag;
 using BioWorld.Application.Tag.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -50,9 +53,14 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<Response>> Delete(int id)
         {
-            await Mediator.Send(new DeleteTagCommand { Id = id });
+            var Resp = await Mediator.Send(new DeleteTagCommand { Id = id });
+
+            if (!Resp.IsSuccess)
+            {
+                return NotFound(Resp);
+            }
 
             return NoContent();
         }

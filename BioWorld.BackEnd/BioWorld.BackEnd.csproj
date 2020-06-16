@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BioWorld.Application\BioWorld.Application.csproj" />
     <ProjectReference Include="..\BioWorld.Infrastructure\BioWorld.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
+using BioWorld.BackEnd.Filters;
 using BioWorld.BackEnd.Services;
 using BioWorld.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -38,7 +39,7 @@ namespace BioWorld.BackEnd
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            services.AddControllers();
+            services.AddControllers(option => option.Filters.Add(new ApiExceptionFilter()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,21 +50,21 @@ namespace BioWorld.BackEnd
         {
             _logger = logger;
 
-            // if (env.IsDevelopment())
-            // {
-            //     app.UseDeveloperExceptionPage();
-            // }
-            // else
+            if (env.IsDevelopment())
             {
-                app.UseExceptionHandler(appBuilder =>
-                {
-                    appBuilder.Run(async context =>
-                    {
-                        context.Response.StatusCode = 500;
-                        await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
-                    });
-                });
+                app.UseDeveloperExceptionPage();
             }
+            // else
+            // {
+            //     app.UseExceptionHandler(appBuilder =>
+            //     {
+            //         appBuilder.Run(async context =>
+            //         {
+            //             context.Response.StatusCode = 500;
+            //             await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
+            //         });
+            //     });
+            // }
 
             appLifetime.ApplicationStarted.Register(() =>
             {

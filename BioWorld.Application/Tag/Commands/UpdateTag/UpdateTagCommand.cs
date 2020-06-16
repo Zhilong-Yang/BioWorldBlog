@@ -6,7 +6,7 @@ using BioWorld.Application.Core;
 using BioWorld.Domain.Entities;
 using MediatR;
 
-namespace BioWorld.Application.Tag.Commands
+namespace BioWorld.Application.Tag.Commands.UpdateTag
 {
     public class UpdateTagCommand : IRequest
     {

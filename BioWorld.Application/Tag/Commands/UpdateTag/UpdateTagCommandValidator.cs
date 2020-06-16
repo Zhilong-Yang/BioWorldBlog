@@ -5,7 +5,7 @@ using BioWorld.Application.Common.Interface;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioWorld.Application.Tag.Commands
+namespace BioWorld.Application.Tag.Commands.UpdateTag
 {
     public class UpdateTagCommandValidator : AbstractValidator<UpdateTagCommand>
     {
@@ -21,11 +21,11 @@ namespace BioWorld.Application.Tag.Commands
                 .MustAsync(BeUniqueTitle).WithMessage("The specified Tag Name already exists.");
         }
 
-        public async Task<bool> BeUniqueTitle(UpdateTagCommand model, string name, CancellationToken cancellationToken)
+        private async Task<bool> BeUniqueTitle(UpdateTagCommand model, string name, CancellationToken cancellationToken)
         {
             return await _context.Tag
                 .Where(l => l.Id != model.Id)
-                .AllAsync(l => l.DisplayName != name);
+                .AllAsync(l => l.DisplayName != name, cancellationToken: cancellationToken);
         }
     }
 }

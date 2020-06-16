@@ -3,18 +3,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
+using BioWorld.Application.Common.Models;
 using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioWorld.Application.Tag.Commands
+namespace BioWorld.Application.Tag.Commands.DeleteTag
 {
-    public class DeleteTagCommand : IRequest
+    public class DeleteTagCommand : IRequest<Response>
     {
         public int Id { get; set; }
     }
 
-    public class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand>
+    public class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, Response>
     {
         private readonly IApplicationDbContext _context;
 
@@ -23,7 +24,7 @@ namespace BioWorld.Application.Tag.Commands
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
         {
             // 1. Delete Post-Tag Association
 
@@ -47,14 +48,20 @@ namespace BioWorld.Application.Tag.Commands
 
             if (tag == null)
             {
-                throw new NotFoundException(nameof(TagEntity), request.Id);
+                return new FailedResponse((int)ResponseFailureCode.TagNotFound)
+                {
+                    Message = "TagNotFound"
+                };
             }
 
             _context.Tag.Remove(tag);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return new SuccessResponse()
+            {
+                Message = "TagDeleted",
+            };
         }
     }
 }
