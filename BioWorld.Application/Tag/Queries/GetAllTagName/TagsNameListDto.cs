@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BioWorld.Application.Tag.Queries
+namespace BioWorld.Application.Tag.Queries.GetAllTagName
 {
     public class TagsNameListDto
     {

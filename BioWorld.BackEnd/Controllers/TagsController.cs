@@ -4,6 +4,10 @@ using BioWorld.Application.Tag.Commands;
 using BioWorld.Application.Tag.Commands.DeleteTag;
 using BioWorld.Application.Tag.Commands.UpdateTag;
 using BioWorld.Application.Tag.Queries;
+using BioWorld.Application.Tag.Queries.GetAllTag;
+using BioWorld.Application.Tag.Queries.GetAllTagName;
+using BioWorld.Application.Tag.Queries.GetHotTag;
+using BioWorld.Application.Tag.Queries.GetTag;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

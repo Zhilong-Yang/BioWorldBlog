@@ -5,7 +5,7 @@ using BioWorld.Application.Common.Interface;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioWorld.Application.Tag.Queries
+namespace BioWorld.Application.Tag.Queries.GetTag
 {
     public class GetTagQuery : IRequest<TagDto>
     {
