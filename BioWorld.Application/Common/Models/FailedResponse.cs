@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BioWorld.Application.Response
+namespace BioWorld.Application.Common.Models
 {
     public class FailedResponse<T> : Response<T>
     {

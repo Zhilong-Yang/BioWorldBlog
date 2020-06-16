@@ -22,16 +22,5 @@ namespace BioWorld.BackEnd.Controllers
         {
             if (null != logger) Logger = logger;
         }
-
-        [Route("server-error")]
-        public IActionResult ServerError(string errMessage = "")
-        {
-            if (!string.IsNullOrWhiteSpace(errMessage))
-            {
-                Logger.LogError($"Server Error: {errMessage}");
-            }
-
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
     }
 }

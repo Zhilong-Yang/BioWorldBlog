@@ -21,8 +21,4 @@
     <ProjectReference Include="..\BioWorld.Domain\BioWorld.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Post\Commands\" />
-  </ItemGroup>
-
 </Project>

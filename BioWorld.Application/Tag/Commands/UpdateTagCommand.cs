@@ -5,7 +5,6 @@ using BioWorld.Application.Common.Interface;
 using BioWorld.Application.Core;
 using BioWorld.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Tag.Commands
 {
@@ -14,32 +13,32 @@ namespace BioWorld.Application.Tag.Commands
         public int Id { get; set; }
 
         public string Name { get; set; }
+    }
 
-        public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTagCommand>
+    public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTagCommand>
+    {
+        private readonly IApplicationDbContext _context;
+
+        public UpdateTodoListCommandHandler(IApplicationDbContext context)
         {
-            private readonly IApplicationDbContext _context;
+            _context = context;
+        }
 
-            public UpdateTodoListCommandHandler(IApplicationDbContext context)
+        public async Task<Unit> Handle(UpdateTagCommand request, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Tag.FindAsync(request.Id);
+
+            if (entity == null)
             {
-                _context = context;
+                throw new NotFoundException(nameof(TagEntity), request.Id);
             }
 
-            public async Task<Unit> Handle(UpdateTagCommand request, CancellationToken cancellationToken)
-            {
-                var entity = await _context.Tag.FindAsync(request.Id);
+            entity.DisplayName = request.Name;
+            entity.NormalizedName = Utils.NormalizeTagName(request.Name);
 
-                if (entity == null)
-                {
-                    throw new NotFoundException(nameof(TagEntity), request.Id);
-                }
+            await _context.SaveChangesAsync(cancellationToken);
 
-                entity.DisplayName = request.Name;
-                entity.NormalizedName = Utils.NormalizeTagName(request.Name);
-
-                await _context.SaveChangesAsync(cancellationToken);
-
-                return Unit.Value;
-            }
+            return Unit.Value;
         }
     }
 }

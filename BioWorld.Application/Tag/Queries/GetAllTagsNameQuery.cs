@@ -9,30 +9,31 @@ namespace BioWorld.Application.Tag.Queries
 {
     public class GetAllTagsNameQuery : IRequest<TagsNameListDto>
     {
-        public class GetAllTagsNameQueryHandler : IRequestHandler<GetAllTagsNameQuery, TagsNameListDto>
+    }
+
+    public class GetAllTagsNameQueryHandler : IRequestHandler<GetAllTagsNameQuery, TagsNameListDto>
+    {
+        private readonly IApplicationDbContext _context;
+
+        public GetAllTagsNameQueryHandler(IApplicationDbContext context)
         {
-            private readonly IApplicationDbContext _context;
+            _context = context;
+        }
 
-            public GetAllTagsNameQueryHandler(IApplicationDbContext context)
+        public async Task<TagsNameListDto> Handle(GetAllTagsNameQuery request,
+            CancellationToken cancellationToken)
+        {
+            var names = await _context.Tag
+                .AsNoTracking()
+                .Select(t => t.DisplayName)
+                .ToListAsync(cancellationToken);
+
+            var vm = new TagsNameListDto
             {
-                _context = context;
-            }
+                TagsName = names
+            };
 
-            public async Task<TagsNameListDto> Handle(GetAllTagsNameQuery request,
-                CancellationToken cancellationToken)
-            {
-                var names = await _context.Tag
-                    .AsNoTracking()
-                    .Select(t => t.DisplayName)
-                    .ToListAsync(cancellationToken);
-
-                var vm = new TagsNameListDto
-                {
-                    TagsName = names
-                };
-
-                return vm;
-            }
+            return vm;
         }
     }
 }

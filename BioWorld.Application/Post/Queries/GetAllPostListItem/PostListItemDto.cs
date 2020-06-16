@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BioWorld.Application.Tag.Queries;
 
-namespace BioWorld.Application.Post.Queries
+namespace BioWorld.Application.Post.Queries.GetAllPostListItem
 {
     public class PostListItemDto
     {

@@ -1,4 +1,4 @@
-﻿namespace BioWorld.Application.Response
+﻿namespace BioWorld.Application.Common.Models
 {
     public class SuccessResponse<T> : Response<T>
     {

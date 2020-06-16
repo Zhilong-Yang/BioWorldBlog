@@ -1,12 +1,12 @@
-﻿namespace BioWorld.Application.Common
+﻿namespace BioWorld.Application.Common.Models
 {
-    public class BlogResourceParameters
+    public class Paging
     {
         const int maxPageSize = 20;
 
         public int PageNumber { get; set; } = 1;
 
-        private int _pageSize = 10;
+        public int _pageSize = 10;
 
         public int PageSize
         {
