@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
 using BioWorld.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Category.Commands.UpdateCategory
 {
@@ -30,6 +32,13 @@ namespace BioWorld.Application.Category.Commands.UpdateCategory
             var entity = await _context.Category.FindAsync(request.Id);
 
             if (entity == null) throw new NotFoundException(nameof(CategoryEntity), request.Id);
+
+            // var snc = await _context.Category
+            //     .Where(p => p.DisplayName == request.DisplayName.Trim())
+            //     .AsNoTracking()
+            //     .FirstOrDefaultAsync(cancellationToken);
+            //
+            // if (snc == null) throw new BadRequestException("same DisplayName exit");
 
             entity.RouteName = request.RouteName.Trim();
             entity.DisplayName = request.DisplayName.Trim();

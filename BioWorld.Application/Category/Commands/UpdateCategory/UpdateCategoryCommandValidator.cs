@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Category.Commands.UpdateCategory
 {
-    class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
+    public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
     {
         private readonly IApplicationDbContext _context;
 
