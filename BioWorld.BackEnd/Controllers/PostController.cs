@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Models;
+using BioWorld.Application.Post.Commands.CountVisiblePosts;
 using BioWorld.Application.Post.Commands.PostHit;
 using BioWorld.Application.Post.Commands.PostLike;
 using BioWorld.Application.Post.Queries.GetAllPostListItem;
@@ -20,6 +21,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<IReadOnlyList<PostListItemDto>>> GetAll([FromQuery] Paging param)
         {
             return Ok(await Mediator.Send(new GetAllPostListItemQuery() { Param = param }));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<CountVisiblePostsDto>> Count()
+        {
+            return Ok(await Mediator.Send(new CountVisiblePostsCommand()));
         }
 
         [HttpPost("{postId}")]

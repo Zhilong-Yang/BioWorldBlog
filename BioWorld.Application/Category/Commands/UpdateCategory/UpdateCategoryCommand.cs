@@ -33,13 +33,6 @@ namespace BioWorld.Application.Category.Commands.UpdateCategory
 
             if (entity == null) throw new NotFoundException(nameof(CategoryEntity), request.Id);
 
-            // var snc = await _context.Category
-            //     .Where(p => p.DisplayName == request.DisplayName.Trim())
-            //     .AsNoTracking()
-            //     .FirstOrDefaultAsync(cancellationToken);
-            //
-            // if (snc == null) throw new BadRequestException("same DisplayName exit");
-
             entity.RouteName = request.RouteName.Trim();
             entity.DisplayName = request.DisplayName.Trim();
             entity.Note = request.Note.Trim();
