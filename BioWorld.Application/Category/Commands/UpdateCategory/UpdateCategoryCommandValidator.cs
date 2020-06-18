@@ -4,13 +4,13 @@ using BioWorld.Application.Common.Interface;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioWorld.Application.Category.Commands.CreateCategory
+namespace BioWorld.Application.Category.Commands.UpdateCategory
 {
-    public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+    class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
     {
         private readonly IApplicationDbContext _context;
 
-        public CreateCategoryCommandValidator(IApplicationDbContext context)
+        public UpdateCategoryCommandValidator(IApplicationDbContext context)
         {
             _context = context;
 
