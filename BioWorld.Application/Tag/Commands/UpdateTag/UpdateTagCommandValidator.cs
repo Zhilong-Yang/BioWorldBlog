@@ -18,14 +18,13 @@ namespace BioWorld.Application.Tag.Commands.UpdateTag
             RuleFor(v => v.Name)
                 .NotEmpty().WithMessage("Tag Name is required.")
                 .MaximumLength(50).WithMessage("Tag Name must not exceed 50 characters.")
-                .MustAsync(BeUniqueTitle).WithMessage("The specified Tag Name already exists.");
+                .MustAsync(BeUniqueName).WithMessage("The specified Tag Name already exists.");
         }
 
-        private async Task<bool> BeUniqueTitle(UpdateTagCommand model, string name, CancellationToken cancellationToken)
+        public async Task<bool> BeUniqueName(string name, CancellationToken cancellationToken)
         {
             return await _context.Tag
-                .Where(l => l.Id != model.Id)
-                .AllAsync(l => l.DisplayName != name, cancellationToken: cancellationToken);
+                .AllAsync(l => l.DisplayName != name);
         }
     }
 }
