@@ -22,12 +22,14 @@ namespace BioWorld.Infrastructure
 
         public static async Task SeedSampleDataAsync(ApplicationDbContext context)
         {
+            Guid newCategoryId = Guid.Parse("9710daba-ae1b-462c-9252-8eacf90f45a8");
+
             // Seed, if necessary
             if (!context.Category.Any())
             {
                 context.Category.Add(new CategoryEntity
                 {
-                    Id = Guid.Parse("e2506fd5-887c-4537-b1ff-c9e3cf01a00b"),
+                    Id = newCategoryId,
                     DisplayName = "Default",
                     Note = "Default Category",
                     RouteName = "default"
@@ -76,7 +78,7 @@ namespace BioWorld.Infrastructure
 
             Guid newPostId = Guid.Parse("4886ec88-fc7b-4338-9fd2-56411187a7f7");
 
-            Guid neCategoryId = Guid.Parse("9710daba-ae1b-462c-9252-8eacf90f45a8");
+
 
             if (!context.Post.Any())
             {
@@ -121,7 +123,7 @@ namespace BioWorld.Infrastructure
                 context.Add(new PostCategoryEntity
                 {
                     PostId = newPostId,
-                    CategoryId = neCategoryId,
+                    CategoryId = newCategoryId,
                 });
             }
 

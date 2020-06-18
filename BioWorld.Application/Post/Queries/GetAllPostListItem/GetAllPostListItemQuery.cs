@@ -45,7 +45,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
 
             // Expression<Func<PostEntity, bool>> criteria = (p => !p.PostPublish.IsDeleted && p.PostPublish.IsPublished);//                                                    
 
-            var posts = await _context.Post.AsNoTracking()
+            var posts = await _context.Post
                 .Where(p => !p.PostPublish.IsDeleted && p.PostPublish.IsPublished)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
@@ -61,7 +61,9 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
                         NormalizedName = pt.Tag.NormalizedName,
                         TagName = pt.Tag.DisplayName,
                     }).ToList()
-                }).ToListAsync(cancellationToken: cancellationToken);
+                })
+                .AsNoTracking()
+                .ToListAsync(cancellationToken: cancellationToken);
             return posts;
         }
     }
