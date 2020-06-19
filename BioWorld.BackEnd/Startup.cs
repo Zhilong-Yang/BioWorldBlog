@@ -18,18 +18,22 @@ namespace BioWorld.BackEnd
     {
         private ILogger<Startup> _logger;
 
-        public IConfiguration Configuration { get; }
+        private readonly IConfigurationSection _appSettingsSection;
+
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
+            _appSettingsSection = _configuration.GetSection(nameof(AppSettings));
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(_appSettingsSection);
             services.AddApplication();
-            services.AddInfrastructure(Configuration);
+            services.AddInfrastructure(_configuration);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
 
