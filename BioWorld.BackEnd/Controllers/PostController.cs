@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Models;
 using BioWorld.Application.Post.Commands.CountVisiblePosts;
+using BioWorld.Application.Post.Commands.CreatePost;
 using BioWorld.Application.Post.Commands.PostHit;
 using BioWorld.Application.Post.Commands.PostLike;
 using BioWorld.Application.Post.Queries.GetAllPostListItem;
@@ -39,6 +40,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<PostLikeDto>> Like(Guid postId)
         {
             return Ok(await Mediator.Send(new PostLikeCommand() { PostId = postId }));
+        }
+
+        [HttpPost]
+        public async Task<CreatePostDto> Create(CreatePostCommand command)
+        {
+            return await Mediator.Send(command);
         }
     }
 }

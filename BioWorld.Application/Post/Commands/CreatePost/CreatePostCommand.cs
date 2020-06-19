@@ -40,7 +40,7 @@ namespace BioWorld.Application.Post.Commands.CreatePost
     {
         private readonly IApplicationDbContext _context;
 
-        protected readonly AppSettings AppSettings;
+        private readonly AppSettings AppSettings;
 
         public CreatePostCommandHandler(IApplicationDbContext context,
             IOptions<AppSettings> settings = null)
@@ -67,7 +67,7 @@ namespace BioWorld.Application.Post.Commands.CreatePost
                 {
                     IsDeleted = false,
                     IsPublished = request.IsPublished,
-                    PubDateUtc = request.IsPublished ? DateTime.UtcNow : (DateTime?)null,
+                    PubDateUtc = request.IsPublished ? DateTime.UtcNow : (DateTime?) null,
                     ExposedToSiteMap = request.ExposedToSiteMap,
                     IsFeedIncluded = request.IsFeedIncluded,
                     Revision = 0,
@@ -86,7 +86,6 @@ namespace BioWorld.Application.Post.Commands.CreatePost
             // cannot write "p.PostPublish.PubDateUtc.GetValueOrDefault().Date == DateTime.UtcNow.Date"
             // it will not blow up, but can result in select ENTIRE posts and evaluated in memory!!!
             // - The LINQ expression 'where (Convert([p.PostPublish]?.PubDateUtc?.GetValueOrDefault(), DateTime).Date == DateTime.UtcNow.Date)' could not be translated and will be evaluated locally
-            // Why EF Core this diao yang?
             if (_context.Post.Any(p =>
                 p.Slug == postModel.Slug &&
                 p.PostPublish.PubDateUtc != null &&
@@ -124,7 +123,8 @@ namespace BioWorld.Application.Post.Commands.CreatePost
                         continue;
                     }
 
-                    var tag = await _context.Tag.FirstOrDefaultAsync(q => q.DisplayName == item, cancellationToken: cancellationToken);
+                    var tag = await _context.Tag.FirstOrDefaultAsync(q => q.DisplayName == item,
+                        cancellationToken: cancellationToken);
                     if (null == tag)
                     {
                         var newTag = new TagEntity
@@ -145,9 +145,25 @@ namespace BioWorld.Application.Post.Commands.CreatePost
                 }
 
                 await _context.Post.AddAsync(postModel, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
             }
 
-            return (CreatePostDto) postModel;
+            return new CreatePostDto()
+            {
+                Title = postModel.Title,
+                Slug = postModel.Slug,
+                EditorContent = postModel.PostContent,
+                EnableComment = postModel.CommentEnabled,
+                IsPublished = postModel.PostPublish.IsPublished,
+                ExposedToSiteMap = postModel.PostPublish.ExposedToSiteMap,
+                IsFeedIncluded = postModel.PostPublish.IsFeedIncluded,
+                ContentLanguageCode =postModel.PostPublish.ContentLanguageCode,
+                RequestIp = postModel.PostPublish.PublisherIp,
+                PublishDate = postModel.PostPublish.PubDateUtc,
+                Tags = request.Tags,
+                CategoryIds = request.CategoryIds
+            };
         }
     }
 }
+
