@@ -7,47 +7,36 @@ using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioWorld.Application.Post.Commands.DeletePost
+namespace BioWorld.Application.Post.Commands.RestoreDeletedPost
 {
-    public class DeletePostCommand : IRequest
+    public class RestoreDeletedPostCommand : IRequest
     {
         public Guid PostId;
-
-        public bool IsRecycle;
     }
 
-    public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand>
+    public class RestoreDeletedPostCommandHandler : IRequestHandler<RestoreDeletedPostCommand>
     {
         private readonly IApplicationDbContext _context;
 
-        public DeletePostCommandHandler(IApplicationDbContext context)
+        public RestoreDeletedPostCommandHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RestoreDeletedPostCommand request, CancellationToken cancellationToken)
         {
             var post = await _context.Post
-                .Include(o=>o.PostPublish)
+                .Include(o => o.PostPublish)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(o => o.Id == request.PostId, cancellationToken: cancellationToken);
-
+            
             if (post == null)
             {
                 throw new NotFoundException(nameof(PostEntity), request.PostId);
             }
 
-            if (request.IsRecycle)
-            {
-                post.PostPublish.IsDeleted = true;
-            }
-            else
-            {
-                _context.Post.Remove(post);
-            }
-
+            post.PostPublish.IsDeleted = true; 
             await _context.SaveChangesAsync(cancellationToken);
-
             return Unit.Value;
         }
     }

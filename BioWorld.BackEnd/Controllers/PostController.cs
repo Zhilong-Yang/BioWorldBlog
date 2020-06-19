@@ -7,6 +7,7 @@ using BioWorld.Application.Post.Commands.CreatePost;
 using BioWorld.Application.Post.Commands.DeletePost;
 using BioWorld.Application.Post.Commands.PostHit;
 using BioWorld.Application.Post.Commands.PostLike;
+using BioWorld.Application.Post.Commands.RestoreDeletedPost;
 using BioWorld.Application.Post.Queries.GetAllPostListItem;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -54,6 +55,12 @@ namespace BioWorld.BackEnd.Controllers
         {
             await Mediator.Send(new DeletePostCommand { PostId = id , IsRecycle = isRecycle });
             return NoContent();
+        }
+
+        [HttpPost("{id}")]
+        public async Task<ActionResult> Restore(Guid id)
+        {
+            return Ok(await Mediator.Send(new RestoreDeletedPostCommand { PostId = id }));
         }
     }
 }

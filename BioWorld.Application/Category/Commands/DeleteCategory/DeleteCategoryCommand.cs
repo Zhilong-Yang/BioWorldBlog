@@ -26,31 +26,19 @@ namespace BioWorld.Application.Category.Commands.DeleteCategory
 
         public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
-            // var entity = await _context.Category
-            //     .Where(l => l.Id == request.Id)
-            //     .AsNoTracking()
-            //     .SingleOrDefaultAsync(cancellationToken);
-            //
-            // if (entity == null)
-            // {
-            //     throw new NotFoundException(nameof(CategoryEntity), request.Id);
-            // }
-
-            var entity = await _context.Category.FindAsync(request.Id);
-
+            var entity = await _context.Category
+                .AsNoTracking()
+                .Include(o=>o.PostCategory)
+                .SingleOrDefaultAsync(l => l.Id == request.Id,cancellationToken);
+            
             if (entity == null)
             {
                 throw new NotFoundException(nameof(CategoryEntity), request.Id);
             }
-            
-            var pc = await _context.PostCategory
-                .Where(l => l.CategoryId == request.Id)
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
 
-            if (null != pc)
+            if (null != entity.PostCategory)
             {
-                _context.PostCategory.RemoveRange(pc);
+                _context.PostCategory.RemoveRange(entity.PostCategory);
             }
 
             _context.Category.Remove(entity);
