@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using BioWorld.Application.Common.Models;
-using BioWorld.Application.Tag.Commands;
 using BioWorld.Application.Tag.Commands.DeleteTag;
 using BioWorld.Application.Tag.Commands.UpdateTag;
 using BioWorld.Application.Tag.Queries;
@@ -52,7 +50,6 @@ namespace BioWorld.BackEnd.Controllers
             }
 
             await Mediator.Send(command);
-
             return NoContent();
         }
 

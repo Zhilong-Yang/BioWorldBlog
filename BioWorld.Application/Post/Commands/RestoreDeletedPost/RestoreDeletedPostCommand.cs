@@ -25,17 +25,14 @@ namespace BioWorld.Application.Post.Commands.RestoreDeletedPost
 
         public async Task<Unit> Handle(RestoreDeletedPostCommand request, CancellationToken cancellationToken)
         {
-            var post = await _context.Post
-                .Include(o => o.PostPublish)
-                .AsNoTracking()
-                .SingleOrDefaultAsync(o => o.Id == request.PostId, cancellationToken: cancellationToken);
-            
-            if (post == null)
-            {
-                throw new NotFoundException(nameof(PostEntity), request.PostId);
-            }
+            var pp = await _context.PostPublish.FindAsync(request.PostId);
 
-            post.PostPublish.IsDeleted = true; 
+            if (pp == null)
+            {
+                throw new NotFoundException(nameof(PostPublishEntity), request.PostId);
+            }
+            
+            pp.IsDeleted = false; 
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

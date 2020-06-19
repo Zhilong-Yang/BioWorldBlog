@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Models;
+using BioWorld.Application.Post;
 using BioWorld.Application.Post.Commands.CountVisiblePosts;
 using BioWorld.Application.Post.Commands.CreatePost;
 using BioWorld.Application.Post.Commands.DeletePost;
@@ -9,6 +10,7 @@ using BioWorld.Application.Post.Commands.PostHit;
 using BioWorld.Application.Post.Commands.PostLike;
 using BioWorld.Application.Post.Commands.RestoreDeletedPost;
 using BioWorld.Application.Post.Queries.GetAllPostListItem;
+using BioWorld.Application.Post.Queries.GetMetaList;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -24,6 +26,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<IReadOnlyList<PostListItemDto>>> GetAll([FromQuery] Paging param)
         {
             return Ok(await Mediator.Send(new GetAllPostListItemQuery() { Param = param }));
+        }
+
+        [HttpGet("{status}")]
+        public async Task<ActionResult<IReadOnlyList<PostMetaDataDto>>> GetMetaList(PostPublishStatus status)
+        {
+            return Ok(await Mediator.Send(new GetMetaListQuery() { PostPublishStatus = status }));
         }
 
         [HttpGet]

@@ -28,7 +28,7 @@ namespace BioWorld.Application.Post.Commands.CreatePost
         public string RequestIp { get; set; }
 
         public DateTime? PublishDate { get; set; }
-
+        
         public CreatePostCommand()
         {
             Tags = new string[] { };

@@ -27,23 +27,21 @@ namespace BioWorld.Application.Post.Commands.DeletePost
 
         public async Task<Unit> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
-            var post = await _context.Post
-                .Include(o=>o.PostPublish)
-                .AsNoTracking()
-                .SingleOrDefaultAsync(o => o.Id == request.PostId, cancellationToken: cancellationToken);
+            var pp = await _context.PostPublish.FindAsync(request.PostId);
 
-            if (post == null)
+            if (pp == null)
             {
-                throw new NotFoundException(nameof(PostEntity), request.PostId);
+                throw new NotFoundException(nameof(PostPublishEntity), request.PostId);
             }
 
             if (request.IsRecycle)
             {
-                post.PostPublish.IsDeleted = true;
+                pp.IsDeleted = true;
             }
             else
             {
-                _context.Post.Remove(post);
+                var p = await _context.Post.FindAsync(request.PostId);
+                _context.Post.Remove(p);
             }
 
             await _context.SaveChangesAsync(cancellationToken);
