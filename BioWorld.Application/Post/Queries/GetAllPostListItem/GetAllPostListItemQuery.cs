@@ -52,6 +52,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
                 .OrderByDescending(p => p.PostPublish.PubDateUtc)
                 .Select(p => new PostListItemDto()
                 {
+                    Id = p.Id,
                     Title = p.Title,
                     Slug = p.Slug,
                     ContentAbstract = p.ContentAbstract,

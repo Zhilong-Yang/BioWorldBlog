@@ -1,4 +1,6 @@
-﻿namespace BioWorld.Application.Post.Commands.CountVisiblePosts
+﻿using System;
+
+namespace BioWorld.Application.Post.Commands.CountVisiblePosts
 {
     public class CountVisiblePostsDto
     {

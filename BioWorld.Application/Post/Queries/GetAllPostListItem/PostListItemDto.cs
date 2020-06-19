@@ -6,6 +6,8 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
 {
     public class PostListItemDto
     {
+        public Guid Id { get; set; }
+
         public DateTime PubDateUtc { get; set; }
 
         public string Title { get; set; }

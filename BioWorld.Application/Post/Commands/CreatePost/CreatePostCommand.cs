@@ -150,6 +150,7 @@ namespace BioWorld.Application.Post.Commands.CreatePost
 
             return new CreatePostDto()
             {
+                Id = postModel.Id,
                 Title = postModel.Title,
                 Slug = postModel.Slug,
                 EditorContent = postModel.PostContent,

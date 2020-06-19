@@ -78,8 +78,6 @@ namespace BioWorld.Infrastructure
 
             Guid newPostId = Guid.Parse("4886ec88-fc7b-4338-9fd2-56411187a7f7");
 
-
-
             if (!context.Post.Any())
             {
                 context.Add(new PostEntity
