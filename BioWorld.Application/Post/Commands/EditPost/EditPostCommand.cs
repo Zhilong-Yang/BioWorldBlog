@@ -19,10 +19,10 @@ namespace BioWorld.Application.Post.Commands.EditPost
         public string Title { get; set; }
         public string Slug { get; set; }
         public string EditorContent { get; set; }
-        public bool EnableComment { get; set; }
-        public bool IsPublished { get; set; }
-        public bool ExposedToSiteMap { get; set; }
-        public bool IsFeedIncluded { get; set; }
+        public bool EnableComment { get; set; } = true;
+        public bool IsPublished { get; set; } = true;
+        public bool ExposedToSiteMap { get; set; } = true;
+        public bool IsFeedIncluded { get; set; } = true;
         public string ContentLanguageCode { get; set; }
 
         public string[] Tags { get; set; }

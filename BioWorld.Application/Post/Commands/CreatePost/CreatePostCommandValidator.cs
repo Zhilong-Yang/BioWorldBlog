@@ -23,21 +23,6 @@ namespace BioWorld.Application.Post.Commands.CreatePost
                 .MaximumLength(128).WithMessage("Slug must not exceed 128 characters.")
                 .NotEmpty().WithMessage("Slug is required.");
 
-            RuleFor(v => v.EditorContent)
-                .NotEmpty().WithMessage("EditorContent is required.");
-
-            RuleFor(v => v.EnableComment)
-                .NotEmpty().WithMessage("EnableComment is required.");
-
-            RuleFor(v => v.IsPublished)
-                .NotEmpty().WithMessage("IsPublished is required.");
-
-            RuleFor(v => v.ExposedToSiteMap)
-                .NotEmpty().WithMessage("ExposedToSiteMap is required.");
-
-            RuleFor(v => v.IsFeedIncluded)
-                .NotEmpty().WithMessage("IsFeedIncluded is required.");
-
             RuleFor(v => v.ContentLanguageCode)
                 .MaximumLength(8).WithMessage("ContentLanguageCode must not exceed 8 characters.")
                 .NotEmpty().WithMessage("ContentLanguageCode is required.");

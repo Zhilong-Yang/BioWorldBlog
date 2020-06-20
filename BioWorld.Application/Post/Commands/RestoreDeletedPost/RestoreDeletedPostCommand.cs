@@ -10,7 +10,7 @@ namespace BioWorld.Application.Post.Commands.RestoreDeletedPost
 {
     public class RestoreDeletedPostCommand : IRequest
     {
-        public Guid PostId;
+        public Guid PostId { get; set; }
     }
 
     public class RestoreDeletedPostCommandHandler : IRequestHandler<RestoreDeletedPostCommand>

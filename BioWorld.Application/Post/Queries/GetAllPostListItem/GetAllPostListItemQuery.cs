@@ -13,7 +13,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
 {
     public class GetAllPostListItemQuery : IRequest<IReadOnlyList<PostListItemDto>>
     {
-        public Paging Param;
+        public Paging Param { get; set; }
     }
 
     public class GetAllPostListItemQueryHandler : IRequestHandler<GetAllPostListItemQuery, IReadOnlyList<PostListItemDto>>

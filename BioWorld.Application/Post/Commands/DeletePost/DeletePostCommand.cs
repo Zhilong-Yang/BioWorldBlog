@@ -10,9 +10,9 @@ namespace BioWorld.Application.Post.Commands.DeletePost
 {
     public class DeletePostCommand : IRequest
     {
-        public Guid PostId;
+        public Guid PostId { get; set; }
 
-        public bool IsRecycle;
+        public bool IsRecycle { get; set; } = true;
     }
 
     public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand>
