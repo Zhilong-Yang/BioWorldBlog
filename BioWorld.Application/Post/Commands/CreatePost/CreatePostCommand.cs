@@ -28,7 +28,7 @@ namespace BioWorld.Application.Post.Commands.CreatePost
         public string RequestIp { get; set; }
 
         public DateTime? PublishDate { get; set; }
-        
+
         public CreatePostCommand()
         {
             Tags = new string[] { };
@@ -158,7 +158,7 @@ namespace BioWorld.Application.Post.Commands.CreatePost
                 IsPublished = postModel.PostPublish.IsPublished,
                 ExposedToSiteMap = postModel.PostPublish.ExposedToSiteMap,
                 IsFeedIncluded = postModel.PostPublish.IsFeedIncluded,
-                ContentLanguageCode =postModel.PostPublish.ContentLanguageCode,
+                ContentLanguageCode = postModel.PostPublish.ContentLanguageCode,
                 RequestIp = postModel.PostPublish.PublisherIp,
                 PublishDate = postModel.PostPublish.PubDateUtc,
                 Tags = request.Tags,
@@ -167,4 +167,3 @@ namespace BioWorld.Application.Post.Commands.CreatePost
         }
     }
 }
-

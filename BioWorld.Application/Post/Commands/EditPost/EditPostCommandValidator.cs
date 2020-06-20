@@ -4,13 +4,13 @@ using BioWorld.Application.Common.Interface;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioWorld.Application.Post.Commands.CreatePost
+namespace BioWorld.Application.Post.Commands.EditPost
 {
-    public class CreatePostCommandValidator : AbstractValidator<CreatePostCommand>
+    public class EditPostCommandValidator : AbstractValidator<EditPostCommand>
     {
         private readonly IApplicationDbContext _context;
 
-        public CreatePostCommandValidator(IApplicationDbContext context)
+        public EditPostCommandValidator(IApplicationDbContext context)
         {
             _context = context;
 

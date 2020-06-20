@@ -5,6 +5,7 @@ using BioWorld.Application.Common.Models;
 using BioWorld.Application.Post;
 using BioWorld.Application.Post.Commands.CreatePost;
 using BioWorld.Application.Post.Commands.DeletePost;
+using BioWorld.Application.Post.Commands.EditPost;
 using BioWorld.Application.Post.Commands.PostHit;
 using BioWorld.Application.Post.Commands.PostLike;
 using BioWorld.Application.Post.Commands.RestoreDeletedPost;
@@ -83,6 +84,18 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult> Restore(Guid id)
         {
             return Ok(await Mediator.Send(new RestoreDeletedPostCommand {PostId = id}));
+        }
+        
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, EditPostCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+        
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }

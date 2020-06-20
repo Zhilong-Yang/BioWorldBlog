@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using BioWorld.Application.Tag.Queries;
 
 namespace BioWorld.Application.Post.Commands.CreatePost
 {
-    public class CreatePostDto 
+    public class CreatePostDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -22,6 +20,5 @@ namespace BioWorld.Application.Post.Commands.CreatePost
         public string RequestIp { get; set; }
 
         public DateTime? PublishDate { get; set; }
-
     }
 }
