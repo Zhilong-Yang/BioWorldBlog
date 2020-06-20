@@ -20,7 +20,7 @@ namespace BioWorld.Application.Post.Queries.GetMetaList
     {
         private readonly IApplicationDbContext _context;
 
-        public Expression<Func<PostEntity, bool>> _criteria { get; set; }
+        public Expression<Func<PostEntity, bool>> Criteria { get; set; }
 
         public GetMetaListQueryHandler(IApplicationDbContext context)
         {
@@ -33,16 +33,16 @@ namespace BioWorld.Application.Post.Queries.GetMetaList
             switch (request.PostPublishStatus)
             {
                 case PostPublishStatus.Draft:
-                    _criteria = (p => !p.PostPublish.IsPublished && !p.PostPublish.IsDeleted);
+                    Criteria = (p => !p.PostPublish.IsPublished && !p.PostPublish.IsDeleted);
                     break;
                 case PostPublishStatus.Published:
-                    _criteria = (p => p.PostPublish.IsPublished && !p.PostPublish.IsDeleted);
+                    Criteria = (p => p.PostPublish.IsPublished && !p.PostPublish.IsDeleted);
                     break;
                 case PostPublishStatus.Deleted:
-                    _criteria = (p => p.PostPublish.IsDeleted);
+                    Criteria = (p => p.PostPublish.IsDeleted);
                     break;
                 case PostPublishStatus.NotSet:
-                    _criteria = (p => true);
+                    Criteria = (p => true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(PostPublishStatus), request.PostPublishStatus, null);
@@ -50,7 +50,7 @@ namespace BioWorld.Application.Post.Queries.GetMetaList
 
             var post = await _context.Post
                 .Include(p => p.PostPublish)
-                .Where(_criteria)
+                .Where(Criteria)
                 //.AsNoTracking()
                 .Select(p => new PostMetaDataDto()
                 {

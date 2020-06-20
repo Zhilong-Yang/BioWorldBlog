@@ -8,7 +8,6 @@ using BioWorld.Application.Category.Commands.UpdateCategory;
 using BioWorld.Application.Category.Queries.GetAllCategoryListItem;
 using BioWorld.Application.Category.Queries.GetCategoryById;
 using BioWorld.Application.Category.Queries.GetCategoryByName;
-using BioWorld.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

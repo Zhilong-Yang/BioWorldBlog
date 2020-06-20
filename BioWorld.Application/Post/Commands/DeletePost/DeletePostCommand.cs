@@ -5,7 +5,6 @@ using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
 using BioWorld.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Post.Commands.DeletePost
 {
