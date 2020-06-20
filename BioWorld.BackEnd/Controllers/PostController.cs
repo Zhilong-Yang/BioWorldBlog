@@ -12,8 +12,10 @@ using BioWorld.Application.Post.Commands.RestoreDeletedPost;
 using BioWorld.Application.Post.Queries.GetAllPostListItem;
 using BioWorld.Application.Post.Queries.GetCountByCategoryId;
 using BioWorld.Application.Post.Queries.GetCountVisiblePosts;
+using BioWorld.Application.Post.Queries.GetInsights;
 using BioWorld.Application.Post.Queries.GetMetaList;
 using BioWorld.Application.Post.Queries.GetPostListItem;
+using BioWorld.Application.Post.Queries.GetPostsByTag;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -32,6 +34,12 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet("{id}")]
+        public async Task<ActionResult<IReadOnlyList<GetPostsByTagDto>>> GetByTagId(int id)
+        {
+            return Ok(await Mediator.Send(new GetPostsByTagQuery() { TagId = id }));
+        }
+
+        [HttpGet("{id}")]
         public async Task<ActionResult<PostDto>> Get(Guid id)
         {
             return Ok(await Mediator.Send(new GetPostListItemQuery(){Id = id}));
@@ -41,6 +49,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<IReadOnlyList<PostMetaDataDto>>> GetMetaList(PostPublishStatus status)
         {
             return Ok(await Mediator.Send(new GetMetaListQuery() {PostPublishStatus = status}));
+        }
+
+        [HttpGet("{insights}")]
+        public async Task<ActionResult<IReadOnlyList<GetInsightsDto>>> GetInsights(PostInsightsType insights)
+        {
+            return Ok(await Mediator.Send(new GetInsightsQuery() { InsightsType = insights }));
         }
 
         [HttpGet]
