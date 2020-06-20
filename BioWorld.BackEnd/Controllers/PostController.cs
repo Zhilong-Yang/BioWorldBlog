@@ -14,6 +14,7 @@ using BioWorld.Application.Post.Queries.GetCountByCategoryId;
 using BioWorld.Application.Post.Queries.GetCountVisiblePosts;
 using BioWorld.Application.Post.Queries.GetInsights;
 using BioWorld.Application.Post.Queries.GetMetaList;
+using BioWorld.Application.Post.Queries.GetPostByDate;
 using BioWorld.Application.Post.Queries.GetPostListItem;
 using BioWorld.Application.Post.Queries.GetPostsByTag;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<IReadOnlyList<GetInsightsDto>>> GetInsights(PostInsightsType insights)
         {
             return Ok(await Mediator.Send(new GetInsightsQuery() { InsightsType = insights }));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery]QueryDateSlug queryDateSlug)
+        {
+            return Ok(await Mediator.Send(new GetPostByDateQuery(){ queryDateSlug = queryDateSlug }));
         }
 
         [HttpGet]
