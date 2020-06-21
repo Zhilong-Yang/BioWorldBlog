@@ -15,7 +15,7 @@ namespace BioWorld.Application.Comment.Commands.AddComment
 {
     public class AddCommentCommand : IRequest<CommentListItemDto>
     {
-        public Guid PostId { get; }
+        public Guid PostId { get; set; }
 
         public string Username { get; set; }
 

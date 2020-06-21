@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Category;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Common.Models;
 using BioWorld.Application.Tag.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +23,13 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
         {
             _context = context;
         }
+
+        /// <summary>
+        /// zhilong TO DO fix this bug
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
 
         public async Task<PostSlugDto> Handle(GetPostByDateQuery request,
             CancellationToken cancellationToken)
@@ -56,25 +62,24 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
                     IsExposedToSiteMap = p.PostPublish.ExposedToSiteMap,
                     LastModifyOnUtc = p.PostPublish.LastModifiedUtc,
 
-                    CommentCount = p.Comment.Count(c => c.IsApproved == true),
+                    CommentCount = p.Comment.Count(c => c.IsApproved),
 
                     Tags = p.PostTag.Select(pt => pt.Tag)
-                        .Select(p => new TagDto()
+                        .Select(t => new TagDto()
                         {
-                            NormalizedName = p.NormalizedName,
-                            TagName = p.DisplayName
+                            NormalizedName = t.NormalizedName,
+                            TagName = t.DisplayName
                         }).ToList(),
 
                     Categories = p.PostCategory.Select(pc => pc.Category)
-                        .Select(p => new CategoryDto()
+                        .Select(c => new CategoryDto()
                         {
-                            Id = p.Id,
-                            DisplayName = p.DisplayName,
-                            RouteName = p.RouteName
+                            Id = c.Id,
+                            DisplayName = c.DisplayName,
+                            RouteName = c.RouteName
                         }).ToList()
                 })
                 .FirstOrDefaultAsync(cancellationToken);
-
 
             return pds;
         }
