@@ -1,11 +1,11 @@
 using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
+using BioWorld.Application.Configuration;
 using BioWorld.BackEnd.Filters;
 using BioWorld.BackEnd.Services;
 using BioWorld.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +31,10 @@ namespace BioWorld.BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var blogConfigurationSection = new BlogConfigSetting();
+            _configuration.Bind(nameof(BlogConfigSetting), blogConfigurationSection);
+            services.Configure<BlogConfigSetting>(_configuration.GetSection(nameof(BlogConfigSetting)));
+
             services.Configure<AppSettings>(_appSettingsSection);
             services.AddApplication();
             services.AddInfrastructure(_configuration);

@@ -82,14 +82,14 @@ namespace BioWorld.Application.Post.Commands.EditPost
             // Address #221: Do not allow published posts back to draft status
             // postModel.PostPublish.IsPublished = request.IsPublished;
             // Edit draft -> save and publish, ignore false case because #221
-            bool isNewPublish = false;
+            // bool isNewPublish = false;
             if (request.IsPublished && !postModel.PostPublish.IsPublished)
             {
                 postModel.PostPublish.IsPublished = true;
                 postModel.PostPublish.PublisherIp = request.RequestIp;
                 postModel.PostPublish.PubDateUtc = DateTime.UtcNow;
 
-                isNewPublish = true;
+                // isNewPublish = true;
             }
 
             // #325: Allow changing publish date for published posts

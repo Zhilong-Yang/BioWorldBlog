@@ -34,8 +34,8 @@ namespace BioWorld.Infrastructure
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            //services.AddTransient<IDateTime, DateTimeService>();
-            services.AddScoped<IDateTime>(c => new DateTimeService("08:00:00"));
+            // string time = configuration.GetValue<BlogConfigSetting>("BlogConfigSetting").GeneralSettings.TimeZoneUtcOffset;
+            services.AddScoped<IDateTime>(c => new DateTimeService("08:00:00")); // zhilong to do 
 
             services.AddTransient<IIdentityService, IdentityService>();
 
