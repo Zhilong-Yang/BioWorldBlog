@@ -2,6 +2,7 @@
 using BioWorld.Application.Comment.Commands.AddComment;
 using BioWorld.Application.Comment.Commands.AddReply;
 using BioWorld.Application.Comment.Commands.ApproveComment;
+using BioWorld.Application.Comment.Commands.DeleteComment;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,12 @@ namespace BioWorld.BackEnd.Controllers
 
         [HttpPost]
         public async Task<ActionResult> ToggleApprovalStatus(ApproveToggleCommentCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteComments(DeleteCommentCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
