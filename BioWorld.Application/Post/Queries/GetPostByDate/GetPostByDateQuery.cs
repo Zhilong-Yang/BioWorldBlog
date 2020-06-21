@@ -49,6 +49,7 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
                 .Include(p => p.PostCategory)
                     .ThenInclude(pc => pc.Category)
                 .AsNoTracking()
+                
                 .Select(p => new PostSlugDto()
                 {
                     Title = p.Title,
