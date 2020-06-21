@@ -66,6 +66,7 @@ namespace BioWorld.Application.Comment.Commands.AddReply
             };
 
             await _context.CommentReply.AddAsync(model, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
 
             var detail = new CommentReplyDetailDto()
             {
