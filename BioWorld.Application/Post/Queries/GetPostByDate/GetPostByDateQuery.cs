@@ -28,7 +28,8 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
         public async Task<PostSlugDto> Handle(GetPostByDateQuery request,
             CancellationToken cancellationToken)
         {
-            var date = new DateTime(request.DateSlugCmdDto.Year, request.DateSlugCmdDto.Month, request.DateSlugCmdDto.Day);
+            var date = new DateTime(request.DateSlugCmdDto.Year, request.DateSlugCmdDto.Month,
+                request.DateSlugCmdDto.Day);
 
             var count = _context.Comment.Count(c => c.IsApproved);
 
@@ -41,11 +42,10 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
                 .Include(p => p.PostExtension)
                 .Include(p => p.Comment)
                 .Include(p => p.PostTag)
-                    .ThenInclude(pt => pt.Tag)
+                .ThenInclude(pt => pt.Tag)
                 .Include(p => p.PostCategory)
-                    .ThenInclude(pc => pc.Category)
+                .ThenInclude(pc => pc.Category)
                 .AsNoTracking()
-                
                 .Select(p => new PostSlugDto()
                 {
                     Title = p.Title,

@@ -38,9 +38,9 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<CreateCategoryDto> Create(CreateCategoryCommand command)
+        public async Task<ActionResult<CreateCategoryDto>> Create(CreateCategoryCommand command)
         {
-            return await Mediator.Send(command);
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpDelete("{id}")]

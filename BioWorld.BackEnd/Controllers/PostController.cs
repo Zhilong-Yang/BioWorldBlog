@@ -37,13 +37,13 @@ namespace BioWorld.BackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IReadOnlyList<GetPostsByTagDto>>> GetByTagId(int id)
         {
-            return Ok(await Mediator.Send(new GetPostsByTagQuery() { TagId = id }));
+            return Ok(await Mediator.Send(new GetPostsByTagQuery() {TagId = id}));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PostDto>> Get(Guid id)
         {
-            return Ok(await Mediator.Send(new GetPostListItemQuery(){Id = id}));
+            return Ok(await Mediator.Send(new GetPostListItemQuery() {Id = id}));
         }
 
         [HttpGet("{status}")]
@@ -55,13 +55,13 @@ namespace BioWorld.BackEnd.Controllers
         [HttpGet("{insights}")]
         public async Task<ActionResult<IReadOnlyList<GetInsightsDto>>> GetInsights(PostInsightsType insights)
         {
-            return Ok(await Mediator.Send(new GetInsightsQuery() { InsightsType = insights }));
+            return Ok(await Mediator.Send(new GetInsightsQuery() {InsightsType = insights}));
         }
 
         [HttpGet]
-        public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery]DateSlugCmdDto dateSlugCmdDto)
+        public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery] DateSlugCmdDto dateSlugCmdDto)
         {
-            return Ok(await Mediator.Send(new GetPostByDateQuery(){ DateSlugCmdDto = dateSlugCmdDto }));
+            return Ok(await Mediator.Send(new GetPostByDateQuery() {DateSlugCmdDto = dateSlugCmdDto}));
         }
 
         [HttpGet]
@@ -89,9 +89,9 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<CreatePostDto> Create(CreatePostCommand command)
+        public async Task<ActionResult<CreatePostDto>> Create(CreatePostCommand command)
         {
-            return await Mediator.Send(command);
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
@@ -106,7 +106,7 @@ namespace BioWorld.BackEnd.Controllers
         {
             return Ok(await Mediator.Send(new RestoreDeletedPostCommand {PostId = id}));
         }
-        
+
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, EditPostCommand command)
         {
@@ -114,7 +114,7 @@ namespace BioWorld.BackEnd.Controllers
             {
                 return BadRequest();
             }
-        
+
             await Mediator.Send(command);
             return NoContent();
         }
