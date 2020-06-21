@@ -5,6 +5,7 @@ using BioWorld.Application.Comment.Commands.AddComment;
 using BioWorld.Application.Comment.Commands.AddReply;
 using BioWorld.Application.Comment.Commands.ApproveComment;
 using BioWorld.Application.Comment.Commands.DeleteComment;
+using BioWorld.Application.Comment.Queries.GetCountComments;
 using BioWorld.Application.Comment.Queries.GetPagedComment;
 using BioWorld.Application.Comment.Queries.GetSelectedCommentsOfPost;
 using BioWorld.Application.Common.Models;
@@ -46,13 +47,19 @@ namespace BioWorld.BackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<CommentListItemWithReplyDto>>> GetAll([FromQuery] Paging param)
         {
-            return Ok(await Mediator.Send(new GetPagedCommentQuery() { Param = param }));
+            return Ok(await Mediator.Send(new GetPagedCommentQuery() {Param = param}));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<CommentCountDto>> CountComments()
+        {
+            return Ok(await Mediator.Send(new GetCountCommentsQuery() { }));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<IReadOnlyList<PostCommentListItemDto>>> GetSelectedCommentsOfPost(Guid id)
         {
-            return Ok(await Mediator.Send(new GetSelectedCommentsQuery() { PostId = id }));
+            return Ok(await Mediator.Send(new GetSelectedCommentsQuery() {PostId = id}));
         }
     }
 }
