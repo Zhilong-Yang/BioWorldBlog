@@ -40,14 +40,14 @@ namespace BioWorld.Infrastructure
             {
                 context.Tag.Add(new TagEntity()
                 {
-                    //Id = 0,
+                    //Id = 1,
                     DisplayName = ".NET Core",
                     NormalizedName = "dotnet-core"
                 });
 
                 context.Tag.Add(new TagEntity()
                 {
-                    //Id = 1,
+                    //Id = 2,
                     DisplayName = "Azure",
                     NormalizedName = "azure"
                 });
@@ -58,8 +58,8 @@ namespace BioWorld.Infrastructure
                 context.Add(new FriendLinkEntity
                 {
                     Id = Guid.Parse("f4079a57-3d22-4ab8-9fdf-25c31f4f5644"),
-                    LinkUrl = "https://edi.wang",
-                    Title = "Edi.Wang"
+                    LinkUrl = "https://zhilong.yang",
+                    Title = "zhilong.yang"
                 });
             }
 
@@ -69,7 +69,7 @@ namespace BioWorld.Infrastructure
                 {
                     Id = Guid.Parse("06d83988-c254-43b9-9220-d3a4a862fae8"),
                     Title = "About",
-                    Url = "",
+                    Url = "/page/about",
                     Icon = "icon-star-full",
                     DisplayOrder = 0,
                     IsOpenInNewTab = false
@@ -86,7 +86,7 @@ namespace BioWorld.Infrastructure
                     Title = "Welcome to BioWorld",
                     Slug = "welcome-to-bioworld",
                     PostContent =
-                        "Bioworld is the new blog system for https://edi.wang. It is a complete rewrite of the old system using .NET Core and runs on Microsoft Azure.",
+                        "Bioworld is the new blog system for https://zhilong.yang. It is a complete rewrite of the old system using .NET Core and runs on Microsoft Azure.",
                     CommentEnabled = true,
                     CreateOnUtc = DateTime.UtcNow,
                     ContentAbstract = "new blog system",
@@ -107,7 +107,7 @@ namespace BioWorld.Infrastructure
                     IsPublished = true,
                     ExposedToSiteMap = true,
                     IsFeedIncluded = true,
-                    LastModifiedUtc = DateTime.UtcNow,
+                    LastModifiedUtc = null,
                     IsDeleted = false,
                     PubDateUtc = DateTime.UtcNow,
                     Revision = 0,
@@ -130,13 +130,13 @@ namespace BioWorld.Infrastructure
                 context.Add(new PostTagEntity
                 {
                     PostId = newPostId,
-                    TagId = 0
+                    TagId = 1
                 });
 
                 context.Add(new PostTagEntity
                 {
                     PostId = newPostId,
-                    TagId = 1
+                    TagId = 2
                 });
             }
 
@@ -144,7 +144,7 @@ namespace BioWorld.Infrastructure
             {
                 context.Add(new CustomPageEntity
                 {
-                    Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"), //Guid.NewGuid(),
+                    Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"), 
                     Title = "About",
                     RouteName = "about",
                     HtmlContent = "'An Empty About Page",

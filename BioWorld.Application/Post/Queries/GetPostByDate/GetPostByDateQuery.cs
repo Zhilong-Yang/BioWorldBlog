@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+// using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Category;
@@ -24,17 +25,12 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
             _context = context;
         }
 
-        /// <summary>
-        /// zhilong TO DO fix this bug
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-
         public async Task<PostSlugDto> Handle(GetPostByDateQuery request,
             CancellationToken cancellationToken)
         {
             var date = new DateTime(request.DateSlugCmdDto.Year, request.DateSlugCmdDto.Month, request.DateSlugCmdDto.Day);
+
+            var count = _context.Comment.Count(c => c.IsApproved);
 
             var pds = await _context.Post
                 .Where(p => p.Slug == request.DateSlugCmdDto.Slug &&
@@ -63,11 +59,12 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
                     IsExposedToSiteMap = p.PostPublish.ExposedToSiteMap,
                     LastModifyOnUtc = p.PostPublish.LastModifiedUtc,
 
-                    CommentCount = p.Comment.Count(c => c.IsApproved),
+                    CommentCount = count,
 
                     Tags = p.PostTag.Select(pt => pt.Tag)
                         .Select(t => new TagDto()
                         {
+                            Id = t.Id,
                             NormalizedName = t.NormalizedName,
                             TagName = t.DisplayName
                         }).ToList(),
