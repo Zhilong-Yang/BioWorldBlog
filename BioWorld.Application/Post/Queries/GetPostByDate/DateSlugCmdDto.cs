@@ -1,6 +1,6 @@
-﻿namespace BioWorld.Application.Common.Models
+﻿namespace BioWorld.Application.Post.Queries.GetPostByDate
 {
-    public class QueryDateSlug
+    public class DateSlugCmdDto
     {
         public int Year { get; set; }
         public int Month { get; set; }

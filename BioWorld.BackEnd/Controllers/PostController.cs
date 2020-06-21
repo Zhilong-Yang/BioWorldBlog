@@ -59,9 +59,9 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery]QueryDateSlug queryDateSlug)
+        public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery]DateSlugCmdDto dateSlugCmdDto)
         {
-            return Ok(await Mediator.Send(new GetPostByDateQuery(){ queryDateSlug = queryDateSlug }));
+            return Ok(await Mediator.Send(new GetPostByDateQuery(){ DateSlugCmdDto = dateSlugCmdDto }));
         }
 
         [HttpGet]

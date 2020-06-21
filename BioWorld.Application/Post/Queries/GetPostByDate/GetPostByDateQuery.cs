@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
 {
     public class GetPostByDateQuery : IRequest<PostSlugDto>
     {
-        public QueryDateSlug queryDateSlug { get; set; }
+        public DateSlugCmdDto DateSlugCmdDto { get; set; }
     }
 
     public class GetPostByDateQueryHandler : IRequestHandler<GetPostByDateQuery, PostSlugDto>
@@ -29,10 +28,10 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
         public async Task<PostSlugDto> Handle(GetPostByDateQuery request,
             CancellationToken cancellationToken)
         {
-            var date = new DateTime(request.queryDateSlug.Year, request.queryDateSlug.Month, request.queryDateSlug.Day);
+            var date = new DateTime(request.DateSlugCmdDto.Year, request.DateSlugCmdDto.Month, request.DateSlugCmdDto.Day);
 
             var pds = await _context.Post
-                .Where(p => p.Slug == request.queryDateSlug.Slug &&
+                .Where(p => p.Slug == request.DateSlugCmdDto.Slug &&
                             p.PostPublish.IsPublished &&
                             p.PostPublish.PubDateUtc.Value.Date == date &&
                             !p.PostPublish.IsDeleted)
@@ -57,7 +56,7 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
                     IsExposedToSiteMap = p.PostPublish.ExposedToSiteMap,
                     LastModifyOnUtc = p.PostPublish.LastModifiedUtc,
 
-                    //CommentCount = p.Comment.Count(c => c.IsApproved == true),
+                    CommentCount = p.Comment.Count(c => c.IsApproved == true),
 
                     Tags = p.PostTag.Select(pt => pt.Tag)
                         .Select(p => new TagDto()

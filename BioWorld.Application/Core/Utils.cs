@@ -8,6 +8,33 @@ namespace BioWorld.Application.Core
 {
     public static class Utils
     {
+        public enum MarkdownConvertType
+        {
+            None = 0,
+            Html = 1,
+            Text = 2
+        }
+
+        public static string ConvertMarkdownContent(string markdown, MarkdownConvertType type, bool disableHtml = true)
+        {
+            var pipeline = GetMoongladeMarkdownPipelineBuilder();
+        
+            if (disableHtml)
+            {
+                pipeline.DisableHtml();
+            }
+        
+            var result = type switch
+            {
+                MarkdownConvertType.None => markdown,
+                MarkdownConvertType.Html => Markdown.ToHtml(markdown, pipeline.Build()),
+                MarkdownConvertType.Text => Markdown.ToPlainText(markdown, pipeline.Build()),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+        
+            return result;
+        }
+
         public static string NormalizeTagName(string orgTagName)
         {
             return ReplaceWithStringBuilder(orgTagName, TagNormalizeSourceTable).ToLower();
@@ -56,13 +83,6 @@ namespace BioWorld.Application.Core
             return result.ToString();
         }
 
-        private enum MarkdownConvertType
-        {
-            None = 0,
-            Html = 1,
-            Text = 2
-        }
-
         private static MarkdownPipelineBuilder GetMoongladeMarkdownPipelineBuilder()
         {
             var pipeline = new MarkdownPipelineBuilder()
@@ -70,26 +90,6 @@ namespace BioWorld.Application.Core
                 .UseBootstrap();
 
             return pipeline;
-        }
-
-        private static string ConvertMarkdownContent(string markdown, MarkdownConvertType type, bool disableHtml = true)
-        {
-            var pipeline = GetMoongladeMarkdownPipelineBuilder();
-        
-            if (disableHtml)
-            {
-                pipeline.DisableHtml();
-            }
-        
-            var result = type switch
-            {
-                MarkdownConvertType.None => markdown,
-                MarkdownConvertType.Html => Markdown.ToHtml(markdown, pipeline.Build()),
-                MarkdownConvertType.Text => Markdown.ToPlainText(markdown, pipeline.Build()),
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-            };
-        
-            return result;
         }
 
         private static string RemoveTags(string html)

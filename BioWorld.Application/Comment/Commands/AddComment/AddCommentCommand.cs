@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Post.Commands.CreatePost;
+using BioWorld.Application.Configuration;
+using BioWorld.Application.WordFilter;
 using BioWorld.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace BioWorld.Application.Comment.Commands.AddComment
 {
-    public class AddCommentCommand : IRequest
+    public class AddCommentCommand : IRequest<CommentListItemDto>
     {
         public Guid PostId { get; }
 
@@ -25,20 +28,35 @@ namespace BioWorld.Application.Comment.Commands.AddComment
         public string UserAgent { get; set; }
     }
 
-    public class AddCommentCommandHandler : IRequestHandler<AddCommentCommand>
+    public class AddCommentCommandHandler : IRequestHandler<AddCommentCommand, CommentListItemDto>
     {
         private readonly IApplicationDbContext _context;
 
-        public AddCommentCommandHandler(IApplicationDbContext context)
+        private readonly BlogConfigSetting _blogConfig;
+
+        public AddCommentCommandHandler(IApplicationDbContext context,
+            IOptions<BlogConfigSetting> settings = null)
         {
+            if (null != settings) _blogConfig = settings.Value;
             _context = context;
         }
 
-        public async Task<Unit> Handle(AddCommentCommand request, CancellationToken cancellationToken)
+        public async Task<CommentListItemDto> Handle(AddCommentCommand request, CancellationToken cancellationToken)
         {
             // 1. Check comment enabled or not
-
+            if (!_blogConfig.ContentSettings.EnableComments)
+            {
+                throw new BadRequestException(
+                    $"{nameof(_blogConfig.ContentSettings.EnableComments)} can not be less than 1, current value: {_blogConfig.ContentSettings.EnableComments}.");
+            }
             // 2. Harmonize banned keywords
+            if (_blogConfig.ContentSettings.EnableWordFilter)
+            {
+                var dw = _blogConfig.ContentSettings.DisharmonyWords;
+                var maskWordFilter = new MaskWordFilter(new StringWordSource(dw));
+                request.Username = maskWordFilter.FilterContent(request.Username);
+                request.Content = maskWordFilter.FilterContent(request.Content);
+            }
 
             var model = new CommentEntity
             {
@@ -49,11 +67,27 @@ namespace BioWorld.Application.Comment.Commands.AddComment
                 CreateOnUtc = DateTime.UtcNow,
                 Email = request.Email,
                 IPAddress = request.IpAddress,
-                //IsApproved = !_blogConfig.ContentSettings.RequireCommentReview,
+                IsApproved = !_blogConfig.ContentSettings.RequireCommentReview,
                 UserAgent = request.UserAgent
             };
 
-            return Unit.Value;
+            await _context.Comment.AddAsync(model, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            var postTitle = await _context.Post.Select(p => p.Title).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+            var item = new CommentListItemDto()
+            {
+                Id = model.Id,
+                CommentContent = model.CommentContent,
+                CreateOnUtc = model.CreateOnUtc,
+                Email = model.Email,
+                IpAddress = model.IPAddress,
+                IsApproved = model.IsApproved,
+                PostTitle = postTitle,
+                Username = model.Username
+            };
+            return item;
         }
     }
 }
