@@ -15,8 +15,7 @@ namespace BioWorld.Application.Comment.Queries.GetPagedComment
         public Paging Param { get; set; }
     }
 
-    public class
-        GetPagedCommentQueryHandler : IRequestHandler<GetPagedCommentQuery, IReadOnlyList<CommentListItemWithReplyDto>>
+    public class GetPagedCommentQueryHandler : IRequestHandler<GetPagedCommentQuery, IReadOnlyList<CommentListItemWithReplyDto>>
     {
         private readonly IApplicationDbContext _context;
 

@@ -9,8 +9,6 @@ namespace BioWorld.Application.Comment.Queries.GetPagedComment
         public string ReplyContent { get; set; }
         public string ReplyContentHtml { get; set; }
     }
-
-
     public class CommentListItemWithReplyDto
     {
         public Guid Id { get; set; }
