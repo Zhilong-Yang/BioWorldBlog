@@ -22,7 +22,6 @@ namespace BioWorld.Application.Post.Queries.GetCountByCategoryId
             _context = context;
         }
 
-
         public async Task<CountPostsDto> Handle(GetCountByCategoryIdQuery request, CancellationToken cancellationToken)
         {
             var count = await _context.PostCategory

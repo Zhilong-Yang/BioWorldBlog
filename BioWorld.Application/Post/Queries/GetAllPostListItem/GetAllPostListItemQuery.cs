@@ -59,6 +59,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
                     PubDateUtc = p.PostPublish.PubDateUtc.GetValueOrDefault(),
                     Tags = p.PostTag.Select(pt => new TagDto
                     {
+                        Id = pt.TagId,
                         NormalizedName = pt.Tag.NormalizedName,
                         TagName = pt.Tag.DisplayName,
                     }).ToList()
