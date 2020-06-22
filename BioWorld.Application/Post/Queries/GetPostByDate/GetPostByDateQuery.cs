@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-// using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Category;
@@ -13,7 +12,10 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
 {
     public class GetPostByDateQuery : IRequest<PostSlugDto>
     {
-        public DateSlugCmdDto DateSlugCmdDto { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
+        public string Slug { get; set; }
     }
 
     public class GetPostByDateQueryHandler : IRequestHandler<GetPostByDateQuery, PostSlugDto>
@@ -28,13 +30,13 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
         public async Task<PostSlugDto> Handle(GetPostByDateQuery request,
             CancellationToken cancellationToken)
         {
-            var date = new DateTime(request.DateSlugCmdDto.Year, request.DateSlugCmdDto.Month,
-                request.DateSlugCmdDto.Day);
+            var date = new DateTime(request.Year, request.Month,
+                request.Day);
 
             var count = _context.Comment.Count(c => c.IsApproved);
 
             var pds = await _context.Post
-                .Where(p => p.Slug == request.DateSlugCmdDto.Slug &&
+                .Where(p => p.Slug == request.Slug &&
                             p.PostPublish.IsPublished &&
                             p.PostPublish.PubDateUtc.Value.Date == date &&
                             !p.PostPublish.IsDeleted)

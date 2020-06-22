@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Post.Queries.GetPostByDate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,10 @@ namespace BioWorld.Application.Post.Queries.GetMetaByDate
 {
     public class GetMetaByDateQuery : IRequest<PostSlugMetaDto>
     {
-        public DateSlugCmdDto DateSlugCmdDto { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
+        public string Slug { get; set; }
     }
 
     public class GetMetaByDateQueryHandler : IRequestHandler<GetMetaByDateQuery, PostSlugMetaDto>
@@ -25,12 +27,12 @@ namespace BioWorld.Application.Post.Queries.GetMetaByDate
 
         public async Task<PostSlugMetaDto> Handle(GetMetaByDateQuery request, CancellationToken cancellationToken)
         {
-            var date = new DateTime(request.DateSlugCmdDto.Year,
-                request.DateSlugCmdDto.Month,
-                request.DateSlugCmdDto.Day);
+            var date = new DateTime(request.Year,
+                request.Month,
+                request.Day);
 
             var model = await _context.Post
-                .Where(p => p.Slug == request.DateSlugCmdDto.Slug &&
+                .Where(p => p.Slug == request.Slug &&
                             p.PostPublish.IsPublished &&
                             p.PostPublish.PubDateUtc.Value.Date == date &&
                             !p.PostPublish.IsDeleted)

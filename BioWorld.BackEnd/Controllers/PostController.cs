@@ -20,6 +20,7 @@ using BioWorld.Application.Post.Queries.GetMetaList;
 using BioWorld.Application.Post.Queries.GetPostByDate;
 using BioWorld.Application.Post.Queries.GetPostListItem;
 using BioWorld.Application.Post.Queries.GetPostsByTag;
+using BioWorld.Application.Post.Queries.GetRawContent;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -68,15 +69,48 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery] DateSlugCmdDto dateSlugCmdDto)
+        public async Task<ActionResult<PostRawContentDto>> GetRawContent([FromQuery] int year,
+            [FromQuery] int month,
+            [FromQuery] int day,
+            [FromQuery] string slug)
         {
-            return Ok(await Mediator.Send(new GetPostByDateQuery() {DateSlugCmdDto = dateSlugCmdDto}));
+            return Ok(await Mediator.Send(new GetRawContentQuery()
+            {
+                Year = year,
+                Month = month,
+                Day = day,
+                Slug = slug
+            }));
         }
 
         [HttpGet]
-        public async Task<ActionResult<PostSlugMetaDto>> GetMetaByDateSlug([FromQuery] DateSlugCmdDto dateSlugCmdDto)
+        public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery] int year,
+            [FromQuery] int month,
+            [FromQuery] int day,
+            [FromQuery] string slug)
         {
-            return Ok(await Mediator.Send(new GetMetaByDateQuery() { DateSlugCmdDto = dateSlugCmdDto }));
+            return Ok(await Mediator.Send(new GetPostByDateQuery()
+            {
+                Year = year,
+                Month = month,
+                Day = day,
+                Slug = slug
+            }));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PostSlugMetaDto>> GetMetaByDateSlug([FromQuery] int year,
+            [FromQuery] int month,
+            [FromQuery] int day,
+            [FromQuery] string slug)
+        {
+            return Ok(await Mediator.Send(new GetMetaByDateQuery()
+            {
+                Year = year,
+                Month = month,
+                Day = day,
+                Slug = slug
+            }));
         }
 
         [HttpGet]
