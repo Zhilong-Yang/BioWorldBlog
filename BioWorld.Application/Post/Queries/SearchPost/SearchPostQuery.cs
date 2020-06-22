@@ -33,12 +33,14 @@ namespace BioWorld.Application.Post.Queries.SearchPost
             var resultList = await postList
                 .Select(p => new PostListItemDto
                 {
+                    Id = p.Id,
                     Title = p.Title,
                     Slug = p.Slug,
                     ContentAbstract = p.ContentAbstract,
                     PubDateUtc = p.PostPublish.PubDateUtc.GetValueOrDefault(),
                     Tags = p.PostTag.Select(pt => new TagDto()
                     {
+                        Id = pt.TagId,
                         NormalizedName = pt.Tag.NormalizedName,
                         TagName = pt.Tag.DisplayName
                     }).ToList()

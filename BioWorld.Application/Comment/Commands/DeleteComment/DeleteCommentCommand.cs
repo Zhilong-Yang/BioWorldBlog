@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
+using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,11 @@ namespace BioWorld.Application.Comment.Commands.DeleteComment
             var comments = await _context.Comment
                 .Where(c => request.CommentIds.Contains(c.Id))
                 .ToListAsync(cancellationToken: cancellationToken);
+
+            if (comments.Count == 0)
+            {
+                throw new NotFoundException("comments id does not exit");
+            }
 
             foreach (var cmt in comments)
             {
