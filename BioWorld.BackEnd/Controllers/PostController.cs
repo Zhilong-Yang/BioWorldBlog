@@ -14,6 +14,7 @@ using BioWorld.Application.Post.Queries.GetAllPostListItem;
 using BioWorld.Application.Post.Queries.GetArchived;
 using BioWorld.Application.Post.Queries.GetCountByCategoryId;
 using BioWorld.Application.Post.Queries.GetCountVisiblePosts;
+using BioWorld.Application.Post.Queries.GetDraftPreview;
 using BioWorld.Application.Post.Queries.GetInsights;
 using BioWorld.Application.Post.Queries.GetMetaByDate;
 using BioWorld.Application.Post.Queries.GetMetaList;
@@ -42,6 +43,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<IReadOnlyList<PostListItemDto>>> GetArchived([FromQuery] int year, [FromQuery] int month)
         {
             return Ok(await Mediator.Send(new GetArchivedQuery() { Year = year, Month = month}));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IReadOnlyList<PostSlugDto>>> GetDraftPreview(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetDraftPreviewQuery() {  PostId= id }));
         }
 
         [HttpGet("{id}")]
