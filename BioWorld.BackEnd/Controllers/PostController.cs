@@ -15,6 +15,7 @@ using BioWorld.Application.Post.Queries.GetArchived;
 using BioWorld.Application.Post.Queries.GetCountByCategoryId;
 using BioWorld.Application.Post.Queries.GetCountVisiblePosts;
 using BioWorld.Application.Post.Queries.GetInsights;
+using BioWorld.Application.Post.Queries.GetMetaByDate;
 using BioWorld.Application.Post.Queries.GetMetaList;
 using BioWorld.Application.Post.Queries.GetPostByDate;
 using BioWorld.Application.Post.Queries.GetPostListItem;
@@ -70,6 +71,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<PostSlugDto>> GetPostByDateSlug([FromQuery] DateSlugCmdDto dateSlugCmdDto)
         {
             return Ok(await Mediator.Send(new GetPostByDateQuery() {DateSlugCmdDto = dateSlugCmdDto}));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PostSlugMetaDto>> GetMetaByDateSlug([FromQuery] DateSlugCmdDto dateSlugCmdDto)
+        {
+            return Ok(await Mediator.Send(new GetMetaByDateQuery() { DateSlugCmdDto = dateSlugCmdDto }));
         }
 
         [HttpGet]
