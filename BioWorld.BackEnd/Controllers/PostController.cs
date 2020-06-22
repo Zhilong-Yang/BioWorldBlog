@@ -12,6 +12,7 @@ using BioWorld.Application.Post.Commands.PostLike;
 using BioWorld.Application.Post.Commands.RestoreDeletedPost;
 using BioWorld.Application.Post.Queries.GetAllPostListItem;
 using BioWorld.Application.Post.Queries.GetArchived;
+using BioWorld.Application.Post.Queries.GetArchiveList;
 using BioWorld.Application.Post.Queries.GetCountByCategoryId;
 using BioWorld.Application.Post.Queries.GetCountVisiblePosts;
 using BioWorld.Application.Post.Queries.GetDraftPreview;
@@ -43,6 +44,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<IReadOnlyList<PostListItemDto>>> GetArchived([FromQuery] int year, [FromQuery] int month)
         {
             return Ok(await Mediator.Send(new GetArchivedQuery() { Year = year, Month = month}));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyList<ArchiveDto>>> GetArchiveList()
+        {
+            return Ok(await Mediator.Send(new GetArchiveListQuery() ));
         }
 
         [HttpGet("{id}")]
