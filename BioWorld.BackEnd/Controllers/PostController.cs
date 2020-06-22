@@ -5,6 +5,7 @@ using BioWorld.Application.Common.Models;
 using BioWorld.Application.Post;
 using BioWorld.Application.Post.Commands.CreatePost;
 using BioWorld.Application.Post.Commands.DeletePost;
+using BioWorld.Application.Post.Commands.DeleteRecycled;
 using BioWorld.Application.Post.Commands.EditPost;
 using BioWorld.Application.Post.Commands.PostHit;
 using BioWorld.Application.Post.Commands.PostLike;
@@ -98,6 +99,13 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult> Delete([FromRoute] Guid id, [FromQuery] bool isRecycle)
         {
             await Mediator.Send(new DeletePostCommand {PostId = id, IsRecycle = isRecycle});
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteRecycled()
+        {
+            await Mediator.Send(new DeleteRecycledCommand());
             return NoContent();
         }
 
