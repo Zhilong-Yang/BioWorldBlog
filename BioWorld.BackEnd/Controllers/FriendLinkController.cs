@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.FriendLink;
 using BioWorld.Application.FriendLink.Commands.AddFriendLink;
+using BioWorld.Application.FriendLink.Commands.DeleteFriendLink;
 using BioWorld.Application.FriendLink.Queries.GetAllFriendLink;
 using BioWorld.Application.FriendLink.Queries.GetFriendLink;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,13 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<FriendLinkDto>> Create(AddFriendLinkCommand command)
         {
             return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            await Mediator.Send(new DeleteFriendLinkCommand { Id = id });
+            return NoContent();
         }
 
     }
