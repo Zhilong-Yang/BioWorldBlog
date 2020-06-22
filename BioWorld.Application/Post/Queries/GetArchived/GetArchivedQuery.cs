@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,14 +11,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Post.Queries.GetArchived
 {
-    public class GetArchivedQuery : IRequest<IReadOnlyList<PostListItemDto>>
+    public class GetArchivedQuery : IRequest<PostListItemJsonDto>
     {
         public int Year { get; set; }
 
         public int Month { get; set; } = 0;
     }
 
-    public class GetArchivedQueryHandler : IRequestHandler<GetArchivedQuery, IReadOnlyList<PostListItemDto>>
+    public class GetArchivedQueryHandler : IRequestHandler<GetArchivedQuery, PostListItemJsonDto>
     {
         private readonly IApplicationDbContext _context;
 
@@ -28,7 +27,7 @@ namespace BioWorld.Application.Post.Queries.GetArchived
             _context = context;
         }
 
-        public async Task<IReadOnlyList<PostListItemDto>> Handle(GetArchivedQuery request,
+        public async Task<PostListItemJsonDto> Handle(GetArchivedQuery request,
             CancellationToken cancellationToken)
         {
             if (request.Year < DateTime.MinValue.Year || request.Year > DateTime.MaxValue.Year)
@@ -65,7 +64,7 @@ namespace BioWorld.Application.Post.Queries.GetArchived
                 })
                 .ToListAsync(cancellationToken);
 
-            return list;
+            return new PostListItemJsonDto(list);
         }
     }
 }

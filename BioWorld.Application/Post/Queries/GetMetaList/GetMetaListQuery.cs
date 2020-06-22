@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -11,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Post.Queries.GetMetaList
 {
-    public class GetMetaListQuery : IRequest<IReadOnlyList<PostMetaDataDto>>
+    public class GetMetaListQuery : IRequest<PostMetaDataJsonDto>
     {
         public PostPublishStatus PostPublishStatus { get; set; }
     }
 
-    public class GetMetaListQueryHandler : IRequestHandler<GetMetaListQuery, IReadOnlyList<PostMetaDataDto>>
+    public class GetMetaListQueryHandler : IRequestHandler<GetMetaListQuery, PostMetaDataJsonDto>
     {
         private readonly IApplicationDbContext _context;
 
@@ -27,7 +26,7 @@ namespace BioWorld.Application.Post.Queries.GetMetaList
             _context = context;
         }
 
-        public async Task<IReadOnlyList<PostMetaDataDto>> Handle(GetMetaListQuery request,
+        public async Task<PostMetaDataJsonDto> Handle(GetMetaListQuery request,
             CancellationToken cancellationToken)
         {
             switch (request.PostPublishStatus)
@@ -66,7 +65,7 @@ namespace BioWorld.Application.Post.Queries.GetMetaList
                 })
                 .ToListAsync(cancellationToken);
 
-            return post;
+            return new PostMetaDataJsonDto(post);
         }
     }
 }

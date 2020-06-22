@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
@@ -11,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Post.Queries.GetAllPostListItem
 {
-    public class GetAllPostListItemQuery : IRequest<IReadOnlyList<PostListItemDto>>
+    public class GetAllPostListItemQuery : IRequest<PostListItemJsonDto>
     {
         public Paging Param { get; set; }
     }
 
-    public class GetAllPostListItemQueryHandler : IRequestHandler<GetAllPostListItemQuery, IReadOnlyList<PostListItemDto>>
+    public class GetAllPostListItemQueryHandler : IRequestHandler<GetAllPostListItemQuery, PostListItemJsonDto>
     {
         private readonly IApplicationDbContext _context;
 
@@ -25,7 +24,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
             _context = context;
         }
 
-        public async Task<IReadOnlyList<PostListItemDto>> Handle(GetAllPostListItemQuery request,
+        public async Task<PostListItemJsonDto> Handle(GetAllPostListItemQuery request,
             CancellationToken cancellationToken)
         {
             var pageSize = request.Param.PageSize;
@@ -66,7 +65,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
                 })
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
-            return posts;
+            return new PostListItemJsonDto(posts);
         }
     }
 }

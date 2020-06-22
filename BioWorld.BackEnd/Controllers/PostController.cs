@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Models;
 using BioWorld.Application.Post;
@@ -23,6 +22,7 @@ using BioWorld.Application.Post.Queries.GetPostByDate;
 using BioWorld.Application.Post.Queries.GetPostListItem;
 using BioWorld.Application.Post.Queries.GetPostsByTag;
 using BioWorld.Application.Post.Queries.GetRawContent;
+using BioWorld.Application.Post.Queries.SearchPost;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -35,31 +35,31 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<PostListItemDto>>> GetAll([FromQuery] Paging param)
+        public async Task<ActionResult<PostListItemJsonDto>> GetAll([FromQuery] Paging param)
         {
             return Ok(await Mediator.Send(new GetAllPostListItemQuery() {Param = param}));
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<PostListItemDto>>> GetArchived([FromQuery] int year, [FromQuery] int month)
+        public async Task<ActionResult<PostListItemJsonDto>> GetArchived([FromQuery] int year, [FromQuery] int month)
         {
             return Ok(await Mediator.Send(new GetArchivedQuery() { Year = year, Month = month}));
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ArchiveDto>>> GetArchiveList()
+        public async Task<ActionResult<ArchiveJsonDto>> GetArchiveList()
         {
             return Ok(await Mediator.Send(new GetArchiveListQuery() ));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IReadOnlyList<PostSlugDto>>> GetDraftPreview(Guid id)
+        public async Task<ActionResult<PostSlugDto>> GetDraftPreview(Guid id)
         {
             return Ok(await Mediator.Send(new GetDraftPreviewQuery() {  PostId= id }));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IReadOnlyList<GetPostsByTagDto>>> GetByTagId(int id)
+        public async Task<ActionResult<GetPostsByTagJsonDto>> GetByTagId(int id)
         {
             return Ok(await Mediator.Send(new GetPostsByTagQuery() {TagId = id}));
         }
@@ -71,13 +71,13 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet("{status}")]
-        public async Task<ActionResult<IReadOnlyList<PostMetaDataDto>>> GetMetaList(PostPublishStatus status)
+        public async Task<ActionResult<PostMetaDataJsonDto>> GetMetaList(PostPublishStatus status)
         {
             return Ok(await Mediator.Send(new GetMetaListQuery() {PostPublishStatus = status}));
         }
 
         [HttpGet("{insights}")]
-        public async Task<ActionResult<IReadOnlyList<GetInsightsDto>>> GetInsights(PostInsightsType insights)
+        public async Task<ActionResult<GetInsightsJsonDto>> GetInsights(PostInsightsType insights)
         {
             return Ok(await Mediator.Send(new GetInsightsQuery() {InsightsType = insights}));
         }
@@ -131,6 +131,12 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<CountPostsDto>> Count()
         {
             return Ok(await Mediator.Send(new GetCountVisiblePostsQuery()));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PostListItemJsonDto>> Search([FromQuery]string keyword)
+        {
+            return Ok(await Mediator.Send(new SearchPostQuery() {Keyword = keyword}));
         }
 
         [HttpGet("{id}")]

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
@@ -9,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Post.Queries.GetPostsByTag
 {
-    public class GetPostsByTagQuery : IRequest<IReadOnlyList<GetPostsByTagDto>>
+    public class GetPostsByTagQuery : IRequest<GetPostsByTagJsonDto>
     {
         public int TagId { get; set; }
     }
 
-    public class GetPostsByTagQueryHandler : IRequestHandler<GetPostsByTagQuery, IReadOnlyList<GetPostsByTagDto>>
+    public class GetPostsByTagQueryHandler : IRequestHandler<GetPostsByTagQuery, GetPostsByTagJsonDto>
     {
         private readonly IApplicationDbContext _context;
 
@@ -23,7 +22,7 @@ namespace BioWorld.Application.Post.Queries.GetPostsByTag
             _context = context;
         }
 
-        public async Task<IReadOnlyList<GetPostsByTagDto>> Handle(GetPostsByTagQuery request,
+        public async Task<GetPostsByTagJsonDto> Handle(GetPostsByTagQuery request,
             CancellationToken cancellationToken)
         {
             if (request.TagId == 0)
@@ -45,7 +44,7 @@ namespace BioWorld.Application.Post.Queries.GetPostsByTag
                     PubDateUtc = p.Post.PostPublish.PubDateUtc.GetValueOrDefault()
                 })
                 .ToListAsync(cancellationToken: cancellationToken);
-            return posts;
+            return new GetPostsByTagJsonDto(posts);
         }
     }
 }

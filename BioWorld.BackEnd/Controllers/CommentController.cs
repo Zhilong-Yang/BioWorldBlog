@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.Comment.Commands.AddComment;
 using BioWorld.Application.Comment.Commands.AddReply;
@@ -45,7 +44,7 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<CommentListItemWithReplyDto>>> GetAll([FromQuery] Paging param)
+        public async Task<ActionResult<CommentListItemWithReplyJsonDto>> GetAll([FromQuery] Paging param)
         {
             return Ok(await Mediator.Send(new GetPagedCommentQuery() {Param = param}));
         }
@@ -57,7 +56,7 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IReadOnlyList<PostCommentListItemDto>>> GetSelectedCommentsOfPost(Guid id)
+        public async Task<ActionResult<PostCommentListItemJsonDto>> GetSelectedCommentsOfPost(Guid id)
         {
             return Ok(await Mediator.Send(new GetSelectedCommentsQuery() {PostId = id}));
         }

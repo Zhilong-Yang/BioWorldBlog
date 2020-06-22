@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BioWorld.Application.Post.Queries.GetInsights
 {
@@ -13,5 +14,15 @@ namespace BioWorld.Application.Post.Queries.GetInsights
         public bool IsPublished { get; set; }
         public int Hits { get; set; }
         public bool IsDeleted { get; set; }
+    }
+
+    public class GetInsightsJsonDto
+    {
+        public IReadOnlyList<GetInsightsDto> InsightList { get; set; }
+
+        public GetInsightsJsonDto(IReadOnlyList<GetInsightsDto> insightList)
+        {
+            InsightList = insightList;
+        }
     }
 }

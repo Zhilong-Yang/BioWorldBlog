@@ -1,4 +1,4 @@
-﻿using BioWorld.Domain.Entities;
+﻿using System.Collections.Generic;
 
 namespace BioWorld.Application.Tag.Queries
 {
@@ -9,6 +9,16 @@ namespace BioWorld.Application.Tag.Queries
         public string TagName { get; set; }
 
         public string NormalizedName { get; set; }
+    }
+
+    public class TagJsonDto
+    {
+        public IReadOnlyList<TagDto> TagList { get; set; }
+
+        public TagJsonDto(IReadOnlyList<TagDto> tagList)
+        {
+            TagList = tagList;
+        }
     }
 
     public class TagCountInfo : TagDto

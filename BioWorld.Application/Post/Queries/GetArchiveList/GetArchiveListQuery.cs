@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
@@ -9,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Post.Queries.GetArchiveList
 {
-    public class GetArchiveListQuery : IRequest<IReadOnlyList<ArchiveDto>>
+    public class GetArchiveListQuery : IRequest<ArchiveJsonDto>
     {
-        public class GetArchiveListQueryHandler : IRequestHandler<GetArchiveListQuery, IReadOnlyList<ArchiveDto>>
+        public class GetArchiveListQueryHandler : IRequestHandler<GetArchiveListQuery, ArchiveJsonDto>
         {
             private readonly IApplicationDbContext _context;
 
@@ -20,7 +19,7 @@ namespace BioWorld.Application.Post.Queries.GetArchiveList
                 _context = context;
             }
 
-            public async Task<IReadOnlyList<ArchiveDto>> Handle(GetArchiveListQuery request,
+            public async Task<ArchiveJsonDto> Handle(GetArchiveListQuery request,
                 CancellationToken cancellationToken)
             {
                 if (!_context.Post.Any(p => p.PostPublish.IsPublished && !p.PostPublish.IsDeleted))
@@ -44,7 +43,7 @@ namespace BioWorld.Application.Post.Queries.GetArchiveList
                 {
                     p.Count = i++;
                 }
-                return list;
+                return new ArchiveJsonDto(list);
             }
         }
     }

@@ -22,4 +22,14 @@ namespace BioWorld.Application.Post.Queries.GetPostByDate
         public IList<CategoryDto> Categories { get; set; }
         public IList<TagDto> Tags { get; set; }
     }
+
+    public class PostSlugJsonDto
+    {
+        public IReadOnlyList<PostSlugDto> PostSlugList { get; set; }
+
+        public PostSlugJsonDto(IReadOnlyList<PostSlugDto> postSlugList)
+        {
+            PostSlugList = postSlugList;
+        }
+    }
 }

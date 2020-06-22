@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
@@ -10,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Comment.Queries.GetPagedComment
 {
-    public class GetPagedCommentQuery : IRequest<IReadOnlyList<CommentListItemWithReplyDto>>
+    public class GetPagedCommentQuery : IRequest<CommentListItemWithReplyJsonDto>
     {
         public Paging Param { get; set; }
     }
 
-    public class GetPagedCommentQueryHandler : IRequestHandler<GetPagedCommentQuery, IReadOnlyList<CommentListItemWithReplyDto>>
+    public class GetPagedCommentQueryHandler : IRequestHandler<GetPagedCommentQuery, CommentListItemWithReplyJsonDto>
     {
         private readonly IApplicationDbContext _context;
 
@@ -24,7 +23,7 @@ namespace BioWorld.Application.Comment.Queries.GetPagedComment
             _context = context;
         }
 
-        public async Task<IReadOnlyList<CommentListItemWithReplyDto>> Handle(GetPagedCommentQuery request,
+        public async Task<CommentListItemWithReplyJsonDto> Handle(GetPagedCommentQuery request,
             CancellationToken cancellationToken)
         {
             var pageSize = request.Param.PageSize;
@@ -71,7 +70,7 @@ namespace BioWorld.Application.Comment.Queries.GetPagedComment
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
 
-            return comments;
+            return new CommentListItemWithReplyJsonDto(comments);
         }
     }
 }

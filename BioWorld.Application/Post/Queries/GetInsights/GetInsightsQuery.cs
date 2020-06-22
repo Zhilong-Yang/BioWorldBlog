@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -11,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Post.Queries.GetInsights
 {
-    public class GetInsightsQuery : IRequest<IReadOnlyList<GetInsightsDto>>
+    public class GetInsightsQuery : IRequest<GetInsightsJsonDto>
     {
         public PostInsightsType InsightsType { get; set; }
     }
 
-    public class GetInsightsQueryHandler : IRequestHandler<GetInsightsQuery, IReadOnlyList<GetInsightsDto>>
+    public class GetInsightsQueryHandler : IRequestHandler<GetInsightsQuery, GetInsightsJsonDto>
     {
         private readonly IApplicationDbContext _context;
 
@@ -27,7 +26,7 @@ namespace BioWorld.Application.Post.Queries.GetInsights
             _context = context;
         }
 
-        public async Task<IReadOnlyList<GetInsightsDto>> Handle(GetInsightsQuery request, CancellationToken cancellationToken)
+        public async Task<GetInsightsJsonDto> Handle(GetInsightsQuery request, CancellationToken cancellationToken)
         {
             switch (request.InsightsType)
             {
@@ -62,7 +61,7 @@ namespace BioWorld.Application.Post.Queries.GetInsights
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
 
-            return post;
+            return new GetInsightsJsonDto(post);
         }
     }
 }

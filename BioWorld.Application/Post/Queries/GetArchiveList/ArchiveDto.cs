@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BioWorld.Application.Post.Queries.GetArchiveList
 {
@@ -15,6 +16,16 @@ namespace BioWorld.Application.Post.Queries.GetArchiveList
             Month = month;
             Count = count;
             PostId = postId;
+        }
+    }
+
+    public class ArchiveJsonDto
+    {
+        public IReadOnlyList<ArchiveDto> ArchiveList { get; set; }
+
+        public ArchiveJsonDto(IReadOnlyList<ArchiveDto> archiveList)
+        {
+            ArchiveList = archiveList;
         }
     }
 }

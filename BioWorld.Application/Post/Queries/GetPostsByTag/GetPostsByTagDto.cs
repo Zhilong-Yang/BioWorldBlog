@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BioWorld.Application.Post.Queries.GetPostsByTag
 {
@@ -11,5 +12,15 @@ namespace BioWorld.Application.Post.Queries.GetPostsByTag
         public string Slug { get; set; }
 
         public string ContentAbstract { get; set; }
+    }
+
+    public class GetPostsByTagJsonDto
+    {
+        public IReadOnlyList<GetPostsByTagDto> PostList { get; set; }
+
+        public GetPostsByTagJsonDto(IReadOnlyList<GetPostsByTagDto> postList)
+        {
+            PostList = postList;
+        }
     }
 }

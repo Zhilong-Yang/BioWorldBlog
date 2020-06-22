@@ -16,4 +16,14 @@ namespace BioWorld.Application.Comment.Queries.GetSelectedCommentsOfPost
 
         public IReadOnlyList<CommentReplyDigestDto> CommentReplies { get; set; }
     }
+
+    public class PostCommentListItemJsonDto
+    {
+        public IReadOnlyList<PostCommentListItemDto> PostCommentList { get; set; }
+
+        public PostCommentListItemJsonDto(IReadOnlyList<PostCommentListItemDto> postCommentList)
+        {
+            PostCommentList = postCommentList;
+        }
+    }
 }

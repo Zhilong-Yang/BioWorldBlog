@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
@@ -8,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.FriendLink.Queries.GetAllFriendLink
 {
-    public class GetAllFriendLinkQuery: IRequest<IReadOnlyList<FriendLinkDto>>
+    public class GetAllFriendLinkQuery: IRequest<FriendLinkJsonDto>
     {
-        public class GetAllFriendLinkQueryHandler : IRequestHandler<GetAllFriendLinkQuery, IReadOnlyList<FriendLinkDto>>
+        public class GetAllFriendLinkQueryHandler : IRequestHandler<GetAllFriendLinkQuery, FriendLinkJsonDto>
         {
             private readonly IApplicationDbContext _context;
 
@@ -19,7 +18,7 @@ namespace BioWorld.Application.FriendLink.Queries.GetAllFriendLink
                 _context = context;
             }
 
-            public async Task<IReadOnlyList<FriendLinkDto>> Handle(GetAllFriendLinkQuery request, CancellationToken cancellationToken)
+            public async Task<FriendLinkJsonDto> Handle(GetAllFriendLinkQuery request, CancellationToken cancellationToken)
             {
                 var items = await _context.FriendLink
                     .Select(f => new FriendLinkDto
@@ -30,7 +29,7 @@ namespace BioWorld.Application.FriendLink.Queries.GetAllFriendLink
                     })
                     .ToListAsync(cancellationToken: cancellationToken);
 
-                return items;
+                return new FriendLinkJsonDto(items);
             }
         }
     }

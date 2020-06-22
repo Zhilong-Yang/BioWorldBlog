@@ -22,4 +22,14 @@ namespace BioWorld.Application.Comment.Queries.GetPagedComment
 
         public IReadOnlyList<CommentReplyDigestDto> CommentRepliesDto { get; set; }
     }
+
+    public class CommentListItemWithReplyJsonDto
+    {
+        public CommentListItemWithReplyJsonDto(IReadOnlyList<CommentListItemWithReplyDto> commentList)
+        {
+            CommentList = commentList;
+        }
+
+        public IReadOnlyList<CommentListItemWithReplyDto> CommentList { get; set; }
+    }
 }

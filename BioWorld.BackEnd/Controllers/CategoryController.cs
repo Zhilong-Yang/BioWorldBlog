@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BioWorld.Application.Category;
 using BioWorld.Application.Category.Commands.CreateCategory;
@@ -20,7 +19,7 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<CategoryDto>>> GetAll()
+        public async Task<ActionResult<CategoryJsonDto>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllCategoryQuery()));
         }

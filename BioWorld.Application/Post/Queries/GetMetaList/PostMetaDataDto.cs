@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BioWorld.Application.Post.Queries.GetMetaList
 {
@@ -13,5 +14,15 @@ namespace BioWorld.Application.Post.Queries.GetMetaList
         public bool IsPublished { get; set; }
         public int Hits { get; set; }
         public bool IsDeleted { get; set; }
+    }
+
+    public class PostMetaDataJsonDto
+    {
+        public IReadOnlyList<PostMetaDataDto> PostMetaDataList { get; set; }
+
+        public PostMetaDataJsonDto(IReadOnlyList<PostMetaDataDto> postMetaData)
+        {
+            PostMetaDataList = postMetaData;
+        }
     }
 }

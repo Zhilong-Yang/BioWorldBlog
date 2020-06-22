@@ -18,7 +18,7 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<TagDto>> GetAll()
+        public async Task<ActionResult<TagJsonDto>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllTagQuery()));
         }

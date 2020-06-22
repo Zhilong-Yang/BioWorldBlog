@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
@@ -8,10 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Category.Queries.GetAllCategoryListItem
 {
-    public class GetAllCategoryQuery : IRequest<IReadOnlyList<CategoryDto>>
+    public class GetAllCategoryQuery : IRequest<CategoryJsonDto>
     {
-        public class GetAllCategoryQueryHandler
-            : IRequestHandler<GetAllCategoryQuery, IReadOnlyList<CategoryDto>>
+        public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQuery, CategoryJsonDto>
         {
             private readonly IApplicationDbContext _context;
 
@@ -20,7 +18,7 @@ namespace BioWorld.Application.Category.Queries.GetAllCategoryListItem
                 _context = context;
             }
 
-            public async Task<IReadOnlyList<CategoryDto>> Handle(GetAllCategoryQuery request,
+            public async Task<CategoryJsonDto> Handle(GetAllCategoryQuery request,
                 CancellationToken cancellationToken)
             {
                 var categories = await _context.Category
@@ -33,7 +31,7 @@ namespace BioWorld.Application.Category.Queries.GetAllCategoryListItem
                     })
                     .AsNoTracking()
                     .ToListAsync(cancellationToken);
-                return categories;
+                return new CategoryJsonDto(categories);
             }
         }
     }

@@ -18,4 +18,14 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
 
         public IList<TagDto> Tags { get; set; }
     }
+
+    public class PostListItemJsonDto
+    {
+        public IReadOnlyList<PostListItemDto> PostLists { get; set; }
+
+        public PostListItemJsonDto(IReadOnlyList<PostListItemDto> lists)
+        {
+            PostLists = lists;
+        }
+    }
 }
