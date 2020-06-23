@@ -1,13 +1,14 @@
 ﻿using System.Threading.Tasks;
+using BioWorld.Application.Setting.Queries.GetContentSetting;
 using BioWorld.Application.Setting.Queries.GetGeneralSetting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace BioWorld.BackEnd.Controllers
 {
-    public class GeneralSettingController: ApiController
+    public class ConfigureSettingController: ApiController
     {
-        public GeneralSettingController(ILogger<ControllerBase> logger) : base(logger)
+        public ConfigureSettingController(ILogger<ControllerBase> logger) : base(logger)
         {
         }
 
@@ -16,5 +17,13 @@ namespace BioWorld.BackEnd.Controllers
         {
             return Ok(await Mediator.Send(new GetGeneralSettingQuery()));
         }
+
+        [HttpGet]
+        public async Task<ActionResult<ContentSettingsDto>> GetContent()
+        {
+            return Ok(await Mediator.Send(new GetContentSettingQuery()));
+        }
+
+        
     }
 }
