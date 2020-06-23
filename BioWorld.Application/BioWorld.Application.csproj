@@ -26,4 +26,8 @@
     <ProjectReference Include="..\BioWorld.Domain\BioWorld.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Setting\Commands\" />
+  </ItemGroup>
+
 </Project>
