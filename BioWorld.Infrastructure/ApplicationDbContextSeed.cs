@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BioWorld.Domain.Entities;
+using BioWorld.Domain.Entities.Cfg;
 using BioWorld.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -144,7 +145,7 @@ namespace BioWorld.Infrastructure
             {
                 context.Add(new CustomPageEntity
                 {
-                    Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"), 
+                    Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"),
                     Title = "About",
                     RouteName = "about",
                     HtmlContent = "'An Empty About Page",
@@ -152,6 +153,94 @@ namespace BioWorld.Infrastructure
                     HideSidebar = true,
                     CreateOnUtc = DateTime.UtcNow,
                     UpdatedOnUtc = DateTime.UtcNow
+                });
+            }
+
+            if (!context.AdvancedSettings.Any())
+            {
+                context.Add(new AdvancedSettingsEntity
+                {
+                    DNSPrefetchEndpoint = ""
+                });
+            }
+
+            if (!context.ContentSettings.Any())
+            {
+                context.Add(new ContentSettingsEntity
+                {
+                    DisharmonyWords = "fuck|shit",
+                    EnableComments = true,
+                    RequireCommentReview = true,
+                    EnableWordFilter = false,
+                    UseFriendlyNotFoundImage = true,
+                    PostListPageSize = 10,
+                    HotTagAmount = 10,
+                    ShowCalloutSection = false
+                });
+            }
+
+            if (!context.FeedSettings.Any())
+            {
+                context.Add(new FeedSettingsEntity
+                {
+                    RssItemCount = 20,
+                    RssCopyright = "(c) {year} BioWorld",
+                    RssDescription = "Latest posts from BioWorld",
+                    RssGeneratorName = "BioWorld",
+                    RssTitle = "BioWorld",
+                    AuthorName = "Admin",
+                    UseFullContent = false
+                });
+            }
+
+            if (!context.FriendLinksSettings.Any())
+            {
+                context.Add(new FriendLinksSettingsEntity
+                {
+                    ShowFriendLinksSection = true
+                });
+            }
+
+            if (!context.GeneralSettings.Any())
+            {
+                context.Add(new GeneralSettingsEntity
+                {
+                    OwnerName = "Admin",
+                    Description = "BioWorld Admin",
+                    ShortDescription = "BioWorld Admin",
+                    AvatarBase64 = "",
+                    SiteTitle = "BioWorld",
+                    LogoText = "bioworld",
+                    MetaKeyword = "bioworld",
+                    MetaDescription = "Just another .NET blog system",
+                    Copyright = "&copy; 2020",
+                    SideBarCustomizedHtmlPitch = "",
+                    FooterCustomizedHtmlPitch = "",
+                    TimeZoneUtcOffset = "08:00:00",
+                    TimeZoneId = "China Standard Time"
+                });
+            }
+
+            if (!context.NotificationSettings.Any())
+            {
+                context.Add(new NotificationSettingsEntity
+                {
+                    EnableEmailSending = true,
+                    SendEmailOnCommentReply = true,
+                    SendEmailOnNewComment = true,
+                    AdminEmail = "yzl_200@sina.com",
+                    EmailDisplayName = "BioWorld"
+                });
+            }
+
+            if (!context.WatermarkSettings.Any())
+            {
+                context.Add(new WatermarkSettingsEntity
+                {
+                    IsEnabled = true,
+                    KeepOriginImage = false,
+                    FontSize = 20,
+                    WatermarkText = "BioWorld"
                 });
             }
 
