@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
 using BioWorld.Domain.Common;
 using BioWorld.Domain.Entities;
+using BioWorld.Domain.Entities.Cfg;
 using BioWorld.Infrastructure.Identity;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -41,6 +42,14 @@ namespace BioWorld.Infrastructure
         public virtual DbSet<CustomPageEntity> CustomPage { get; set; }
         public virtual DbSet<MenuEntity> Menu { get; set; }
 
+        public virtual DbSet<AdvancedSettingsEntity> AdvancedSettings { get; set; }
+        public virtual DbSet<ContentSettingsEntity> ContentSettings { get; set; }
+        public virtual DbSet<FeedSettingsEntity> FeedSettings { get; set; }
+        public virtual DbSet<FriendLinksSettingsEntity> FriendLinksSettings { get; set; }
+        public virtual DbSet<GeneralSettingsEntity> GeneralSettings { get; set; }
+        public virtual DbSet<NotificationSettingsEntity> NotificationSettings { get; set; }
+        public virtual DbSet<WatermarkSettingsEntity> WatermarkSettings { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
@@ -64,7 +73,6 @@ namespace BioWorld.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            //builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             base.OnModelCreating(builder);
         }
     }
