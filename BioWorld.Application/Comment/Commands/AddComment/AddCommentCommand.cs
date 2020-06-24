@@ -4,12 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Configuration;
 using BioWorld.Application.WordFilter;
 using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace BioWorld.Application.Comment.Commands.AddComment
 {
@@ -32,12 +30,12 @@ namespace BioWorld.Application.Comment.Commands.AddComment
     {
         private readonly IApplicationDbContext _context;
 
-        private readonly BlogConfigSetting _blogConfig;
+        private readonly IBlogConfigService _blogConfig;
 
         public AddCommentCommandHandler(IApplicationDbContext context,
-            IOptions<BlogConfigSetting> settings = null)
+            IBlogConfigService settings)
         {
-            if (null != settings) _blogConfig = settings.Value;
+            if (null != settings) _blogConfig = settings;
             _context = context;
         }
 

@@ -37,7 +37,9 @@ namespace BioWorld.BackEnd.Controllers
             _blogConfigService.WatermarkSettings = _context.WatermarkSettings.FirstOrDefault();
 
             // Overwrite the appsetting value
-            _timeService.TimeZoneUtcOffset = _blogConfigService.GeneralSettings.TimeZoneUtcOffset;
+            if (_blogConfigService.GeneralSettings != null)
+                _timeService.TimeZoneUtcOffset = _blogConfigService.GeneralSettings.TimeZoneUtcOffset;
+
             return Ok("BioWorld Blog BackEnd Service started");
         }
     }

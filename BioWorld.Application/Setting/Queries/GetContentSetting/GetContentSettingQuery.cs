@@ -1,8 +1,9 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using BioWorld.Application.Configuration;
+using BioWorld.Application.Common.Interface;
 using MediatR;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Setting.Queries.GetContentSetting
 {
@@ -10,31 +11,33 @@ namespace BioWorld.Application.Setting.Queries.GetContentSetting
     {
         public class GetContentSettingQueryHandler : IRequestHandler<GetContentSettingQuery, ContentSettingsDto>
         {
-            private readonly BlogConfigSetting _blogConfig;
+            private readonly IApplicationDbContext _context;
 
-            public GetContentSettingQueryHandler(IOptions<BlogConfigSetting> settings)
+            public GetContentSettingQueryHandler(IApplicationDbContext context)
             {
-                if (null != settings) _blogConfig = settings.Value;
+                _context = context;
             }
 
             public async Task<ContentSettingsDto> Handle(GetContentSettingQuery request, CancellationToken cancellationToken)
             {
-                var vm = new ContentSettingsDto
-                {
-                    DisharmonyWords = _blogConfig.ContentSettings.DisharmonyWords,
-                    EnableComments = _blogConfig.ContentSettings.EnableComments,
-                    RequireCommentReview = _blogConfig.ContentSettings.RequireCommentReview,
-                    EnableWordFilter = _blogConfig.ContentSettings.EnableWordFilter,
-                    UseFriendlyNotFoundImage = _blogConfig.ContentSettings.UseFriendlyNotFoundImage,
-                    PostListPageSize = _blogConfig.ContentSettings.PostListPageSize,
-                    HotTagAmount = _blogConfig.ContentSettings.HotTagAmount,
-                    EnableGravatar = _blogConfig.ContentSettings.EnableGravatar,
-                    ShowCalloutSection = _blogConfig.ContentSettings.ShowCalloutSection,
-                    CalloutSectionHtmlPitch = _blogConfig.ContentSettings.CalloutSectionHtmlPitch,
-                    ShowPostFooter = _blogConfig.ContentSettings.ShowPostFooter,
-                    PostFooterHtmlPitch = _blogConfig.ContentSettings.PostFooterHtmlPitch
-                };
-                return vm;
+                var entity = await _context.ContentSettings.
+                    Select(c => new ContentSettingsDto
+                    {
+                        DisharmonyWords = c.DisharmonyWords,
+                        EnableComments = c.EnableComments,
+                        RequireCommentReview = c.RequireCommentReview,
+                        EnableWordFilter = c.EnableWordFilter,
+                        UseFriendlyNotFoundImage = c.UseFriendlyNotFoundImage,
+                        PostListPageSize = c.PostListPageSize,
+                        HotTagAmount = c.HotTagAmount,
+                        EnableGravatar = c.EnableGravatar,
+                        ShowCalloutSection = c.ShowCalloutSection,
+                        CalloutSectionHtmlPitch = c.CalloutSectionHtmlPitch,
+                        ShowPostFooter = c.ShowPostFooter,
+                        PostFooterHtmlPitch = c.PostFooterHtmlPitch
+                    })
+                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                return entity;
             }
         }
     }

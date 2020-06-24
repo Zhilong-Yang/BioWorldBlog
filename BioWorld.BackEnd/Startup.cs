@@ -1,6 +1,5 @@
 using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Configuration;
 using BioWorld.BackEnd.Filters;
 using BioWorld.BackEnd.Services;
 using BioWorld.Infrastructure;
@@ -31,9 +30,6 @@ namespace BioWorld.BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            _configuration.Bind(nameof(BlogConfigSetting), new BlogConfigSetting());
-            services.Configure<BlogConfigSetting>(_configuration.GetSection(nameof(BlogConfigSetting)));
-
             _configuration.Bind(nameof(AppSettings),  AppSettings.Instance);
             services.Configure<AppSettings>(_configuration.GetSection(nameof(AppSettings)));
 

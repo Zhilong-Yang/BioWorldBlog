@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Configuration;
 using BioWorld.Application.Core;
 using BioWorld.Domain.Entities;
 using MediatR;
@@ -25,12 +24,12 @@ namespace BioWorld.Application.Comment.Commands.AddReply
     {
         private readonly IApplicationDbContext _context;
 
-        private readonly BlogConfigSetting _blogConfig;
+        private readonly IBlogConfigService _blogConfig;
 
         public AddReplyCommandHandler(IApplicationDbContext context,
-            IOptions<BlogConfigSetting> settings = null)
+            IBlogConfigService settings)
         {
-            if (null != settings) _blogConfig = settings.Value;
+            if (null != settings) _blogConfig = settings;
             _context = context;
         }
 

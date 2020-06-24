@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.Configuration;
 using BioWorld.Application.Core;
 using MediatR;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Setting.Queries.GetGeneralSetting
 {
@@ -13,13 +12,13 @@ namespace BioWorld.Application.Setting.Queries.GetGeneralSetting
     {
         public class GetAllPostListItemQueryHandler : IRequestHandler<GetGeneralSettingQuery, GetGeneralSettingsDto>
         {
-            private readonly BlogConfigSetting _blogConfig;
+            private readonly IApplicationDbContext _context;
 
             private readonly IDateTime _dateTimeResolver;
 
-            public GetAllPostListItemQueryHandler(IOptions<BlogConfigSetting> settings, IDateTime dateTimeResolver)
+            public GetAllPostListItemQueryHandler(IApplicationDbContext context, IDateTime dateTimeResolver)
             {
-                if (null != settings) _blogConfig = settings.Value;
+                if (null != context) _context = context;
                 _dateTimeResolver = dateTimeResolver;
             }
 
@@ -38,28 +37,29 @@ namespace BioWorld.Application.Setting.Queries.GetGeneralSetting
                     Value = t.Value
                 }).ToList();
 
-                var vm = new GetGeneralSettingsDto
-                {
-                    LogoText = _blogConfig.GeneralSettings.LogoText,
-                    MetaKeyword = _blogConfig.GeneralSettings.MetaKeyword,
-                    MetaDescription = _blogConfig.GeneralSettings.MetaDescription,
-                    CanonicalPrefix = _blogConfig.GeneralSettings.CanonicalPrefix,
-                    SiteTitle = _blogConfig.GeneralSettings.SiteTitle,
-                    Copyright = _blogConfig.GeneralSettings.Copyright,
-                    SideBarCustomizedHtmlPitch = _blogConfig.GeneralSettings.SideBarCustomizedHtmlPitch,
-                    FooterCustomizedHtmlPitch = _blogConfig.GeneralSettings.FooterCustomizedHtmlPitch,
-                    OwnerName = _blogConfig.GeneralSettings.OwnerName,
-                    OwnerDescription = _blogConfig.GeneralSettings.Description,
-                    OwnerShortDescription = _blogConfig.GeneralSettings.ShortDescription,
-                    SelectedTimeZoneId = _blogConfig.GeneralSettings.TimeZoneId,
-                    SelectedUtcOffset = _dateTimeResolver.GetTimeSpanByZoneId(_blogConfig.GeneralSettings.TimeZoneId),
-                    TimeZoneList = tzList,
-                    SelectedThemeFileName = _blogConfig.GeneralSettings.ThemeFileName,
-                    AutoDarkLightTheme = _blogConfig.GeneralSettings.AutoDarkLightTheme,
-                    ThemeList = tmList
-                };
-
-                return vm;
+                var entity = await _context.GeneralSettings.
+                    Select(c => new GetGeneralSettingsDto()
+                    {
+                        LogoText = c.LogoText,
+                        MetaKeyword = c.MetaKeyword,
+                        MetaDescription = c.MetaDescription,
+                        CanonicalPrefix = c.CanonicalPrefix,
+                        SiteTitle = c.SiteTitle,
+                        Copyright = c.Copyright,
+                        SideBarCustomizedHtmlPitch = c.SideBarCustomizedHtmlPitch,
+                        FooterCustomizedHtmlPitch = c.FooterCustomizedHtmlPitch,
+                        OwnerName = c.OwnerName,
+                        OwnerDescription = c.Description,
+                        OwnerShortDescription = c.ShortDescription,
+                        SelectedTimeZoneId = c.TimeZoneId,
+                        SelectedUtcOffset = _dateTimeResolver.GetTimeSpanByZoneId(c.TimeZoneId),
+                        TimeZoneList = tzList,
+                        SelectedThemeFileName = c.ThemeFileName,
+                        AutoDarkLightTheme = c.AutoDarkLightTheme,
+                        ThemeList = tmList
+                    })
+                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                return entity;
             }
         }
     }

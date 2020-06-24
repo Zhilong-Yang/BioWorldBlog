@@ -25,8 +25,6 @@ namespace BioWorld.Infrastructure.Services
 
         public AdvancedSettingsEntity AdvancedSettings { get; set; }
 
-        private bool _hasInitialized;
-
         public BlogConfigService(ILogger<BlogConfigService> logger,
             IConfiguration configuration)
         {
