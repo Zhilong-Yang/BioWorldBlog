@@ -1,4 +1,5 @@
-﻿using BioWorld.Application.Common.Interface;
+﻿using BioWorld.Application;
+using BioWorld.Application.Common.Interface;
 using BioWorld.Infrastructure.Identity;
 using BioWorld.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -36,12 +37,8 @@ namespace BioWorld.Infrastructure
 
             services.AddScoped<IBlogConfigService, BlogConfigService>();
 
-            services.AddScoped<IDateTime>(c => new DateTimeService(c.GetService<IBlogConfigService>().GeneralSettings.TimeZoneUtcOffset));
-
-            //services.AddScoped<IDateTime>(c => new DateTimeService("08:00:00")); 
-            // var sp = services.BuildServiceProvider();
-            // var fooService = sp.GetService<IBlogConfigService>();
-
+            services.AddScoped<IDateTime>(c => new DateTimeService(AppSettings.Instance.TimeZoneUtcOffset));
+            
             services.AddTransient<IIdentityService, IdentityService>();
 
             services.AddAuthentication()

@@ -10,5 +10,7 @@ namespace BioWorld.Application.Common.Interface
         DateTime GetUtcTimeFromUserTZone(DateTime userDateTime);
         IEnumerable<TimeZoneInfo> GetTimeZones();
         TimeSpan GetTimeSpanByZoneId(string timeZoneId);
+
+        string TimeZoneUtcOffset { get; set; }
     }
 }

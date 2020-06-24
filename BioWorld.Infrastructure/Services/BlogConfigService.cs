@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BioWorld.Application.Common.Interface;
+﻿using BioWorld.Application.Common.Interface;
 using BioWorld.Domain.Entities.Cfg;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -40,34 +39,6 @@ namespace BioWorld.Infrastructure.Services
             WatermarkSettings = new WatermarkSettingsEntity();
             FriendLinksSettings = new FriendLinksSettingsEntity();
             AdvancedSettings = new AdvancedSettingsEntity();
-
-            Initialize();
-        }
-
-        public void RequireRefresh()
-        {
-            _hasInitialized = false;
-        }
-
-        private void Initialize()
-        {
-            if (_hasInitialized) return;
-
-            GetAllConfigurations();
-
-            _hasInitialized = true;
-        }
-
-
-        private void GetAllConfigurations()
-        {
-            // GeneralSettings = _context.GeneralSettings.FirstOrDefault();
-            // ContentSettings = _context.ContentSettings.FirstOrDefault();
-            // NotificationSettings = _context.NotificationSettings.FirstOrDefault();
-            // FeedSettings = _context.FeedSettings.FirstOrDefault();
-            // WatermarkSettings = _context.WatermarkSettings.FirstOrDefault();
-            // FriendLinksSettings = _context.FriendLinksSettings.FirstOrDefault();
-            // AdvancedSettings = _context.AdvancedSettings.FirstOrDefault();
         }
     }
 }

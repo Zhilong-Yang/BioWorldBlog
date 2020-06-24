@@ -11,6 +11,5 @@ namespace BioWorld.Application.Common.Interface
         WatermarkSettingsEntity WatermarkSettings { get; set; }
         FriendLinksSettingsEntity FriendLinksSettings { get; set; }
         AdvancedSettingsEntity AdvancedSettings { get; set; }
-        void RequireRefresh();
     }
 }

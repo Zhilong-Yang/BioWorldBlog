@@ -31,11 +31,12 @@ namespace BioWorld.BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var blogConfigurationSection = new BlogConfigSetting();
-            _configuration.Bind(nameof(BlogConfigSetting), blogConfigurationSection);
+            _configuration.Bind(nameof(BlogConfigSetting), new BlogConfigSetting());
             services.Configure<BlogConfigSetting>(_configuration.GetSection(nameof(BlogConfigSetting)));
 
-            services.Configure<AppSettings>(_appSettingsSection);
+            _configuration.Bind(nameof(AppSettings),  AppSettings.Instance);
+            services.Configure<AppSettings>(_configuration.GetSection(nameof(AppSettings)));
+
             services.AddApplication();
             services.AddInfrastructure(_configuration);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
