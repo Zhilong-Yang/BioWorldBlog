@@ -4,6 +4,7 @@ using BioWorld.Application.Setting.Queries.GetContentSetting;
 using BioWorld.Application.Setting.Queries.GetFeedSetting;
 using BioWorld.Application.Setting.Queries.GetFriendLinksSetting;
 using BioWorld.Application.Setting.Queries.GetGeneralSetting;
+using BioWorld.Application.Setting.Queries.GetNotificationSetting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -45,6 +46,11 @@ namespace BioWorld.BackEnd.Controllers
             return Ok(await Mediator.Send(new GetFriendLinksSettingQuery()));
         }
 
+        [HttpGet]
+        public async Task<ActionResult<NotificationSettingsDto>> GetNotificationSetting()
+        {
+            return Ok(await Mediator.Send(new GetNotificationSettingQuery()));
+        }   
         
     }
 }
