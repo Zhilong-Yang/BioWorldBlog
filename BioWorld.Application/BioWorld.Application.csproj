@@ -6,13 +6,10 @@
 
   <ItemGroup>
     <Compile Remove="Post\Queries\GetPostByTag\**" />
-    <Compile Remove="Setting\Commands\**" />
     <Compile Remove="Tag\1\**" />
     <EmbeddedResource Remove="Post\Queries\GetPostByTag\**" />
-    <EmbeddedResource Remove="Setting\Commands\**" />
     <EmbeddedResource Remove="Tag\1\**" />
     <None Remove="Post\Queries\GetPostByTag\**" />
-    <None Remove="Setting\Commands\**" />
     <None Remove="Tag\1\**" />
   </ItemGroup>
 

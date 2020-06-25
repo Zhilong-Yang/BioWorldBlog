@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using BioWorld.Application.Setting.Commands.UpdateAdvanceSetting;
 using BioWorld.Application.Setting.Queries.GetAdvanceSetting;
 using BioWorld.Application.Setting.Queries.GetContentSetting;
 using BioWorld.Application.Setting.Queries.GetFeedSetting;
@@ -11,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BioWorld.BackEnd.Controllers
 {
-    public class ConfigureSettingController: ApiController
+    public class ConfigureSettingController : ApiController
     {
         public ConfigureSettingController(ILogger<ControllerBase> logger) : base(logger)
         {
@@ -51,7 +53,7 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult<NotificationSettingsDto>> GetNotificationSetting()
         {
             return Ok(await Mediator.Send(new GetNotificationSettingQuery()));
-        }   
+        }
 
         [HttpGet]
         public async Task<ActionResult<WatermarkSettingsDto>> GetWatermarkSetting()
@@ -59,5 +61,16 @@ namespace BioWorld.BackEnd.Controllers
             return Ok(await Mediator.Send(new GetWatermarkSettingQuery()));
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAdvanceSettings(Guid id, UpdateAdvanceSettingCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
     }
 }

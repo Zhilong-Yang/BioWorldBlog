@@ -23,6 +23,7 @@ namespace BioWorld.Application.Setting.Queries.GetAdvanceSetting
             {
                 var entity = await _context.AdvancedSettings.Select(c => new AdvanceSettingsDto
                     {
+                        Id = c.Id,
                         DNSPrefetchEndpoint = c.DNSPrefetchEndpoint,
                         RobotsTxtContent = c.RobotsTxtContent,
                         EnablePingbackSend = c.EnablePingBackSend,
