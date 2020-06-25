@@ -5,6 +5,7 @@ using BioWorld.Application.Setting.Queries.GetFeedSetting;
 using BioWorld.Application.Setting.Queries.GetFriendLinksSetting;
 using BioWorld.Application.Setting.Queries.GetGeneralSetting;
 using BioWorld.Application.Setting.Queries.GetNotificationSetting;
+using BioWorld.Application.Setting.Queries.GetWatermarkSetting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -51,6 +52,12 @@ namespace BioWorld.BackEnd.Controllers
         {
             return Ok(await Mediator.Send(new GetNotificationSettingQuery()));
         }   
-        
+
+        [HttpGet]
+        public async Task<ActionResult<WatermarkSettingsDto>> GetWatermarkSetting()
+        {
+            return Ok(await Mediator.Send(new GetWatermarkSettingQuery()));
+        }
+
     }
 }
