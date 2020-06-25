@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BioWorld.Application.Setting.Queries.GetAdvanceSetting
+﻿namespace BioWorld.Application.Setting.Queries.GetAdvanceSetting
 {
-    public class AdvanceSettingDto
+    public class AdvanceSettingsDto
     {
         public string DNSPrefetchEndpoint { get; set; }
 

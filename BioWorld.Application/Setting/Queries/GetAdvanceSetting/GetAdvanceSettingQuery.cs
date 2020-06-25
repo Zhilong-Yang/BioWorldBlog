@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioWorld.Application.Setting.Queries.GetAdvanceSetting
 {
-    public class GetAdvanceSettingQuery : IRequest<AdvanceSettingDto>
+    public class GetAdvanceSettingQuery : IRequest<AdvanceSettingsDto>
     {
-        public class GetAdvanceSettingQueryHandler : IRequestHandler<GetAdvanceSettingQuery, AdvanceSettingDto>
+        public class GetAdvanceSettingQueryHandler : IRequestHandler<GetAdvanceSettingQuery, AdvanceSettingsDto>
         {
             private readonly IApplicationDbContext _context;
 
@@ -18,10 +18,10 @@ namespace BioWorld.Application.Setting.Queries.GetAdvanceSetting
                 _context = context;
             }
 
-            public async Task<AdvanceSettingDto> Handle(GetAdvanceSettingQuery request,
+            public async Task<AdvanceSettingsDto> Handle(GetAdvanceSettingQuery request,
                 CancellationToken cancellationToken)
             {
-                var entity = await _context.AdvancedSettings.Select(c => new AdvanceSettingDto
+                var entity = await _context.AdvancedSettings.Select(c => new AdvanceSettingsDto
                     {
                         DNSPrefetchEndpoint = c.DNSPrefetchEndpoint,
                         RobotsTxtContent = c.RobotsTxtContent,

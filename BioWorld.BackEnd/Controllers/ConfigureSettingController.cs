@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BioWorld.Application.Setting.Queries.GetAdvanceSetting;
 using BioWorld.Application.Setting.Queries.GetContentSetting;
+using BioWorld.Application.Setting.Queries.GetFeedSettings;
 using BioWorld.Application.Setting.Queries.GetGeneralSetting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,9 +27,15 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<AdvanceSettingDto>> GetAdvanceSetting()
+        public async Task<ActionResult<AdvanceSettingsDto>> GetAdvanceSetting()
         {
             return Ok(await Mediator.Send(new GetAdvanceSettingQuery()));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<FeedSettingsDto>> GetFeedSetting()
+        {
+            return Ok(await Mediator.Send(new GetFeedSettingQuery()));
         }
     }
 }
