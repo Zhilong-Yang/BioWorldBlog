@@ -1,4 +1,4 @@
-﻿namespace BioWorld.Application.Setting.Queries.GetFeedSettings
+﻿namespace BioWorld.Application.Setting.Queries.GetFeedSetting
 {
     public class FeedSettingsDto
     {

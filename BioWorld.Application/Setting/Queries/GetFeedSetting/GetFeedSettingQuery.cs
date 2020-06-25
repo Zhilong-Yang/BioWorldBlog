@@ -5,7 +5,7 @@ using BioWorld.Application.Common.Interface;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BioWorld.Application.Setting.Queries.GetFeedSettings
+namespace BioWorld.Application.Setting.Queries.GetFeedSetting
 {
     public class GetFeedSettingQuery : IRequest<FeedSettingsDto>
     {
