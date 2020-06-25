@@ -1,18 +1,14 @@
 ﻿using System.Collections;
 using System.Text;
+using BioWorld.Application.Common.Interface;
 
-namespace BioWorld.Application.WordFilter
+namespace BioWorld.Infrastructure.Services.WordFilter
 {
-    public interface IMaskWordFilter
-    {
-        string FilterContent(string content);
-    }
-
     public class MaskWordFilter : IMaskWordFilter
     {
         private readonly Hashtable _filterWords = new Hashtable();
 
-        public MaskWordFilter(IWordSource wordSource)
+        public MaskWordFilter(StringWordSource wordSource) 
         {
             var banWords = wordSource.GetWordsArray();
             foreach (var s in banWords) AddWordToHashtable(s);

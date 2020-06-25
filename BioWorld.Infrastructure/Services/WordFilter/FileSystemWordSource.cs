@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace BioWorld.Application.WordFilter
+namespace BioWorld.Infrastructure.Services.WordFilter
 {
-    public class FileSystemWordSource : IWordSource
+    public class FileSystemWordSource
     {
         public string DataFilePath { get; }
 

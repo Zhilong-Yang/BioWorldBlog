@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,16 +14,12 @@ namespace BioWorld.BackEnd.Controllers
 
         private readonly IBlogConfigService _blogConfigService;
 
-        private readonly IDateTime _timeService;
-
         public HomeController(ILogger<ControllerBase> logger,
             IApplicationDbContext context,
-            IDateTime timeService,
             IBlogConfigService blogConfigService) : base(logger)
         {
             _context = context;
             _blogConfigService = blogConfigService;
-            _timeService = timeService;
         }
 
         [HttpGet]
@@ -36,9 +33,12 @@ namespace BioWorld.BackEnd.Controllers
             _blogConfigService.NotificationSettings = _context.NotificationSettings.FirstOrDefault();
             _blogConfigService.WatermarkSettings = _context.WatermarkSettings.FirstOrDefault();
 
-            // Overwrite the appsetting value
+            // Overwrite the app setting value
             if (_blogConfigService.GeneralSettings != null)
-                _timeService.TimeZoneUtcOffset = _blogConfigService.GeneralSettings.TimeZoneUtcOffset;
+                AppSettings.Instance.TimeZoneUtcOffset = _blogConfigService.GeneralSettings.TimeZoneUtcOffset;
+
+            if (_blogConfigService.ContentSettings != null)
+                AppSettings.Instance.DisharmonyWords = _blogConfigService.ContentSettings.DisharmonyWords;
 
             return Ok("BioWorld Blog BackEnd Service started");
         }

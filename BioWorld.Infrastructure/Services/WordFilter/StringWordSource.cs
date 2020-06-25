@@ -1,6 +1,6 @@
-﻿namespace BioWorld.Application.WordFilter
+﻿namespace BioWorld.Infrastructure.Services.WordFilter
 {
-    public class StringWordSource : IWordSource
+    public class StringWordSource
     {
         public char SplitChar { get; }
 

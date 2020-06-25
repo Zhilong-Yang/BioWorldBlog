@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Application.WordFilter;
 using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -32,11 +31,15 @@ namespace BioWorld.Application.Comment.Commands.AddComment
 
         private readonly IBlogConfigService _blogConfig;
 
+        private readonly IMaskWordFilter _wordFilter;
+
         public AddCommentCommandHandler(IApplicationDbContext context,
-            IBlogConfigService settings)
+            IBlogConfigService settings,
+            IMaskWordFilter wordFilter)
         {
             if (null != settings) _blogConfig = settings;
             _context = context;
+            _wordFilter = wordFilter;
         }
 
         public async Task<CommentListItemDto> Handle(AddCommentCommand request, CancellationToken cancellationToken)
@@ -47,13 +50,12 @@ namespace BioWorld.Application.Comment.Commands.AddComment
                 throw new BadRequestException(
                     $"{nameof(_blogConfig.ContentSettings.EnableComments)} can not be less than 1, current value: {_blogConfig.ContentSettings.EnableComments}.");
             }
+
             // 2. Harmonize banned keywords
             if (_blogConfig.ContentSettings.EnableWordFilter)
             {
-                var dw = _blogConfig.ContentSettings.DisharmonyWords;
-                var maskWordFilter = new MaskWordFilter(new StringWordSource(dw));
-                request.Username = maskWordFilter.FilterContent(request.Username);
-                request.Content = maskWordFilter.FilterContent(request.Content);
+                request.Username = _wordFilter.FilterContent(request.Username);
+                request.Content = _wordFilter.FilterContent(request.Content);
             }
 
             var model = new CommentEntity

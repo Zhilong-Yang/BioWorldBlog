@@ -21,5 +21,7 @@
         public int PostAbstractWords { get; set; }
 
         public string TimeZoneUtcOffset { get; set; }
+
+        public string DisharmonyWords { get; set; }
     }
 }

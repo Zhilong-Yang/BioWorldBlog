@@ -2,6 +2,7 @@
 using BioWorld.Application.Common.Interface;
 using BioWorld.Infrastructure.Identity;
 using BioWorld.Infrastructure.Services;
+using BioWorld.Infrastructure.Services.WordFilter;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,9 +36,11 @@ namespace BioWorld.Infrastructure
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddScoped<IBlogConfigService, BlogConfigService>();
+            services.AddSingleton<IBlogConfigService, BlogConfigService>();
 
             services.AddScoped<IDateTime>(c => new DateTimeService(AppSettings.Instance.TimeZoneUtcOffset));
+
+            services.AddScoped<IMaskWordFilter>(c => new MaskWordFilter(new StringWordSource(AppSettings.Instance.DisharmonyWords)));
             
             services.AddTransient<IIdentityService, IdentityService>();
 
