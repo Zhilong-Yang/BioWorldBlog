@@ -1,12 +1,15 @@
-﻿using BioWorld.Application;
+﻿using System;
+using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
 using BioWorld.Infrastructure.Identity;
 using BioWorld.Infrastructure.Services;
+using BioWorld.Infrastructure.Services.Notification;
 using BioWorld.Infrastructure.Services.WordFilter;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 
 namespace BioWorld.Infrastructure
 {
@@ -38,7 +41,7 @@ namespace BioWorld.Infrastructure
 
             services.AddSingleton<IBlogConfigService, BlogConfigService>();
 
-            services.AddScoped<IDateTimeService>(c => new DateTimeServiceService(AppSettings.Instance.TimeZoneUtcOffset));
+            services.AddScoped<IDateTimeService>(c => new DateTimeService(AppSettings.Instance.TimeZoneUtcOffset));
 
             services.AddScoped<IMaskWordFilterService>(c => new MaskWordFilterServiceService(new StringWordSource(AppSettings.Instance.DisharmonyWords)));
             

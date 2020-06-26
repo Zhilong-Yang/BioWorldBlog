@@ -6,11 +6,11 @@ using TimeZoneConverter;
 
 namespace BioWorld.Infrastructure.Services
 {
-    public class DateTimeServiceService : IDateTimeService
+    public class DateTimeService : IDateTimeService
     {
         public string TimeZoneUtcOffset { get; set; }
 
-        public DateTimeServiceService(string timeZoneUtcOffset)
+        public DateTimeService(string timeZoneUtcOffset)
         {
             TimeZoneUtcOffset = timeZoneUtcOffset;
         }

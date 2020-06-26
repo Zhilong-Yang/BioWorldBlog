@@ -4,9 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
+using BioWorld.Application.Core;
+using BioWorld.Application.Notification;
 using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace BioWorld.Application.Comment.Commands.AddComment
 {
@@ -33,13 +36,21 @@ namespace BioWorld.Application.Comment.Commands.AddComment
 
         private readonly IMaskWordFilterService _wordFilterService;
 
+        // private readonly INotificationClientService _notificationClientService;
+
+        // private readonly ILogger _logger;
+
         public AddCommentCommandHandler(IApplicationDbContext context,
             IBlogConfigService settings,
+            // ILogger logger,
+            // INotificationClientService notificationClientService,
             IMaskWordFilterService wordFilterService)
         {
             if (null != settings) _blogConfig = settings;
             _context = context;
             _wordFilterService = wordFilterService;
+            // _notificationClientService = notificationClientService;
+            // _logger = logger;
         }
 
         public async Task<CommentListItemDto> Handle(AddCommentCommand request, CancellationToken cancellationToken)
@@ -87,6 +98,42 @@ namespace BioWorld.Application.Comment.Commands.AddComment
                 PostTitle = postTitle,
                 Username = model.Username
             };
+
+            #if false
+            if (_blogConfig.NotificationSettings.SendEmailOnNewComment && null != _notificationClientService)
+            {
+                _ = Task.Run(async () =>
+                {
+                    if (!_notificationClientService.IsEnabled)
+                    {
+                        _logger.LogWarning(
+                            "Skipped SendNewCommentNotification because Email sending is disabled.");
+                        await Task.CompletedTask;
+                    }
+
+                    try
+                    {
+                        var payload = new NewCommentNotificationPayload(
+                            request.Username,
+                            request.Email,
+                            request.IpAddress,
+                            postTitle,
+                            Utils.ConvertMarkdownContent(request.Content, Utils.MarkdownConvertType.Html),
+                            model.CreateOnUtc
+                        );
+
+                        await _notificationClientService.SendNotificationRequest(
+                            new NotificationRequest<NewCommentNotificationPayload>(MailMessageTypes.NewCommentNotification,
+                                payload));
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(e, e.Message);
+                    }
+                });
+            }
+            #endif
+
             return item;
         }
     }

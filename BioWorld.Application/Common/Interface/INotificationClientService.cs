@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using BioWorld.Application.Core;
 using BioWorld.Application.Notification;
 
 namespace BioWorld.Application.Common.Interface
