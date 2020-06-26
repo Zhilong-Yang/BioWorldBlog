@@ -1,4 +1,4 @@
-﻿namespace BioWorld.Infrastructure.Services.Notification
+﻿namespace BioWorld.Application.Notification
 {
     public class NotificationRequest<T> where T : class
     {
@@ -6,8 +6,11 @@
         public string EmailDisplayName { get; set; }
         public T Payload { get; set; }
 
-        public NotificationRequest(T payload)
+        public MailMessageTypes MessageType { get; set; }
+
+        public NotificationRequest(MailMessageTypes messageType, T payload)
         {
+            MessageType = messageType;
             Payload = payload;
         }
     }

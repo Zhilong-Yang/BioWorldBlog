@@ -5,23 +5,24 @@ using System.Threading.Tasks;
 using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
 using BioWorld.Application.Core;
+using BioWorld.Application.Notification;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
 namespace BioWorld.Infrastructure.Services.Notification
 {
-    public class NotificationService 
+    public class NotificationClientService : INotificationClientService
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger<NotificationService> _logger;
+        private readonly ILogger<NotificationClientService> _logger;
         private readonly IBlogConfigService _blogConfigService;
 
         public bool IsEnabled { get; set; }
 
-        public NotificationService(HttpClient httpClient,
+        public NotificationClientService(HttpClient httpClient,
             IOptions<AppSettings> settings,
-            ILogger<NotificationService> logger,
+            ILogger<NotificationClientService> logger,
             IBlogConfigService blogConfigS)
         {
             _httpClient = httpClient;
@@ -46,7 +47,7 @@ namespace BioWorld.Infrastructure.Services.Notification
                 }
             }
         }
-        
+
         public async Task SendNotificationRequest<T>(NotificationRequest<T> request,
             [CallerMemberName] string callerMemberName = "") where T : class
         {
