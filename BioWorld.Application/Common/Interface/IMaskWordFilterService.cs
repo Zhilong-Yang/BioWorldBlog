@@ -1,6 +1,6 @@
 ﻿namespace BioWorld.Application.Common.Interface
 {
-    public interface IMaskWordFilter
+    public interface IMaskWordFilterService
     {
         string FilterContent(string content);
     }

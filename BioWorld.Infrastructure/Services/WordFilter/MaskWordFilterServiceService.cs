@@ -4,11 +4,11 @@ using BioWorld.Application.Common.Interface;
 
 namespace BioWorld.Infrastructure.Services.WordFilter
 {
-    public class MaskWordFilter : IMaskWordFilter
+    public class MaskWordFilterServiceService : IMaskWordFilterService
     {
         private readonly Hashtable _filterWords = new Hashtable();
 
-        public MaskWordFilter(StringWordSource wordSource) 
+        public MaskWordFilterServiceService(StringWordSource wordSource) 
         {
             var banWords = wordSource.GetWordsArray();
             foreach (var s in banWords) AddWordToHashtable(s);
@@ -112,7 +112,7 @@ namespace BioWorld.Infrastructure.Services.WordFilter
                                 }
                                 else
                                 {
-                                    if (!h.ContainsKey(0)) return -1;
+                                    if (h != null && !h.ContainsKey(0)) return -1;
                                 }
                             }
 

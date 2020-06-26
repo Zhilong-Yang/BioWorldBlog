@@ -31,15 +31,15 @@ namespace BioWorld.Application.Comment.Commands.AddComment
 
         private readonly IBlogConfigService _blogConfig;
 
-        private readonly IMaskWordFilter _wordFilter;
+        private readonly IMaskWordFilterService _wordFilterService;
 
         public AddCommentCommandHandler(IApplicationDbContext context,
             IBlogConfigService settings,
-            IMaskWordFilter wordFilter)
+            IMaskWordFilterService wordFilterService)
         {
             if (null != settings) _blogConfig = settings;
             _context = context;
-            _wordFilter = wordFilter;
+            _wordFilterService = wordFilterService;
         }
 
         public async Task<CommentListItemDto> Handle(AddCommentCommand request, CancellationToken cancellationToken)
@@ -54,8 +54,8 @@ namespace BioWorld.Application.Comment.Commands.AddComment
             // 2. Harmonize banned keywords
             if (_blogConfig.ContentSettings.EnableWordFilter)
             {
-                request.Username = _wordFilter.FilterContent(request.Username);
-                request.Content = _wordFilter.FilterContent(request.Content);
+                request.Username = _wordFilterService.FilterContent(request.Username);
+                request.Content = _wordFilterService.FilterContent(request.Content);
             }
 
             var model = new CommentEntity

@@ -14,18 +14,18 @@ namespace BioWorld.Application.Setting.Queries.GetGeneralSetting
         {
             private readonly IApplicationDbContext _context;
 
-            private readonly IDateTime _dateTimeResolver;
+            private readonly IDateTimeService _dateTimeServiceResolver;
 
-            public GetAllPostListItemQueryHandler(IApplicationDbContext context, IDateTime dateTimeResolver)
+            public GetAllPostListItemQueryHandler(IApplicationDbContext context, IDateTimeService dateTimeServiceResolver)
             {
                 if (null != context) _context = context;
-                _dateTimeResolver = dateTimeResolver;
+                _dateTimeServiceResolver = dateTimeServiceResolver;
             }
 
             public async Task<GetGeneralSettingsDto> Handle(GetGeneralSettingQuery request,
                 CancellationToken cancellationToken)
             {
-                var tzList = _dateTimeResolver.GetTimeZones().Select(t => new SelectListItemDto
+                var tzList = _dateTimeServiceResolver.GetTimeZones().Select(t => new SelectListItemDto
                 {
                     Text = t.DisplayName,
                     Value = t.Id
@@ -53,7 +53,7 @@ namespace BioWorld.Application.Setting.Queries.GetGeneralSetting
                         OwnerDescription = c.Description,
                         OwnerShortDescription = c.ShortDescription,
                         SelectedTimeZoneId = c.TimeZoneId,
-                        SelectedUtcOffset = _dateTimeResolver.GetTimeSpanByZoneId(c.TimeZoneId),
+                        SelectedUtcOffset = _dateTimeServiceResolver.GetTimeSpanByZoneId(c.TimeZoneId),
                         TimeZoneList = tzList,
                         SelectedThemeFileName = c.ThemeFileName,
                         AutoDarkLightTheme = c.AutoDarkLightTheme,

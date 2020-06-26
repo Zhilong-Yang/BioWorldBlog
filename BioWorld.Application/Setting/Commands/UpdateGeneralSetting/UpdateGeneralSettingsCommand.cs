@@ -33,13 +33,13 @@ namespace BioWorld.Application.Setting.Commands.UpdateGeneralSetting
 
         private readonly IBlogConfigService _blogConfig;
 
-        private readonly IDateTime _dateTime;
+        private readonly IDateTimeService _dateTimeService;
 
-        public UpdateGeneralSettingsCommandHandler(IApplicationDbContext context, IBlogConfigService blogConfig, IDateTime dateTime)
+        public UpdateGeneralSettingsCommandHandler(IApplicationDbContext context, IBlogConfigService blogConfig, IDateTimeService dateTimeService)
         {
             _context = context;
             _blogConfig = blogConfig;
-            _dateTime = dateTime;
+            _dateTimeService = dateTimeService;
         }
 
         public async Task<Unit> Handle(UpdateGeneralSettingsCommand request, CancellationToken cancellationToken)
@@ -61,7 +61,7 @@ namespace BioWorld.Application.Setting.Commands.UpdateGeneralSetting
             settings.LogoText = request.LogoText;
             settings.SideBarCustomizedHtmlPitch = request.SideBarCustomizedHtmlPitch;
             settings.FooterCustomizedHtmlPitch = request.FooterCustomizedHtmlPitch;
-            settings.TimeZoneUtcOffset = _dateTime.GetTimeSpanByZoneId(request.SelectedTimeZoneId).ToString();
+            settings.TimeZoneUtcOffset = _dateTimeService.GetTimeSpanByZoneId(request.SelectedTimeZoneId).ToString();
             settings.TimeZoneId = request.SelectedTimeZoneId;
             settings.ThemeFileName = request.SelectedThemeFileName;
             settings.OwnerName = request.OwnerName;
@@ -77,7 +77,7 @@ namespace BioWorld.Application.Setting.Commands.UpdateGeneralSetting
             entity.LogoText = request.LogoText;
             entity.SideBarCustomizedHtmlPitch = request.SideBarCustomizedHtmlPitch;
             entity.FooterCustomizedHtmlPitch = request.FooterCustomizedHtmlPitch;
-            entity.TimeZoneUtcOffset = _dateTime.GetTimeSpanByZoneId(request.SelectedTimeZoneId).ToString();
+            entity.TimeZoneUtcOffset = _dateTimeService.GetTimeSpanByZoneId(request.SelectedTimeZoneId).ToString();
             entity.TimeZoneId = request.SelectedTimeZoneId;
             entity.ThemeFileName = request.SelectedThemeFileName;
             entity.OwnerName = request.OwnerName;

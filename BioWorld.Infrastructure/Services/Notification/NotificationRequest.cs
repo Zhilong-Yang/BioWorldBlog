@@ -4,12 +4,10 @@
     {
         public string AdminEmail { get; set; }
         public string EmailDisplayName { get; set; }
-        public MailMessageTypes MessageType { get; set; }
         public T Payload { get; set; }
 
-        public NotificationRequest(MailMessageTypes messageType, T payload)
+        public NotificationRequest(T payload)
         {
-            MessageType = messageType;
             Payload = payload;
         }
     }

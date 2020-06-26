@@ -16,16 +16,16 @@ namespace BioWorld.Infrastructure
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly IDateTime _dateTime;
+        private readonly IDateTimeService _dateTimeService;
 
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
             ICurrentUserService currentUserService,
-            IDateTime dateTime) : base(options, operationalStoreOptions)
+            IDateTimeService dateTimeService) : base(options, operationalStoreOptions)
         {
             _currentUserService = currentUserService;
-            _dateTime = dateTime;
+            _dateTimeService = dateTimeService;
         }
 
         public virtual DbSet<CategoryEntity> Category { get; set; }
@@ -58,11 +58,11 @@ namespace BioWorld.Infrastructure
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = _currentUserService.UserId;
-                        entry.Entity.Created = _dateTime.GetNowWithUserTZone();
+                        entry.Entity.Created = _dateTimeService.GetNowWithUserTZone();
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                        entry.Entity.LastModified = _dateTime.GetNowWithUserTZone();
+                        entry.Entity.LastModified = _dateTimeService.GetNowWithUserTZone();
                         break;
                 }
             }

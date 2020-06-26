@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BioWorld.Application.Common.Interface
 {
-    public interface IDateTime
+    public interface IDateTimeService
     {
         DateTime GetNowWithUserTZone();
         DateTime GetDateTimeWithUserTZone(DateTime utcDateTime);

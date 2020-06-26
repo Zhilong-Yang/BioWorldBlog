@@ -45,14 +45,14 @@ namespace BioWorld.Application.Post.Commands.EditPost
 
         private readonly AppSettings _appSettings;
 
-        private readonly IDateTime _dateTimeResolver;
+        private readonly IDateTimeService _dateTimeServiceResolver;
 
         public EditPostCommandHandler(IApplicationDbContext context,
-            IDateTime dateTimeResolver,
+            IDateTimeService dateTimeServiceResolver,
             IOptions<AppSettings> settings = null)
         {
             if (null != settings) _appSettings = settings.Value;
-            _dateTimeResolver = dateTimeResolver;
+            _dateTimeServiceResolver = dateTimeServiceResolver;
             _context = context;
         }
 
@@ -96,7 +96,7 @@ namespace BioWorld.Application.Post.Commands.EditPost
             if (request.PublishDate != null && postModel.PostPublish.PubDateUtc.HasValue)
             {
                 var tod = postModel.PostPublish.PubDateUtc.Value.TimeOfDay;
-                var adjustedDate = _dateTimeResolver.GetUtcTimeFromUserTZone(request.PublishDate.Value);
+                var adjustedDate = _dateTimeServiceResolver.GetUtcTimeFromUserTZone(request.PublishDate.Value);
                 postModel.PostPublish.PubDateUtc = adjustedDate.AddTicks(tod.Ticks);
             }
 
