@@ -25,6 +25,7 @@ namespace BioWorld.Application.Setting.Queries.GetNotificationSetting
                 var entity = await _context.NotificationSettings
                     .Select(c => new NotificationSettingsDto
                     {
+                        Id = c.Id,
                         AdminEmail = c.AdminEmail,
                         EmailDisplayName = c.EmailDisplayName,
                         EnableEmailSending = c.EnableEmailSending,

@@ -40,6 +40,7 @@ namespace BioWorld.Application.Setting.Queries.GetGeneralSetting
                 var entity = await _context.GeneralSettings.
                     Select(c => new GetGeneralSettingsDto()
                     {
+                        Id = c.Id,
                         LogoText = c.LogoText,
                         MetaKeyword = c.MetaKeyword,
                         MetaDescription = c.MetaDescription,

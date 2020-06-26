@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BioWorld.Application.Setting.Commands.UpdateAdvanceSetting;
+using BioWorld.Application.Setting.Commands.UpdateContentSetting;
 using BioWorld.Application.Setting.Queries.GetAdvanceSetting;
 using BioWorld.Application.Setting.Queries.GetContentSetting;
 using BioWorld.Application.Setting.Queries.GetFeedSetting;
@@ -63,6 +64,19 @@ namespace BioWorld.BackEnd.Controllers
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAdvanceSettings(Guid id, UpdateAdvanceSettingCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateContentSetting(Guid id, UpdateContentSettingCommand
+            command)
         {
             if (id != command.Id)
             {

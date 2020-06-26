@@ -22,6 +22,7 @@ namespace BioWorld.Application.Setting.Queries.GetFeedSetting
             {
                 var entity = await _context.FeedSettings.Select(c => new FeedSettingsDto
                     {
+                        Id = c.Id,
                         AuthorName = c.AuthorName,
                         RssCopyright = c.RssCopyright,
                         RssDescription = c.RssDescription,

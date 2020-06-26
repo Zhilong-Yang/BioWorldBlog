@@ -23,6 +23,7 @@ namespace BioWorld.Application.Setting.Queries.GetContentSetting
                 var entity = await _context.ContentSettings.
                     Select(c => new ContentSettingsDto
                     {
+                        Id = c.Id,
                         DisharmonyWords = c.DisharmonyWords,
                         EnableComments = c.EnableComments,
                         RequireCommentReview = c.RequireCommentReview,

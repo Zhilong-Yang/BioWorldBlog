@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
-using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

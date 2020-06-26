@@ -19,10 +19,10 @@ namespace BioWorld.Application.Post.Commands.EditPost
         public string Title { get; set; }
         public string Slug { get; set; }
         public string EditorContent { get; set; }
-        public bool EnableComment { get; set; } = true;
-        public bool IsPublished { get; set; } = true;
-        public bool ExposedToSiteMap { get; set; } = true;
-        public bool IsFeedIncluded { get; set; } = true;
+        public bool EnableComment { get; set; }
+        public bool IsPublished { get; set; }
+        public bool ExposedToSiteMap { get; set; }
+        public bool IsFeedIncluded { get; set; }
         public string ContentLanguageCode { get; set; }
 
         public string[] Tags { get; set; }
@@ -43,7 +43,7 @@ namespace BioWorld.Application.Post.Commands.EditPost
     {
         private readonly IApplicationDbContext _context;
 
-        private readonly AppSettings AppSettings;
+        private readonly AppSettings _appSettings;
 
         private readonly IDateTime _dateTimeResolver;
 
@@ -51,7 +51,7 @@ namespace BioWorld.Application.Post.Commands.EditPost
             IDateTime dateTimeResolver,
             IOptions<AppSettings> settings = null)
         {
-            if (null != settings) AppSettings = settings.Value;
+            if (null != settings) _appSettings = settings.Value;
             _dateTimeResolver = dateTimeResolver;
             _context = context;
         }
@@ -75,8 +75,8 @@ namespace BioWorld.Application.Post.Commands.EditPost
             postModel.PostContent = request.EditorContent;
             postModel.ContentAbstract = Utils.GetPostAbstract(
                 request.EditorContent,
-                AppSettings.PostAbstractWords,
-                AppSettings.Editor == EditorChoice.Markdown);
+                _appSettings.PostAbstractWords,
+                _appSettings.Editor == EditorChoice.Markdown);
 
 
             // Address #221: Do not allow published posts back to draft status

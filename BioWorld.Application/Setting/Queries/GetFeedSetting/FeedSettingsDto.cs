@@ -1,7 +1,11 @@
-﻿namespace BioWorld.Application.Setting.Queries.GetFeedSetting
+﻿using System;
+
+namespace BioWorld.Application.Setting.Queries.GetFeedSetting
 {
     public class FeedSettingsDto
     {
+        public Guid Id { get; set; }
+
         public int RssItemCount { get; set; }
 
         public string RssCopyright { get; set; }

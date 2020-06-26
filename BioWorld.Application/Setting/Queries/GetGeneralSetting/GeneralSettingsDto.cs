@@ -12,6 +12,8 @@ namespace BioWorld.Application.Setting.Queries.GetGeneralSetting
 
     public class GetGeneralSettingsDto
     {
+        public Guid Id { get; set; }
+
         public string MetaKeyword { get; set; }
 
         public string MetaDescription { get; set; }

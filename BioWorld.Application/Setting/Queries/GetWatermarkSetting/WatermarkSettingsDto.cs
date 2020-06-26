@@ -1,7 +1,11 @@
-﻿namespace BioWorld.Application.Setting.Queries.GetWatermarkSetting
+﻿using System;
+
+namespace BioWorld.Application.Setting.Queries.GetWatermarkSetting
 {
     public class WatermarkSettingsDto
     {
+        public Guid Id { get; set; }
+
         public bool IsEnabled { get; set; }
 
         public bool KeepOriginImage { get; set; }

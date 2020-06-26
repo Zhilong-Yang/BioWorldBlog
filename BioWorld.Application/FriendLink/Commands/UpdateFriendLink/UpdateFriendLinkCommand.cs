@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
@@ -9,7 +7,7 @@ using MediatR;
 
 namespace BioWorld.Application.FriendLink.Commands.UpdateFriendLink
 {
-    public class UpdateFriendLinkCommand: IRequest<FriendLinkDto>
+    public class UpdateFriendLinkCommand : IRequest<FriendLinkDto>
     {
         public Guid Id { get; set; }
 

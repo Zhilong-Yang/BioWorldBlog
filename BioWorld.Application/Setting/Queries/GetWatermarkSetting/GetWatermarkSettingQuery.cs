@@ -24,6 +24,7 @@ namespace BioWorld.Application.Setting.Queries.GetWatermarkSetting
                 var entity = await _context.WatermarkSettings
                     .Select(c => new WatermarkSettingsDto
                     {
+                        Id = c.Id,
                         IsEnabled = c.IsEnabled,
                         KeepOriginImage = c.KeepOriginImage,
                         FontSize = c.FontSize,

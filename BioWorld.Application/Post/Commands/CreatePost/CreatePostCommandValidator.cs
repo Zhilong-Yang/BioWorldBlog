@@ -21,10 +21,12 @@ namespace BioWorld.Application.Post.Commands.CreatePost
 
             RuleFor(v => v.Slug)
                 .MaximumLength(128).WithMessage("Slug must not exceed 128 characters.")
+                .Matches(@"^[a-z0-9\-]+$").WithMessage("Only lower case letters and hyphens are allowed.")
                 .NotEmpty().WithMessage("Slug is required.");
 
             RuleFor(v => v.ContentLanguageCode)
                 .MaximumLength(8).WithMessage("ContentLanguageCode must not exceed 8 characters.")
+                .Matches(@"^[a-z]{2}-[a-zA-Z]{2}$").WithMessage("Incorrect language code format. e.g. en-us")
                 .NotEmpty().WithMessage("ContentLanguageCode is required.");
 
             RuleFor(v => v.RequestIp)
@@ -32,10 +34,19 @@ namespace BioWorld.Application.Post.Commands.CreatePost
                 .NotEmpty().WithMessage("RequestIp is required.");
 
             RuleFor(v => v.Tags)
-                .NotEmpty().WithMessage("Tags is required.");
+                .NotNull().WithMessage("Tags is required.");
 
             RuleFor(v => v.CategoryIds)
-                .NotEmpty().WithMessage("CategoryIds is required.");
+                .NotNull().WithMessage("CategoryIds is required.");
+
+            RuleFor(v => v.EnableComment)
+                .NotNull().WithMessage("EnableComment is required.");
+
+            RuleFor(v => v.IsPublished)
+                .NotNull().WithMessage("IsPublished is required.");
+
+            RuleFor(v => v.EditorContent)
+                .NotEmpty().WithMessage("EditorContent is required.");
         }
 
         private async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)

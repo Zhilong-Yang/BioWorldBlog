@@ -25,6 +25,7 @@ namespace BioWorld.Application.Setting.Queries.GetFriendLinksSetting
                 var entity = await _context.FriendLinksSettings
                     .Select(c => new FriendLinksSettingsDto
                     {
+                        Id = c.Id,
                         ShowFriendLinksSection = c.ShowFriendLinksSection
                     })
                     .FirstOrDefaultAsync(cancellationToken: cancellationToken);

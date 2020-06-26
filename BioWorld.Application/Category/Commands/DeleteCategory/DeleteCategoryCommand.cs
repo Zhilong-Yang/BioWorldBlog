@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
@@ -28,9 +27,9 @@ namespace BioWorld.Application.Category.Commands.DeleteCategory
         {
             var entity = await _context.Category
                 .AsNoTracking()
-                .Include(o=>o.PostCategory)
-                .SingleOrDefaultAsync(l => l.Id == request.Id,cancellationToken);
-            
+                .Include(o => o.PostCategory)
+                .SingleOrDefaultAsync(l => l.Id == request.Id, cancellationToken);
+
             if (entity == null)
             {
                 throw new NotFoundException(nameof(CategoryEntity), request.Id);

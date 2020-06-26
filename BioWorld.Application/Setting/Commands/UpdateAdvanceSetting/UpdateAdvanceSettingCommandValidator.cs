@@ -6,8 +6,8 @@ namespace BioWorld.Application.Setting.Commands.UpdateAdvanceSetting
     {
         public UpdateAdvanceSettingCommandValidator()
         {
-            RuleFor(v => v.DNSPrefetchEndpoint)
-                .Matches(@"^(http|http(s)?://)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?") // URL Regex
+            RuleFor(v => v.DnsPrefetchEndpoint)
+                .Matches(@"^(http|http(s)?://)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?").WithMessage("URL with http// or https://.") 
                 .MaximumLength(128).WithMessage("DNSPrefetchEndpoint must not exceed 128 characters.");
 
             RuleFor(v => v.RobotsTxtContent)

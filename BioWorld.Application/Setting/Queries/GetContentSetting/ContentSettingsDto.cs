@@ -1,7 +1,11 @@
-﻿namespace BioWorld.Application.Setting.Queries.GetContentSetting
+﻿using System;
+
+namespace BioWorld.Application.Setting.Queries.GetContentSetting
 {
     public class ContentSettingsDto
     {
+        public Guid Id { get; set; }
+
         public bool EnableComments { get; set; }
 
         public bool RequireCommentReview { get; set; }

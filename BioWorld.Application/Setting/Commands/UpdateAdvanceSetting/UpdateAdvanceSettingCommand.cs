@@ -12,7 +12,7 @@ namespace BioWorld.Application.Setting.Commands.UpdateAdvanceSetting
     {
         public Guid Id { get; set; }
 
-        public string DNSPrefetchEndpoint { get; set; }
+        public string DnsPrefetchEndpoint { get; set; }
 
         public string RobotsTxtContent { get; set; }
 
@@ -43,12 +43,12 @@ namespace BioWorld.Application.Setting.Commands.UpdateAdvanceSetting
             }
 
             var settings = _blogConfig.AdvancedSettings;
-            settings.DNSPrefetchEndpoint = request.DNSPrefetchEndpoint;
+            settings.DNSPrefetchEndpoint = request.DnsPrefetchEndpoint;
             settings.RobotsTxtContent = request.RobotsTxtContent;
             settings.EnablePingBackSend = request.EnablePingbackSend;
             settings.EnablePingBackReceive = request.EnablePingbackReceive;
 
-            entity.DNSPrefetchEndpoint = request.DNSPrefetchEndpoint;
+            entity.DNSPrefetchEndpoint = request.DnsPrefetchEndpoint;
             entity.RobotsTxtContent = request.RobotsTxtContent;
             entity.EnablePingBackSend = request.EnablePingbackSend;
             entity.EnablePingBackReceive = request.EnablePingbackReceive;
