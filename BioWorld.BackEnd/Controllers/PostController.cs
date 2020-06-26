@@ -22,6 +22,8 @@ using BioWorld.Application.Post.Queries.GetPostByDate;
 using BioWorld.Application.Post.Queries.GetPostListItem;
 using BioWorld.Application.Post.Queries.GetPostsByTag;
 using BioWorld.Application.Post.Queries.GetRawContent;
+using BioWorld.Application.Post.Queries.GetSegment;
+using BioWorld.Application.Post.Queries.GetSegments;
 using BioWorld.Application.Post.Queries.SearchPost;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -76,6 +78,12 @@ namespace BioWorld.BackEnd.Controllers
             return Ok(await Mediator.Send(new GetMetaListQuery() {PostPublishStatus = status}));
         }
 
+        [HttpGet("{status}")]
+        public async Task<ActionResult<PostMetaDataJsonDto>> GetSegments(PostPublishStatus status)
+        {
+            return Ok(await Mediator.Send(new GetSegmentsQuery() {PostPublishStatus = status}));
+        }
+
         [HttpGet("{insights}")]
         public async Task<ActionResult<GetInsightsJsonDto>> GetInsights(PostInsightsType insights)
         {
@@ -89,6 +97,21 @@ namespace BioWorld.BackEnd.Controllers
             [FromQuery] string slug)
         {
             return Ok(await Mediator.Send(new GetRawContentQuery()
+            {
+                Year = year,
+                Month = month,
+                Day = day,
+                Slug = slug
+            }));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PostSlugSegmentDto>> GetSegment([FromQuery] int year,
+            [FromQuery] int month,
+            [FromQuery] int day,
+            [FromQuery] string slug)
+        {
+            return Ok(await Mediator.Send(new GetSegmentQuery()
             {
                 Year = year,
                 Month = month,
