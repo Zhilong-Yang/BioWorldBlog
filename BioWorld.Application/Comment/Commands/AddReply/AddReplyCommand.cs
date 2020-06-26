@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using BioWorld.Application.Common.Exceptions;
 using BioWorld.Application.Common.Interface;
 using BioWorld.Application.Core;
+using BioWorld.Application.Notification;
 using BioWorld.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace BioWorld.Application.Comment.Commands.AddReply
 {
@@ -18,6 +19,7 @@ namespace BioWorld.Application.Comment.Commands.AddReply
         public string ReplyContent { get; set; }
         public string IpAddress { get; set; }
         public string UserAgent { get; set; }
+        public string BaseUrl { get; set; }
     }
 
     public class AddReplyCommandHandler : IRequestHandler<AddReplyCommand, CommentReplyDetailDto>
@@ -26,11 +28,19 @@ namespace BioWorld.Application.Comment.Commands.AddReply
 
         private readonly IBlogConfigService _blogConfig;
 
+        private readonly INotificationClientService _notificationClientService;
+
+        private readonly ILogger<AddReplyCommandHandler> _logger;
+
         public AddReplyCommandHandler(IApplicationDbContext context,
-            IBlogConfigService settings)
+            IBlogConfigService settings, 
+            INotificationClientService notificationClientService, 
+            ILogger<AddReplyCommandHandler> logger)
         {
             if (null != settings) _blogConfig = settings;
             _context = context;
+            _notificationClientService = notificationClientService;
+            _logger = logger;
         }
 
         public async Task<CommentReplyDetailDto> Handle(AddReplyCommand request, CancellationToken cancellationToken)
@@ -84,7 +94,41 @@ namespace BioWorld.Application.Comment.Commands.AddReply
                 UserAgent = model.UserAgent
             };
 
+            if (_blogConfig.NotificationSettings.SendEmailOnCommentReply && !string.IsNullOrWhiteSpace(detail.Email))
+            {
+                var postLink = "https://" + request.BaseUrl + "/api/Post/Get/"+ detail.PostId.ToString();
+                _ = Task.Run(async () =>
+                {
+                    if (!_notificationClientService.IsEnabled)
+                    {
+                        _logger.LogWarning(
+                            "Skipped SendCommentReplyNotification because Email sending is disabled.");
+                        await Task.CompletedTask;
+                        return;
+                    }
+
+                    try
+                    {
+                        var payload = new CommentReplyNotificationPayload(
+                            detail.Email,
+                            detail.CommentContent,
+                            detail.Title,
+                            detail.ReplyContentHtml,
+                            postLink);
+
+                        await _notificationClientService.SendNotificationRequest(
+                            new NotificationRequest<CommentReplyNotificationPayload>(MailMessageTypes.AdminReplyNotification,
+                                payload));
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(e, e.Message);
+                    }
+                }, cancellationToken);
+            }
+
             return detail;
         }
+
     }
 }

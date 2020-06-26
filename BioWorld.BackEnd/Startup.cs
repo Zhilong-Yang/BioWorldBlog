@@ -17,14 +17,12 @@ namespace BioWorld.BackEnd
     {
         private ILogger<Startup> _logger;
 
-        private readonly IConfigurationSection _appSettingsSection;
-
         private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
-            _appSettingsSection = _configuration.GetSection(nameof(AppSettings));
+            _configuration.GetSection(nameof(AppSettings));
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

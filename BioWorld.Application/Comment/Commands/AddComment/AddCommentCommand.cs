@@ -131,7 +131,7 @@ namespace BioWorld.Application.Comment.Commands.AddComment
                     {
                         _logger.LogError(e, e.Message);
                     }
-                });
+                }, cancellationToken);
             }
 
             return item;

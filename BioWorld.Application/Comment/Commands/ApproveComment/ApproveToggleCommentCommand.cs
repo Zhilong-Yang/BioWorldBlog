@@ -14,11 +14,11 @@ namespace BioWorld.Application.Comment.Commands.ApproveComment
         public Guid[] CommentIds { get; set; }
     }
 
-    public class AddReplyCommandHandler : IRequestHandler<ApproveToggleCommentCommand>
+    public class ApproveToggleCommentCommandHandler : IRequestHandler<ApproveToggleCommentCommand>
     {
         private readonly IApplicationDbContext _context;
 
-        public AddReplyCommandHandler(IApplicationDbContext context)
+        public ApproveToggleCommentCommandHandler(IApplicationDbContext context)
         {
             _context = context;
         }
