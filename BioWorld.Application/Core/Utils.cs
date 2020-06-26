@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Markdig;
@@ -14,6 +15,11 @@ namespace BioWorld.Application.Core
             Html = 1,
             Text = 2
         }
+
+        public static string AppVersion =>
+            (Assembly.GetEntryAssembly() ?? throw new InvalidOperationException())
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion;
 
         public static IDictionary<string, string> GetThemes()
         {

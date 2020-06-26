@@ -7,10 +7,18 @@
         Markdown = 2
     }
 
+    public class NotificationSettings
+    {
+        public bool Enabled { get; set; }
+
+        public string AzureFunctionEndpoint { get; set; }
+    }
+
     public class AppSettings
     {
         public AppSettings()
         {
+            Notification = new NotificationSettings();
         }
 
         // property with getter only will not work.
@@ -23,5 +31,7 @@
         public string TimeZoneUtcOffset { get; set; }
 
         public string DisharmonyWords { get; set; }
+
+        public NotificationSettings Notification { get; set; }
     }
 }
