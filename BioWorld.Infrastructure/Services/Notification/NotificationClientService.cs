@@ -18,7 +18,7 @@ namespace BioWorld.Infrastructure.Services.Notification
         private readonly ILogger<NotificationClientService> _logger;
         private readonly IBlogConfigService _blogConfigService;
 
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; set; } = false;
 
         public NotificationClientService(HttpClient httpClient,
             IOptions<AppSettings> settings,

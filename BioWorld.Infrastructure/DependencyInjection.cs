@@ -41,6 +41,8 @@ namespace BioWorld.Infrastructure
 
             services.AddSingleton<IBlogConfigService, BlogConfigService>();
 
+            services.AddHttpClient<INotificationClientService, NotificationClientService>();
+
             services.AddScoped<IDateTimeService>(c => new DateTimeService(AppSettings.Instance.TimeZoneUtcOffset));
 
             services.AddScoped<IMaskWordFilterService>(c => new MaskWordFilterServiceService(new StringWordSource(AppSettings.Instance.DisharmonyWords)));

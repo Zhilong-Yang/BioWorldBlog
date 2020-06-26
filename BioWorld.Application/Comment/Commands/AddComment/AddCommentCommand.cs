@@ -36,21 +36,21 @@ namespace BioWorld.Application.Comment.Commands.AddComment
 
         private readonly IMaskWordFilterService _wordFilterService;
 
-        // private readonly INotificationClientService _notificationClientService;
+        private readonly INotificationClientService _notificationClientService;
 
-        // private readonly ILogger _logger;
+        private readonly ILogger<AddCommentCommandHandler> _logger;
 
         public AddCommentCommandHandler(IApplicationDbContext context,
             IBlogConfigService settings,
-            // ILogger logger,
-            // INotificationClientService notificationClientService,
+            ILogger<AddCommentCommandHandler> logger,
+            INotificationClientService notificationClientService,
             IMaskWordFilterService wordFilterService)
         {
             if (null != settings) _blogConfig = settings;
             _context = context;
             _wordFilterService = wordFilterService;
-            // _notificationClientService = notificationClientService;
-            // _logger = logger;
+            _notificationClientService = notificationClientService;
+            _logger = logger;
         }
 
         public async Task<CommentListItemDto> Handle(AddCommentCommand request, CancellationToken cancellationToken)
@@ -99,7 +99,6 @@ namespace BioWorld.Application.Comment.Commands.AddComment
                 Username = model.Username
             };
 
-            #if false
             if (_blogConfig.NotificationSettings.SendEmailOnNewComment && null != _notificationClientService)
             {
                 _ = Task.Run(async () =>
@@ -109,6 +108,8 @@ namespace BioWorld.Application.Comment.Commands.AddComment
                         _logger.LogWarning(
                             "Skipped SendNewCommentNotification because Email sending is disabled.");
                         await Task.CompletedTask;
+
+                        return;
                     }
 
                     try
@@ -132,7 +133,6 @@ namespace BioWorld.Application.Comment.Commands.AddComment
                     }
                 });
             }
-            #endif
 
             return item;
         }
