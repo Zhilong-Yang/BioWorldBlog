@@ -6,6 +6,7 @@ using BioWorld.Application.Setting.Commands.UpdateFeedSetting;
 using BioWorld.Application.Setting.Commands.UpdateFriendLinksSetting;
 using BioWorld.Application.Setting.Commands.UpdateGeneralSetting;
 using BioWorld.Application.Setting.Commands.UpdateNotificationSetting;
+using BioWorld.Application.Setting.Commands.UpdateWatermarkSetting;
 using BioWorld.Application.Setting.Queries.GetAdvanceSetting;
 using BioWorld.Application.Setting.Queries.GetContentSetting;
 using BioWorld.Application.Setting.Queries.GetFeedSetting;
@@ -128,6 +129,18 @@ namespace BioWorld.BackEnd.Controllers
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateNotificationSetting(Guid id, UpdateNotificationSettingCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateWatermarkSetting(Guid id, UpdateWatermarkSettingCommand command)
         {
             if (id != command.Id)
             {
