@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BioWorld.Application.Menu
 {
@@ -19,6 +20,16 @@ namespace BioWorld.Application.Menu
         public MenuDto()
         {
             Icon = "icon-file-text2";
+        }
+    }
+
+    public class MenuJsonDto
+    {
+        public IReadOnlyList<MenuDto> MenuList { get; set; }
+
+        public MenuJsonDto(IReadOnlyList<MenuDto> menuList)
+        {
+            MenuList = menuList;
         }
     }
 }
