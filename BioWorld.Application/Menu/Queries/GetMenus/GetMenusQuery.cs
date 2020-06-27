@@ -24,10 +24,10 @@ namespace BioWorld.Application.Menu.Queries.GetMenus
                     .Select(p => new MenuDto()
                     {
                         Id = p.Id,
+                        Title = p.Title.Trim(),
                         DisplayOrder = p.DisplayOrder,
-                        Icon = p.Icon,
-                        Title = p.Title,
-                        Url = p.Url,
+                        Icon = p.Icon.Trim(),
+                        Url = p.Url.Trim(),
                         IsOpenInNewTab = p.IsOpenInNewTab
                     })
                     .AsNoTracking()
