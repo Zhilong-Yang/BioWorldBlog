@@ -26,4 +26,11 @@
     <ProjectReference Include="..\BioWorld.Domain\BioWorld.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Menu\Commands\DeleteMenu\" />
+    <Folder Include="Menu\Commands\UpdateMenu\" />
+    <Folder Include="Menu\Queries\GetMenu\" />
+    <Folder Include="Menu\Queries\GetMenus\" />
+  </ItemGroup>
+
 </Project>
