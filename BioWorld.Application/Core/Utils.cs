@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,10 +17,101 @@ namespace BioWorld.Application.Core
             Text = 2
         }
 
+        public enum UrlScheme
+        {
+            Http,
+            Https,
+            All
+        }
+
         public static string AppVersion =>
             (Assembly.GetEntryAssembly() ?? throw new InvalidOperationException())
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                ?.InformationalVersion;
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion;
+
+        public static bool IsValidUrl(this string url, UrlScheme urlScheme = UrlScheme.All)
+        {
+            var isValidUrl = Uri.TryCreate(url, UriKind.Absolute, out var uriResult);
+            if (!isValidUrl)
+            {
+                return false;
+            }
+
+            isValidUrl &= urlScheme switch
+            {
+                UrlScheme.All => uriResult.Scheme == Uri.UriSchemeHttps || uriResult.Scheme == Uri.UriSchemeHttp,
+                UrlScheme.Https => uriResult.Scheme == Uri.UriSchemeHttps,
+                UrlScheme.Http => uriResult.Scheme == Uri.UriSchemeHttp,
+                _ => throw new ArgumentOutOfRangeException(nameof(urlScheme), urlScheme, null)
+            };
+            return isValidUrl;
+        }
+
+        // Regex.IsMatch(ip, @"(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)")
+        // Regex has bad performance, this is better
+        public static bool IsPrivateIp(string ip) => IPAddress.Parse(ip).GetAddressBytes() switch
+        {
+            var x when x[0] == 192 && x[1] == 168 => true,
+            var x when x[0] == 10 => true,
+            var x when x[0] == 127 => true,
+            var x when x[0] == 172 && x[1] >= 16 && x[1] <= 31 => true,
+            _ => false
+        };
+
+        public static string SterilizeMenuLink(string rawUrl)
+        {
+            bool IsUnderLocalSlash()
+            {
+                // Allows "/" or "/foo" but not "//" or "/\".
+                if (rawUrl[0] == '/')
+                {
+                    // url is exactly "/"
+                    if (rawUrl.Length == 1)
+                    {
+                        return true;
+                    }
+
+                    // url doesn't start with "//" or "/\"
+                    if (rawUrl[1] != '/' && rawUrl[1] != '\\')
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                return false;
+            }
+
+            string invalidReturn = "#";
+            if (string.IsNullOrWhiteSpace(rawUrl))
+            {
+                return invalidReturn;
+            }
+
+            if (!rawUrl.IsValidUrl())
+            {
+                return IsUnderLocalSlash() ? rawUrl : invalidReturn;
+            }
+
+            var uri = new Uri(rawUrl);
+            if (uri.IsLoopback)
+            {
+                // localhost, 127.0.0.1
+                return invalidReturn;
+            }
+
+            if (uri.HostNameType == UriHostNameType.IPv4)
+            {
+                // Disallow LAN IP (e.g. 192.168.0.1, 10.0.0.1)
+                if (IsPrivateIp(uri.Host))
+                {
+                    return invalidReturn;
+                }
+            }
+
+            return rawUrl;
+        }
 
         public static IDictionary<string, string> GetThemes()
         {
@@ -37,12 +129,12 @@ namespace BioWorld.Application.Core
         public static string ConvertMarkdownContent(string markdown, MarkdownConvertType type, bool disableHtml = true)
         {
             var pipeline = GetMoongladeMarkdownPipelineBuilder();
-        
+
             if (disableHtml)
             {
                 pipeline.DisableHtml();
             }
-        
+
             var result = type switch
             {
                 MarkdownConvertType.None => markdown,
@@ -50,7 +142,7 @@ namespace BioWorld.Application.Core
                 MarkdownConvertType.Text => Markdown.ToPlainText(markdown, pipeline.Build()),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
-        
+
             return result;
         }
 
@@ -61,9 +153,9 @@ namespace BioWorld.Application.Core
 
         public static string GetPostAbstract(string rawContent, int wordCount, bool useMarkdown = false)
         {
-            var plainText = useMarkdown ?
-                ConvertMarkdownContent(rawContent, MarkdownConvertType.Text) :
-                RemoveTags(rawContent);
+            var plainText = useMarkdown
+                ? ConvertMarkdownContent(rawContent, MarkdownConvertType.Text)
+                : RemoveTags(rawContent);
 
             var result = plainText.Ellipsize(wordCount);
             return result;
@@ -155,7 +247,8 @@ namespace BioWorld.Application.Core
             return c == '\r' || c == '\n' || c == '\t' || c == '\f' || c == ' ';
         }
 
-        private static string Ellipsize(this string text, int characterCount, string ellipsis, bool wordBoundary = false)
+        private static string Ellipsize(this string text, int characterCount, string ellipsis,
+            bool wordBoundary = false)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return "";

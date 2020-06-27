@@ -26,8 +26,4 @@
     <ProjectReference Include="..\BioWorld.Domain\BioWorld.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Menu\Commands\UpdateMenu\" />
-  </ItemGroup>
-
 </Project>
