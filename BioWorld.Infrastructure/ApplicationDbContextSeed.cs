@@ -147,9 +147,10 @@ namespace BioWorld.Infrastructure
                 {
                     Id = Guid.Parse("b4103e89-058b-486a-8d44-7bd4433da48b"),
                     Title = "About",
-                    RouteName = "about",
-                    HtmlContent = "'An Empty About Page",
-                    CssContent = "N",
+                    Slug = "about",
+                    MetaDescription = "An Empty About Page",
+                    HtmlContent = "<h3>An Empty About Page</h3>",
+                    CssContent = "",
                     HideSidebar = true,
                     CreateOnUtc = DateTime.UtcNow,
                     UpdatedOnUtc = DateTime.UtcNow
