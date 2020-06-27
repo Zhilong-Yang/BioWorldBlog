@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Menu\Commands\DeleteMenu\" />
     <Folder Include="Menu\Commands\UpdateMenu\" />
   </ItemGroup>
 
