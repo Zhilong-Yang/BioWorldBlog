@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BioWorld.Application.CustomPage;
+using BioWorld.Application.CustomPage.Commands.CreateCustomPage;
 using BioWorld.Application.CustomPage.Queries.GetCustomePageById;
 using BioWorld.Application.CustomPage.Queries.GetCustomPageBySlug;
 using BioWorld.Application.CustomPage.Queries.GetCustomPageListSegment;
@@ -32,5 +33,13 @@ namespace BioWorld.BackEnd.Controllers
         {
             return Ok(await Mediator.Send(new GetCustomPageListSegmentQuery()));
         }
+
+        [HttpPost]
+        public async Task<ActionResult<CustomPageDto>> Create(CreateCustomPageCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        
     }
 }
