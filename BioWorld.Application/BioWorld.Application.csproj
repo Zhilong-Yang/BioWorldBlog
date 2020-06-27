@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CustomPage\Commands\DeleteCustomPage\" />
     <Folder Include="CustomPage\Commands\UpdateCustomPage\" />
   </ItemGroup>
 
