@@ -30,7 +30,6 @@
     <Folder Include="CustomPage\Commands\CreateCustomPage\" />
     <Folder Include="CustomPage\Commands\DeleteCustomPage\" />
     <Folder Include="CustomPage\Commands\UpdateCustomPage\" />
-    <Folder Include="CustomPage\Queries\GetCustomPageBySlug\" />
   </ItemGroup>
 
 </Project>

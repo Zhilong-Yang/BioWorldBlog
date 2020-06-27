@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BioWorld.Application.CustomPage;
 using BioWorld.Application.CustomPage.Queries.GetCustomePageById;
+using BioWorld.Application.CustomPage.Queries.GetCustomPageBySlug;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,5 +19,13 @@ namespace BioWorld.BackEnd.Controllers
         {
             return Ok(await Mediator.Send(new GetCustomPageByIdQuery() {PageId = id}));
         }
+
+        [HttpGet("{slug}")]
+        public async Task<ActionResult<CustomPageDto>> GetBySlug(string slug)
+        {
+            return Ok(await Mediator.Send(new GetCustomPageBySlugQuery() {Slug = slug}));
+        }
+
+        
     }
 }
