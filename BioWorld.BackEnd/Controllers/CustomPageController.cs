@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BioWorld.Application.CustomPage;
 using BioWorld.Application.CustomPage.Commands.CreateCustomPage;
 using BioWorld.Application.CustomPage.Commands.DeleteCustomPage;
+using BioWorld.Application.CustomPage.Commands.UpdateCustomPage;
 using BioWorld.Application.CustomPage.Queries.GetCustomePageById;
 using BioWorld.Application.CustomPage.Queries.GetCustomPageBySlug;
 using BioWorld.Application.CustomPage.Queries.GetCustomPageListSegment;
@@ -45,6 +46,19 @@ namespace BioWorld.BackEnd.Controllers
         public async Task<ActionResult> Delete(Guid id)
         {
             await Mediator.Send(new DeleteCustomPageCommand { Id = id });
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, UpdateCustomPageCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+
             return NoContent();
         }
     }
