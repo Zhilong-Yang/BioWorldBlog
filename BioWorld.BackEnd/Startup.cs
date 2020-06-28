@@ -35,6 +35,7 @@ namespace BioWorld.BackEnd
             services.AddInfrastructure(_configuration);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
+            services.AddCors();
 
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
@@ -74,6 +75,8 @@ namespace BioWorld.BackEnd
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
             app.UseIdentityServer();
