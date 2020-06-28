@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "BioWorld-Spa"
+    }
+  },
+  "defaultProject": "BioWorld-Spa",
+  "cli": {
+    "analytics": false
+  }
 }
