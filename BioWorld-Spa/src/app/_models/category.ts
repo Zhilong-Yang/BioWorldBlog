@@ -1,6 +1,6 @@
 export interface Category {
-    Id:string;
-    RouteName:string;
-    DisplayName:string;
-    Note:string;
+    id:string;
+    routeName:string;
+    displayName:string;
+    note:string;
 }
