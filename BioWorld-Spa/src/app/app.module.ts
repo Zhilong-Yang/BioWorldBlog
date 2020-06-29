@@ -1,10 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from '@angular/common/http'
+import { HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { from } from 'rxjs';
 import { NavComponent } from './nav/nav.component';
+
+import { CategoryService } from './_services/category.service';
+
+import { from } from 'rxjs';
+
 
 @NgModule({
    declarations: [
@@ -15,7 +19,9 @@ import { NavComponent } from './nav/nav.component';
       BrowserModule,
       HttpClientModule
    ],
-   providers: [],
+   providers: [
+      CategoryService
+   ],
    bootstrap: [
       AppComponent
    ]
