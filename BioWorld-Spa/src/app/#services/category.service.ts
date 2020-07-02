@@ -8,7 +8,6 @@ import { Category } from '../#models/Category';
   providedIn: 'root'
 })
 
-
 export class CategoryService {
 
   baseUrl = environment.apiUrl;

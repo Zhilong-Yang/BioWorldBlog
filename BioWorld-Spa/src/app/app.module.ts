@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { NgModule } from '@angular/core';
+import { HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CategoryService } from './#services/category.service';
 
 @NgModule({
    declarations: [
@@ -14,11 +16,13 @@ import { NavbarComponent } from './navbar/navbar.component';
    ],
    imports: [
       BrowserModule,
-      MDBBootstrapModulesPro.forRoot(),
-      AppRoutingModule
+      HttpClientModule,
+      AppRoutingModule,
+      MDBBootstrapModulesPro.forRoot()
    ],
    providers: [
-      MDBSpinningPreloader
+      MDBSpinningPreloader,
+      CategoryService
    ],
    bootstrap: [
       AppComponent
