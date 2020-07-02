@@ -22,18 +22,16 @@
           </a>
 
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
-            <div class="divider dropdown-divider"></div>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#"
+              *ngFor="let cat of categorys">{{cat.displayName}}</a>
           </div>
+
         </li>
 
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect>
             <mdb-icon fas icon="tag"></mdb-icon>
-            <strong>Tags</strong>            
+            <strong>Tags</strong>
             <span class="sr-only">(current)</span>
           </a>
         </li>
@@ -41,14 +39,14 @@
         <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect>
             <mdb-icon fas icon="file"></mdb-icon>
-            <strong>Archive</strong>            
+            <strong>Archive</strong>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect>
             <mdb-icon fas icon="star"></mdb-icon>
-            <strong>About</strong>            
+            <strong>About</strong>
           </a>
         </li>
 

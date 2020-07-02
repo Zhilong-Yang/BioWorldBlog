@@ -8,11 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CategoryService } from './#services/category.service';
+import { PostlistsComponent } from './postlists/postlists.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      NavbarComponent
+      NavbarComponent,
+      PostlistsComponent
    ],
    imports: [
       BrowserModule,
