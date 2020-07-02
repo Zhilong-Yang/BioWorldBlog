@@ -1,20 +1,2 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
-
-/* @import './assets/vendor/bootstrap/bootstrap.min.css';
-@import './assets/vendor/icon-awesome/css/font-awesome.min.css';  */
-
-
-/*-- CSS Global Compulsory --*/
-@import './assets/vendor/icon-hs/style.css';
-@import './assets/vendor/hs-megamenu/src/hs.megamenu.css';
-@import './assets/vendor/hamburgers/hamburgers.min.css';
-@import './assets/animate.css';
-
-/*-- CSS Unify --*/
-@import './assets/css/unify-core.css';
-@import './assets/css/unify-components.css';
-@import './assets/css/unify-globals.css';
-
-/*-- CSS Customization --*/
-@import './assets/css/custom.css';
