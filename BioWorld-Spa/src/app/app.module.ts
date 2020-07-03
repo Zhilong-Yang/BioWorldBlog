@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CategoryService } from './#services/category.service';
 import { PostlistsComponent } from './postlists/postlists.component';
+import { PostlistitemComponent } from './postlistitem/postlistitem.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavbarComponent,
-      PostlistsComponent
+      PostlistsComponent,
+      PostlistitemComponent
    ],
    imports: [
       BrowserModule,
