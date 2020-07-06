@@ -8,7 +8,7 @@ namespace BioWorld.Infrastructure.Persistence.Configurations.Cfg
     {
         public void Configure(EntityTypeBuilder<AdvancedSettingsEntity> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+            builder.Property(e => e.Id).ValueGeneratedNever();
             builder.Property(e => e.DNSPrefetchEndpoint).HasMaxLength(128);
             builder.Property(e => e.RobotsTxtContent).HasMaxLength(1024);
             builder.Property(e => e.EnablePingBackSend);

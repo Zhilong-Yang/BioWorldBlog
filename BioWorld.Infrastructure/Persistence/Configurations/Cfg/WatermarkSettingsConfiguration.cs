@@ -8,7 +8,7 @@ namespace BioWorld.Infrastructure.Persistence.Configurations.Cfg
     {
         public void Configure(EntityTypeBuilder<WatermarkSettingsEntity> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+            builder.Property(e => e.Id).ValueGeneratedNever();
             builder.Property(e => e.IsEnabled).IsRequired();
             builder.Property(e => e.KeepOriginImage).IsRequired();
             builder.Property(e => e.FontSize).IsRequired();

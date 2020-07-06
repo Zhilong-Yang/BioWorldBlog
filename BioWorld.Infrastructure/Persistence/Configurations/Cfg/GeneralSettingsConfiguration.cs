@@ -8,7 +8,7 @@ namespace BioWorld.Infrastructure.Persistence.Configurations.Cfg
     {
         public void Configure(EntityTypeBuilder<GeneralSettingsEntity> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+            builder.Property(e => e.Id).ValueGeneratedNever();
             builder.Property(e => e.MetaKeyword).HasMaxLength(1024).IsRequired();
             builder.Property(e => e.MetaDescription).HasMaxLength(1024).IsRequired();
             builder.Property(e => e.LogoText).HasMaxLength(16).IsRequired();

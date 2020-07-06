@@ -8,7 +8,7 @@ namespace BioWorld.Infrastructure.Persistence.Configurations.Cfg
     {
         public void Configure(EntityTypeBuilder<NotificationSettingsEntity> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+            builder.Property(e => e.Id).ValueGeneratedNever();
             builder.Property(e => e.EnableEmailSending);
             builder.Property(e => e.SendEmailOnCommentReply);
             builder.Property(e => e.SendEmailOnNewComment);

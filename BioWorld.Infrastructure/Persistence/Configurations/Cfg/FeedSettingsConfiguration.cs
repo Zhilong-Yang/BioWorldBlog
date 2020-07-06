@@ -8,7 +8,7 @@ namespace BioWorld.Infrastructure.Persistence.Configurations.Cfg
     {
         public void Configure(EntityTypeBuilder<FeedSettingsEntity> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+            builder.Property(e => e.Id).ValueGeneratedNever();
             builder.Property(e => e.RssItemCount).HasDefaultValue(20);
             builder.Property(e => e.RssCopyright).HasMaxLength(64).IsRequired();
             builder.Property(e => e.RssDescription).HasMaxLength(512).IsRequired();

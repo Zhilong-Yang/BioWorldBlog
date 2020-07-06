@@ -8,7 +8,7 @@ namespace BioWorld.Infrastructure.Persistence.Configurations.Cfg
     {
         public void Configure(EntityTypeBuilder<ContentSettingsEntity> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
+            builder.Property(e => e.Id).ValueGeneratedNever();
             builder.Property(e => e.DisharmonyWords).HasMaxLength(2048).HasDefaultValue(string.Empty).IsRequired();
             builder.Property(e => e.EnableComments).HasDefaultValue(true).IsRequired();
             builder.Property(e => e.RequireCommentReview).IsRequired();
