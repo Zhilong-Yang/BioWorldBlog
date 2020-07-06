@@ -1,14 +1,17 @@
-﻿using System;
-using BioWorld.Application;
+﻿using BioWorld.Application;
 using BioWorld.Application.Common.Interface;
+using BioWorld.Application.Core;
 using BioWorld.Infrastructure.Identity;
 using BioWorld.Infrastructure.Services;
 using BioWorld.Infrastructure.Services.Notification;
 using BioWorld.Infrastructure.Services.WordFilter;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 
 namespace BioWorld.Infrastructure
@@ -45,14 +48,26 @@ namespace BioWorld.Infrastructure
 
             services.AddScoped<IDateTimeService>(c => new DateTimeService(AppSettings.Instance.TimeZoneUtcOffset));
 
-            services.AddScoped<IMaskWordFilterService>(c => new MaskWordFilterServiceService(new StringWordSource(AppSettings.Instance.DisharmonyWords)));
-            
+            services.AddScoped<IMaskWordFilterService>(c =>
+                new MaskWordFilterServiceService(new StringWordSource(AppSettings.Instance.DisharmonyWords)));
+
             services.AddTransient<IIdentityService, IdentityService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
             return services;
+        }
+
+        public static void AddPagination(this HttpResponse response,
+            int currentPage, int itemsPerPage, int totalItems, int totalPages)
+        {
+            var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
+            var camelCaseFormatter = new JsonSerializerSettings();
+            camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            response.Headers.Add("Pagination",
+                JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }
 }

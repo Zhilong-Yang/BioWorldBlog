@@ -25,6 +25,7 @@ using BioWorld.Application.Post.Queries.GetRawContent;
 using BioWorld.Application.Post.Queries.GetSegment;
 using BioWorld.Application.Post.Queries.GetSegments;
 using BioWorld.Application.Post.Queries.SearchPost;
+using BioWorld.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -39,7 +40,12 @@ namespace BioWorld.BackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<PostListItemJsonDto>> GetAll([FromQuery] Paging param)
         {
-            return Ok(await Mediator.Send(new GetAllPostListItemQuery() {Param = param}));
+            var posts = await Mediator.Send(new GetAllPostListItemQuery() { Param = param });
+
+            // Response.AddPagination(users.CurrentPage, users.PageSize,
+            //     users.TotalCount, users.TotalPages);
+
+            return Ok();
         }
 
         [HttpGet]
