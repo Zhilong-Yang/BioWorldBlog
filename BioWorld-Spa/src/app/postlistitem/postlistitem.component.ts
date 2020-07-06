@@ -12,4 +12,6 @@ export class PostlistitemComponent implements OnInit {
   ngOnInit() {
   }
 
+  loadPostList() {
+  }
 }
