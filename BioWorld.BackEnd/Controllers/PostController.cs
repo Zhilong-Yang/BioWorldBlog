@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BioWorld.Application.Common.Interface;
 using BioWorld.Application.Common.Models;
 using BioWorld.Application.Post;
 using BioWorld.Application.Post.Commands.CreatePost;
@@ -27,43 +28,47 @@ using BioWorld.Application.Post.Queries.GetSegments;
 using BioWorld.Application.Post.Queries.SearchPost;
 using BioWorld.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BioWorld.BackEnd.Controllers
 {
     public class PostController : ApiController
     {
-        public PostController(ILogger<ControllerBase> logger) : base(logger)
+        private readonly IApplicationDbContext _context;
+
+        public PostController(ILogger<ControllerBase> logger, IApplicationDbContext context
+            ) : base(logger)
         {
+            _context = context;
         }
 
         [HttpGet]
         public async Task<ActionResult<PostListItemJsonDto>> GetAll([FromQuery] Paging param)
         {
-            var posts = await Mediator.Send(new GetAllPostListItemQuery() { Param = param });
-
-            // Response.AddPagination(users.CurrentPage, users.PageSize,
-            //     users.TotalCount, users.TotalPages);
-
-            return Ok();
+            var postsToReturn = await Mediator.Send(new GetAllPostListItemQuery() {Param = param});
+            var count = await _context.Post.CountAsync(); 
+            int totalPages = (int)Math.Ceiling(count / (double)param.PageSize);
+            Response.AddPagination(param.PageNumber, param.PageSize, count, totalPages);
+            return Ok(postsToReturn);
         }
 
         [HttpGet]
         public async Task<ActionResult<PostListItemJsonDto>> GetArchived([FromQuery] int year, [FromQuery] int month)
         {
-            return Ok(await Mediator.Send(new GetArchivedQuery() { Year = year, Month = month}));
+            return Ok(await Mediator.Send(new GetArchivedQuery() {Year = year, Month = month}));
         }
 
         [HttpGet]
         public async Task<ActionResult<ArchiveJsonDto>> GetArchiveList()
         {
-            return Ok(await Mediator.Send(new GetArchiveListQuery() ));
+            return Ok(await Mediator.Send(new GetArchiveListQuery()));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PostSlugDto>> GetDraftPreview(Guid id)
         {
-            return Ok(await Mediator.Send(new GetDraftPreviewQuery() {  PostId= id }));
+            return Ok(await Mediator.Send(new GetDraftPreviewQuery() {PostId = id}));
         }
 
         [HttpGet("{id}")]
@@ -163,7 +168,7 @@ namespace BioWorld.BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PostListItemJsonDto>> Search([FromQuery]string keyword)
+        public async Task<ActionResult<PostListItemJsonDto>> Search([FromQuery] string keyword)
         {
             return Ok(await Mediator.Send(new SearchPostQuery() {Keyword = keyword}));
         }

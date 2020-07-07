@@ -65,6 +65,7 @@ namespace BioWorld.Application.Post.Queries.GetAllPostListItem
                 })
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
+
             return new PostListItemJsonDto(posts);
         }
     }

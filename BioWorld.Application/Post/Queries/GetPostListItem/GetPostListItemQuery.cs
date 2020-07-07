@@ -30,9 +30,9 @@ namespace BioWorld.Application.Post.Queries.GetPostListItem
                 .Where(p => p.Id == request.Id)
                 .Include(p => p.PostPublish)
                 .Include(p => p.PostTag)
-                    .ThenInclude(pt => pt.Tag)
+                .ThenInclude(pt => pt.Tag)
                 .Include(p => p.PostCategory)
-                    .ThenInclude(pc => pc.Category)
+                .ThenInclude(pc => pc.Category)
                 .AsNoTracking()
                 .Select(p => new PostDto
                 {
