@@ -2,11 +2,21 @@
     <div class="container mt-4 mb-5">
         <div class="row">
             <section class="col-lg-9 col-md-12">
-                <app-postlistitem></app-postlistitem>
+                <h3 class="h3-cat-list">
+                    <span>
+                        All Posts
+                    </span>
+                </h3>
+                <hr>
+                <div *ngFor="let post of posts">
+                    <article class="article-post-summary" lang="en-us">
+                        <app-postlistitem [post]=post></app-postlistitem>
+                    </article>
+                    <div class="mb-4 d-none d-md-block"></div>
+                    <hr class="d-none d-md-block">
+                </div>
             </section>
         </div>
     </div>
 
 </div>
-
-

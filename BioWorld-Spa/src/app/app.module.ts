@@ -5,9 +5,12 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+
+import { CategoryService } from './#services/category.service';
+import { PostService } from './#services/post.service';
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { CategoryService } from './#services/category.service';
 import { PostlistsComponent } from './postlists/postlists.component';
 import { PostlistitemComponent } from './postlistitem/postlistitem.component';
 
@@ -26,7 +29,8 @@ import { PostlistitemComponent } from './postlistitem/postlistitem.component';
    ],
    providers: [
       MDBSpinningPreloader,
-      CategoryService
+      CategoryService,
+      PostService
    ],
    bootstrap: [
       AppComponent

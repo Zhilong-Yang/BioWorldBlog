@@ -12,20 +12,17 @@
   <div class="post-summary-box">
     <h4 class="post-summary-title">
       <a href="/" style="color:#0d47a1;">
-        Solving Azure AD Sign In Failure with Azure Front Door
+        {{post.title}}
       </a>
     </h4>
 
     <p class="post-summary-text">
-      Today I am migrating my blog to use Azure Front Door which I have introduced in a previous blog post last year. Everything went well except for the blog admin sign in. I configured my blog to Azure AD as SSO. But after I put the blog behind Azure Front Door with my custom domain, OIDC Redirect URL just blow up.
-      OIDC Redirection Failure
-      
-      When I tried to sign in, the redirection URL suddenly&nbsp;…
+      {{post.contentAbstract}}
     </p>
 
     <div class="post-summary-tags">
-      <a class="post-summary-tag" href="/">
-        Azure
+      <a *ngFor="let tag of post.tags" class="post-summary-tag" href="/">
+        {{tag.tagName}}
       </a>
     </div>
   </div>
