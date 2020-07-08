@@ -6,7 +6,7 @@ import { ToastService } from 'ng-uikit-pro-standard';
 @Component({
   selector: 'app-postdetail',
   templateUrl: './postdetail.component.html',
-  styleUrls: ['./postdetail.component.css']
+  styleUrls: ['./postdetail.component.scss']
 })
 export class PostdetailComponent implements OnInit {
 
