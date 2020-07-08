@@ -2,10 +2,10 @@
 
   <div class="post-date-box d-none d-md-block">
     <div class="post-date-day">
-      29
+      {{post.pubDateUtc | date: 'dd' }}
     </div>
     <div class="post-date-month">
-      JUN
+      {{post.pubDateUtc | date: 'MMM' | uppercase }}
     </div>
   </div>
 
