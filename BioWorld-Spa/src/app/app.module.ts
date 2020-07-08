@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { NgModule } from '@angular/core';
@@ -15,6 +16,7 @@ import { PostlistsComponent } from './postlists/postlists.component';
 import { PostlistitemComponent } from './postlistitem/postlistitem.component';
 
 import { PostListsResolver } from './#resolvers/postlists.resolver';
+import { ToastModule } from 'ng-uikit-pro-standard';
 
 @NgModule({
    declarations: [
@@ -25,8 +27,10 @@ import { PostListsResolver } from './#resolvers/postlists.resolver';
    ],
    imports: [
       BrowserModule,
+      BrowserAnimationsModule,
       HttpClientModule,
       AppRoutingModule,
+      ToastModule.forRoot(),
       MDBBootstrapModulesPro.forRoot()
    ],
    providers: [

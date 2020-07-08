@@ -5,6 +5,7 @@ import { PostListItem } from '../#models/PostListItem';
 import { Pagination, PaginatedResult } from '../#models/Pagination';
 
 import { PostService } from '../#services/post.service';
+import {ToastService} from 'ng-uikit-pro-standard';
 
 @Component({
   selector: 'app-postlists',
@@ -15,12 +16,11 @@ export class PostlistsComponent implements OnInit {
   posts: PostListItem[];
   pagination: Pagination;
 
-  constructor(private postService: PostService, private route: ActivatedRoute) { }
+  constructor(private toast: ToastService, private postService: PostService, private route: ActivatedRoute) { }
 
   // tslint:disable-next-line: typedef
   ngOnInit() {
     this.route.data.subscribe(data => {
-      console.log(data);
       this.posts = data['posts'].result['postLists'];
       this.pagination = data['posts'].pagination;
     });
