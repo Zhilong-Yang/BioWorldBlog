@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { PostListItem } from '../#models/PostListItem';
 import { PaginatedResult } from '../#models/Pagination';
+import { PostDetail } from '../#models/PostDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,9 @@ export class PostService {
           return paginatedResult;
         })
       );
+  }
+
+  getPostDetail(id): Observable<PostDetail> {
+    return this.http.get<PostDetail>(this.baseUrl + 'Post/Get/' + id);
   }
 }

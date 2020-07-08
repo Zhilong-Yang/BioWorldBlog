@@ -11,7 +11,7 @@
 
   <div class="post-summary-box">
     <h4 class="post-summary-title">
-      <a href="/" style="color:#0d47a1;">
+      <a [routerLink]="['/Post/Get/',post.id]" style="color:#0d47a1;">
         {{post.title}}
       </a>
     </h4>

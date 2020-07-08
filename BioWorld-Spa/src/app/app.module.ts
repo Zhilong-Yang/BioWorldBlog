@@ -16,14 +16,17 @@ import { PostlistsComponent } from './postlists/postlists.component';
 import { PostlistitemComponent } from './postlistitem/postlistitem.component';
 
 import { PostListsResolver } from './#resolvers/postlists.resolver';
+import {PostDetailResolver} from './#resolvers/postdetail.resolver';
 import { ToastModule } from 'ng-uikit-pro-standard';
+import { PostdetailComponent } from './postdetail/postdetail.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavbarComponent,
       PostlistsComponent,
-      PostlistitemComponent
+      PostlistitemComponent,
+      PostdetailComponent
    ],
    imports: [
       BrowserModule,
@@ -37,7 +40,8 @@ import { ToastModule } from 'ng-uikit-pro-standard';
       MDBSpinningPreloader,
       CategoryService,
       PostService,
-      PostListsResolver
+      PostListsResolver,
+      PostDetailResolver
    ],
    bootstrap: [
       AppComponent
