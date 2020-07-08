@@ -14,6 +14,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PostlistsComponent } from './postlists/postlists.component';
 import { PostlistitemComponent } from './postlistitem/postlistitem.component';
 
+import { PostListsResolver } from './#resolvers/postlists.resolver';
+
 @NgModule({
    declarations: [
       AppComponent,
@@ -30,7 +32,8 @@ import { PostlistitemComponent } from './postlistitem/postlistitem.component';
    providers: [
       MDBSpinningPreloader,
       CategoryService,
-      PostService
+      PostService,
+      PostListsResolver
    ],
    bootstrap: [
       AppComponent

@@ -14,31 +14,31 @@ import { PostService } from '../#services/post.service';
 export class PostlistsComponent implements OnInit {
   posts: PostListItem[];
   pagination: Pagination;
+
   constructor(private postService: PostService, private route: ActivatedRoute) { }
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
-    // this.route.data.subscribe(data => {
-    //   this.posts = data['postLists'].result;
-    //   this.pagination = data['postLists'].pagination;
-    // });
-    // this.pagination.currentPage = 1;
-    // this.pagination.itemsPerPage = 5;
-    this.loadPosts();
+    this.route.data.subscribe(data => {
+      console.log(data);
+      this.posts = data['posts'].result['postLists'];
+      this.pagination = data['posts'].pagination;
+    });
   }
 
-  loadPosts(): void {
-    this.postService.getPostListItems(1,5)//this.pagination.currentPage, this.pagination.itemsPerPage
-      .subscribe((res: PaginatedResult<PostListItem[]>) => {
-        console.log(res);
-        this.posts = res.result['postLists'];
-        this.pagination = res.pagination;
-      }, error => {
-        console.log(error);
-      });
-  }
+  // loadPosts(): void {
+  //   this.postService.getPostListItems(1,5)//this.pagination.currentPage, this.pagination.itemsPerPage
+  //     .subscribe((res: PaginatedResult<PostListItem[]>) => {
+  //       console.log(res);
+  //       this.posts = res.result['postLists'];
+  //       this.pagination = res.pagination;
+  //     }, error => {
+  //       console.log(error);
+  //     });
+  // }
 
-  pageChanged(event: any): void {
-    this.pagination.currentPage = event.page;
-    this.loadPosts();
-  }
+  // pageChanged(event: any): void {
+  //   this.pagination.currentPage = event.page;
+  //   this.loadPosts();
+  // }
 }
