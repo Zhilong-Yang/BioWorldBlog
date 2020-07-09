@@ -2,6 +2,47 @@
   <div class="container mt-4 mb-5">
     <div class="row">
       <section class="col-lg-9 col-md-12">
+
+        <header class="post-header">
+          <h4 class="post-title">
+            {{postsdetail.title}}
+          </h4>
+          <hr class="d-none d-md-block post-header-hr">
+
+          <div class="d-none d-md-block post-publish-info mb-2">
+            <strong class="text-muted">
+              <time>{{postsdetail.pubDateUtc | date:'M/d/yy'}}</time>
+              <span>(Edit on {{postsdetail.createOnUtc | date:'medium'}})</span>
+              | China Standard Time
+            </strong>
+            <span class="badge badge-secondary float-right post-hit-number">{{hitCount}} Reads</span>
+          </div>
+
+          <div class="hidden-print">
+            <section class="post-cat-tag-info">
+              <div class="float-right d-none d-md-block">
+                <span class="toptags-list toptags-list-sm">
+                  <a *ngFor="let tag of postsdetail.tags" class="post-summary-tag" href="/">
+                    {{tag.tagName}}
+                  </a>
+                </span>
+              </div>
+
+              <ul class="d-flex flex-row list-unstyled ul-cat-list-desktop mb-0">
+                <li>
+                  <a *ngFor="let cat of postsdetail.categories" class="btn btn-sm btn-outline-success" href="/">
+                    <mdb-icon fas icon="folder"></mdb-icon>
+                    {{cat.displayName}}
+                  </a>
+                </li>
+              </ul>
+
+            </section>
+          </div>
+
+          <hr class="post-header-hr">
+        </header>
+
         <div [innerHTML]="rawPost"></div>
       </section>
     </div>

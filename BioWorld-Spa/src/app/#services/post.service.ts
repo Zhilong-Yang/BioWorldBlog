@@ -43,4 +43,8 @@ export class PostService {
   getPostDetail(id): Observable<PostDetail> {
     return this.http.get<PostDetail>(this.baseUrl + 'Post/Get/' + id);
   }
+
+  postHitCount(id: string){
+    return this.http.post(this.baseUrl + 'Post/Hit/' + id, {});
+  }
 }
