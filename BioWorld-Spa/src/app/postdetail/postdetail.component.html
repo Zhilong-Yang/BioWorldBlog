@@ -43,7 +43,33 @@
           <hr class="post-header-hr">
         </header>
 
-        <div [innerHTML]="rawPost"></div>
+        <section class="post-content clearfix" [innerHTML]="rawPost">
+        </section>
+
+        <section class="post-footer clearfix">
+          <hr>
+          <p>This work is licensed under a
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/">
+              Creative Commons Attribution-ShareAlike 4.0 International License
+            </a>
+          </p>
+        </section>
+        <hr>
+
+        <div class="post-slug-actions clearfix mb-4">
+          <div class="float-right">
+            <button class="btn btn-round btn-outline-success btn-ratings">
+              <mdb-icon far icon="heart"></mdb-icon>
+              Like (<span class="likehits-num">0</span>)
+            </button>
+
+            <button class="btn btn-round btn-outline-secondary">
+              <mdb-icon fas icon="qrcode"></mdb-icon>
+              QR Code
+            </button>
+          </div>
+        </div>
+
       </section>
     </div>
   </div>
